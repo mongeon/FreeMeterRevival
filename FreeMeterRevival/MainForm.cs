@@ -50,10 +50,10 @@ using Microsoft.Win32;
 using NatTraversal.Interop;
 using System.Drawing.Drawing2D;
 
-namespace FreeMeter
+namespace FreeMeterRevival
 {
 
-	public class Form1 : System.Windows.Forms.Form
+	public class MainForm : System.Windows.Forms.Form
 	{
 
 		public string ClipData = "";
@@ -131,11 +131,11 @@ namespace FreeMeter
 		[DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
 		static extern bool DeleteObject(IntPtr oBm);
 
-		public Form1()
+		public MainForm()
 		{
 			if (monitor.Adapters.Length == 0)
 			{
-				MessageBox.Show("I can't find any network adapters on this computer.", "FreeMeter Failed.");
+				MessageBox.Show("I can't find any network adapters on this computer.", "FreeMeter Revival Failed.");
 				return;
 			}
 
@@ -190,7 +190,7 @@ namespace FreeMeter
 
 			//SysTray Icon which is animated to show smaller graph
 			m_notifyicon.ContextMenu = m_menu;
-			Stream s = myAssembly.GetManifestResourceStream("FreeMeter.FreeMeter.ico");
+			Stream s = myAssembly.GetManifestResourceStream("FreeMeterRevival.FreeMeter.ico");
 			Icon = new Icon(s);
 			m_notifyicon.Icon = this.Icon;
 			s.Close();
@@ -353,10 +353,10 @@ namespace FreeMeter
 					}
 				}
 				else
-					MessageBox.Show("I can't find QueryPerformanceFrequency()", "FreeMeter Failed.");
+					MessageBox.Show("I can't find QueryPerformanceFrequency()", "FreeMeter Revival Failed.");
 			}
 			else
-				MessageBox.Show("I failed to use QueryPerformanceFrequency()", "FreeMeter Failed.");
+				MessageBox.Show("I failed to use QueryPerformanceFrequency()", "FreeMeter Revival Failed.");
 		}
 
 		private void ElapsedTimer()
@@ -1406,8 +1406,8 @@ namespace FreeMeter
 			m_menu.MenuItems.Add(new MenuItem("-"));
 			m_menu.MenuItems.Add(m_utils);
 			m_menu.MenuItems.Add(new MenuItem("-"));
-			m_menu.MenuItems.Add(new MenuItem("About FreeMeter", new EventHandler(About_Click)));
-			m_menu.MenuItems.Add(new MenuItem("Exit FreeMeter", new EventHandler(Exit_Click)));
+            m_menu.MenuItems.Add(new MenuItem("About FreeMeterRevival", new EventHandler(About_Click)));
+			m_menu.MenuItems.Add(new MenuItem("Exit FreeMeterRevival", new EventHandler(Exit_Click)));
 
 			m_colors.Text = "Colors/Opacity";
 			m_colors.MenuItems.Add(colorcycle = new MenuItem("Cycle Colors", new EventHandler(Cycle_Colors)));
@@ -1840,38 +1840,39 @@ namespace FreeMeter
 		}
 		private void CheckVersionWorker_DoWork(object sender, DoWorkEventArgs e)
 		{
-			AssemblyName ThisAssemblyName = myAssembly.GetName();
-			string FriendlyVersion = "v" + ThisAssemblyName.Version.Major + "." + ThisAssemblyName.Version.Minor + "." + ThisAssemblyName.Version.Build;
-			if (!respond_to_latest)
-				Thread.Sleep(30000);
-			try
-			{
-				WebRequest w = WebRequest.Create("http://freemeter.cvs.sourceforge.net/*checkout*/freemeter/FM_CVS/changelog.txt?revision=HEAD");
-				Stream sw = w.GetResponse().GetResponseStream();
-				StreamReader sr = new StreamReader(sw);
-				string line = sr.ReadLine();
+            //TODO: Create my own web service to get this info
+            //AssemblyName ThisAssemblyName = myAssembly.GetName();
+            //string FriendlyVersion = "v" + ThisAssemblyName.Version.Major + "." + ThisAssemblyName.Version.Minor + "." + ThisAssemblyName.Version.Build;
+            //if (!respond_to_latest)
+            //    Thread.Sleep(30000);
+            //try
+            //{
+            //    WebRequest w = WebRequest.Create("http://freemeter.cvs.sourceforge.net/*checkout*/freemeter/FM_CVS/changelog.txt?revision=HEAD");
+            //    Stream sw = w.GetResponse().GetResponseStream();
+            //    StreamReader sr = new StreamReader(sw);
+            //    string line = sr.ReadLine();
 
-				int result = String.Compare(line, 1, FriendlyVersion, 1, 8, true, CultureInfo.InvariantCulture);
+            //    int result = String.Compare(line, 1, FriendlyVersion, 1, 8, true, CultureInfo.InvariantCulture);
 
-				if (result < 0)
-					m_notifyicon.ShowBalloonTip(1, "Your version is newer.", line + " is online version. You have " + FriendlyVersion + ".", ToolTipIcon.Info);
-				else if (result > 0)
-					m_notifyicon.ShowBalloonTip(1, "New Update Is Available", line + " is available. You have " + FriendlyVersion + ".\nCheck About dialog for download site.", ToolTipIcon.Info);
-				else if (respond_to_latest)
-				{
-					m_notifyicon.ShowBalloonTip(1, "No New Updates", "You have the latest version (" + line + ").", ToolTipIcon.Info);
-					respond_to_latest = false;
-				}
+            //    if (result < 0)
+            //        m_notifyicon.ShowBalloonTip(1, "Your version is newer.", line + " is online version. You have " + FriendlyVersion + ".", ToolTipIcon.Info);
+            //    else if (result > 0)
+            //        m_notifyicon.ShowBalloonTip(1, "New Update Is Available", line + " is available. You have " + FriendlyVersion + ".\nCheck About dialog for download site.", ToolTipIcon.Info);
+            //    else if (respond_to_latest)
+            //    {
+            //        m_notifyicon.ShowBalloonTip(1, "No New Updates", "You have the latest version (" + line + ").", ToolTipIcon.Info);
+            //        respond_to_latest = false;
+            //    }
 
-				sr.Close();
-				sr.Dispose();
-				sw.Close();
-				sw.Dispose();
-			}
-			catch (Exception ex)
-			{
-				m_notifyicon.ShowBalloonTip(1, "Check For Update", ex.Message, ToolTipIcon.Error);
-			}
+            //    sr.Close();
+            //    sr.Dispose();
+            //    sw.Close();
+            //    sw.Dispose();
+            //}
+            //catch (Exception ex)
+            //{
+            //    m_notifyicon.ShowBalloonTip(1, "Check For Update", ex.Message, ToolTipIcon.Error);
+            //}
 		}
 
 		// Registry reading/writing, and form Dispose override
@@ -1879,7 +1880,7 @@ namespace FreeMeter
 		{
 			try
 			{
-				Registry.CurrentUser.DeleteSubKey("Software\\FreeMeter");
+                Registry.CurrentUser.DeleteSubKey("Software\\FreeMeterRevival");
 			}
 			catch
 			{ }
@@ -2286,11 +2287,11 @@ namespace FreeMeter
 		{
 			//try
 			{
-				Process[] RunningProcesses = Process.GetProcessesByName("FreeMeter");
+				Process[] RunningProcesses = Process.GetProcessesByName("FreeMeterRevival");
 				if (RunningProcesses.Length == 1)
 				{
 					Application.EnableVisualStyles();
-					Application.Run(new Form1());
+					Application.Run(new MainForm());
 				}
 				else if (RunningProcesses.Length == 2)
 				{
@@ -2300,7 +2301,7 @@ namespace FreeMeter
 						RunningProcesses[0].Kill();
 
 					Application.EnableVisualStyles();
-					Application.Run(new Form1());
+					Application.Run(new MainForm());
 				}
 				else
 					MessageBox.Show("I'm Already Running!", "!");
@@ -2656,7 +2657,7 @@ namespace FreeMeter
 
 	public class EmailSettings_Form : System.Windows.Forms.Form
 	{
-		public Form1 MyParentForm;
+		public MainForm MyParentForm;
 		private ComboBox comboBox1;
 		private ComboBox comboBox2;
 		private TextBox textBox1;
@@ -2978,7 +2979,7 @@ namespace FreeMeter
 
 		private void EmailSettings_Form_Load(object sender, System.EventArgs e)
 		{
-			foreach (MailServer s in ((Form1)MyParentForm).MailServers)
+			foreach (MailServer s in ((MainForm)MyParentForm).MailServers)
 			{
 				har.Add(s.Host);
 				uar.Add(s.User);
@@ -2988,7 +2989,7 @@ namespace FreeMeter
 				this.comboBox1.Items.Add(s.Host);
 			}
 			this.comboBox1.SelectedIndex = 0;
-			this.numericUpDown1.Value = new decimal(new int[] { (((Form1)MyParentForm).MailTimer.Interval / 60 / 1000), 0, 0, 0 });
+			this.numericUpDown1.Value = new decimal(new int[] { (((MainForm)MyParentForm).MailTimer.Interval / 60 / 1000), 0, 0, 0 });
 		}
 	}
 
@@ -3057,7 +3058,7 @@ namespace FreeMeter
 			link.LinkBehavior = LinkBehavior.HoverUnderline;
 			link.LinkColor = Color.Navy;
 			link.Font = new Font("Tahoma", 8);
-			link.Text = "http://freemeter.sourceforge.net/";
+			link.Text = "http://freemeterrevival.codeplex.com/";
 			link.LinkClicked += new LinkLabelLinkClickedEventHandler(link_Clicked);
 			// TextArea
 			TextArea.Location = new Point(96, 10);
@@ -3101,9 +3102,9 @@ namespace FreeMeter
 			AssemblyName ThisAssemblyName = ThisAssembly.GetName();
 			this.Icon = Owner.Icon;
 			IconBox1.Image = Owner.Icon.ToBitmap();
-			Stream s = ThisAssembly.GetManifestResourceStream("FreeMeter.lr.ico");
+            Stream s = ThisAssembly.GetManifestResourceStream("FreeMeterRevival.lr.ico");
 			Icon lr = new Icon(s);
-			s = ThisAssembly.GetManifestResourceStream("FreeMeter.ly.ico");
+			s = ThisAssembly.GetManifestResourceStream("FreeMeterRevival.ly.ico");
 			Icon ly = new Icon(s);
 			IconBox2.Image = lr.ToBitmap();
 			IconBox3.Image = ly.ToBitmap();
@@ -3156,7 +3157,7 @@ namespace FreeMeter
 		}
 		private void link_Clicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			Process.Start("http://freemeter.sourceforge.net/");
+			Process.Start("http://freemeterrevival.codeplex.com/");
 		}
 		internal static void ShowAboutForm(IWin32Window Owner)
 		{
@@ -3167,7 +3168,7 @@ namespace FreeMeter
 
 	public class AdvPing : Form
 	{
-		public Form1 MyParentForm;
+		public MainForm MyParentForm;
 		private static TextBox hostbox, databox, databox2, databox3, results;
 		private static CheckBox df;
 		private static Thread pinger;
@@ -3180,7 +3181,7 @@ namespace FreeMeter
 
 		public AdvPing()
 		{
-			Text = "FreeMeter Ping Utility";
+			Text = "FreeMeter Revival Ping Utility";
 			Size = new Size(400, 284);
 			FormBorderStyle = FormBorderStyle.FixedToolWindow;
 			MinimizeBox = true;
@@ -3518,7 +3519,7 @@ namespace FreeMeter
 
 	public class AdvTrace : Form
 	{
-		public Form1 MyParentForm;
+		public MainForm MyParentForm;
 		private static TextBox hostbox, databox, databox2, results;
 		private static CheckBox databox3;
 		private static Thread tracer;
@@ -3529,7 +3530,7 @@ namespace FreeMeter
 
 		public AdvTrace()
 		{
-			Text = "FreeMeter Traceroute Utility";
+			Text = "FreeMeter Revival Traceroute Utility";
 			Size = new Size(400, 284);
 			FormBorderStyle = FormBorderStyle.FixedToolWindow;
 			MinimizeBox = true;
@@ -3844,7 +3845,7 @@ namespace FreeMeter
 
 	public class frmUPnP : Form
 	{
-		public Form1 MyParentForm;
+		public MainForm MyParentForm;
 		private Label label1 = new Label();
 		private Label label2 = new Label();
 		private Label label3 = new Label();
@@ -3860,7 +3861,7 @@ namespace FreeMeter
 
 		public frmUPnP()
 		{
-			Text = "FreeMeter UPnP NAT Utility";
+			Text = "FreeMeter Revival UPnP NAT Utility";
 			Size = new Size(392, 278);
 			FormBorderStyle = FormBorderStyle.FixedToolWindow;
 			MinimizeBox = true;
@@ -3984,7 +3985,7 @@ namespace FreeMeter
 				{
 					try
 					{
-						PortMappingInfo pmi = new PortMappingInfo("FreeMeter", comboBox1.SelectedItem.ToString(), ret.ToString(), int.Parse(port.Text), null, int.Parse(port.Text), true);
+						PortMappingInfo pmi = new PortMappingInfo("FreeMeterRevival", comboBox1.SelectedItem.ToString(), ret.ToString(), int.Parse(port.Text), null, int.Parse(port.Text), true);
 						nat.AddPortMapping(pmi);
 						results.Text = "Successfully Added...\r\n\r\n";
 						BackgroundWorker nater = new BackgroundWorker();
@@ -4016,7 +4017,7 @@ namespace FreeMeter
 			{
 				try
 				{
-					PortMappingInfo pmi = new PortMappingInfo("FreeMeter", comboBox1.SelectedItem.ToString(), null, int.Parse(port.Text), null, int.Parse(port.Text), true);
+					PortMappingInfo pmi = new PortMappingInfo("FreeMeterRevival", comboBox1.SelectedItem.ToString(), null, int.Parse(port.Text), null, int.Parse(port.Text), true);
 					nat.RemovePortMapping(pmi);
 					results.Text = "Successfully Removed...\r\n\r\n";
 					BackgroundWorker nater = new BackgroundWorker();

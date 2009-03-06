@@ -1,4 +1,4 @@
-namespace FreeMeter
+namespace FreeMeterRevival
 {
     partial class Error
     {

@@ -29,7 +29,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>FreeMeterRevival</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <StartupObject>FreeMeter.Form1</StartupObject>
+    <StartupObject>FreeMeterRevival.MainForm</StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -142,7 +142,7 @@
     <Compile Include="Error.Designer.cs">
       <DependentUpon>Error.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GetValue.cs">
@@ -161,8 +161,8 @@
     <Compile Include="Totals Log.Designer.cs">
       <DependentUpon>Totals Log.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FreeMeter.ico" />
