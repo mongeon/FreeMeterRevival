@@ -7,12 +7,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("FreeMeter")]
+[assembly: AssemblyTitle("FreeMeter Revival")]
 [assembly: AssemblyDescription("Network Bandwidth Monitor")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FreeMeter")]
-[assembly: AssemblyCopyright("Copyright © 2005-2007\nDavid Schultz, Mieszko Lassota\nAll rights reserved.")]
+[assembly: AssemblyProduct("FreeMeter Revival")]
+[assembly: AssemblyCopyright("Copyright © Gabriel Mongeon \n\nCopyright © 2005-2007\nDavid Schultz, Mieszko Lassota\nAll rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]		
 
@@ -27,7 +27,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("1.5.*")]
+[assembly: AssemblyVersion("0.1.*")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 

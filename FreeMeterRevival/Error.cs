@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace FreeMeter
+namespace FreeMeterRevival
 {
     public partial class Error : Form
     {

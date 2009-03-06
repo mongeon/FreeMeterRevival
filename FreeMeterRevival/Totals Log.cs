@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.IO;
 
-namespace FreeMeter
+namespace FreeMeterRevival
 {
 	public partial class Totals_Log : Form
 	{
@@ -289,7 +289,7 @@ namespace FreeMeter
 			string msg = string.Format("You have exceeded maximum {0} limit ({1}/{2}) for this {3}.", downloadDirection.ToString(), Value(amount, null), Value(max_allowed, null), limits_period.ToString());
 
 			limits_notified = true;
-			Form1.m_notifyicon.ShowBalloonTip (int.MaxValue, "Bandwidth limit exceeded", msg, ToolTipIcon.Warning);
+			MainForm.m_notifyicon.ShowBalloonTip (int.MaxValue, "Bandwidth limit exceeded", msg, ToolTipIcon.Warning);
 		}
 
 		private double GetTraffic(TimeSpan limits_period, DownloadDirection downloadDirection)
