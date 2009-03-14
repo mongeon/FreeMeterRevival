@@ -24,7 +24,7 @@
   <Class Name="FreeMeterRevival.Forms.MainForm" Collapsed="true">
     <Position X="6.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>Ifc9TnzmSv2QapMcFLZXBXzy3UMBJMQM3+3ZinD/fNg=</HashCode>
+      <HashCode>Ifc9Tn3mSv2QarP+H7bXBXzy3UMBNMQM3+3ZinC/fNg=</HashCode>
       <FileName>Forms\MainForm.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -73,7 +73,7 @@
   <Class Name="FreeMeterRevival.Forms.EmailSettingsForm" Collapsed="true">
     <Position X="6.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ACARADICAAQgABEQAAAACABQAEA4AAAAEDBMAgEAAQA=</HashCode>
+      <HashCode>ACARADICAAQgABEQAAAACABSAEA4AAAAEDBMAgEAAQA=</HashCode>
       <FileName>Forms\EmailSettingsForm.cs</FileName>
     </TypeIdentifier>
   </Class>

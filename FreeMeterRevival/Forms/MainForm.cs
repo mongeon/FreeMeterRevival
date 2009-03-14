@@ -62,7 +62,6 @@ namespace FreeMeterRevival.Forms
 
 		private Assembly myAssembly = Assembly.GetExecutingAssembly();
 		private NetworkMonitor monitor = new NetworkMonitor();
-		private Thread backgroundWorker1;
 
 		private int timerInterval = 1000;
 		private int WLength, WHeight, scale;
@@ -77,16 +76,11 @@ namespace FreeMeterRevival.Forms
 		private bool respond_to_latest = false;
 
 
-		private Color DOWNLOAD_COLOR = Color.FromArgb(255, 0, 255, 0);
-		private Color UPLOAD_COLOR = Color.FromArgb(255, 255, 0, 0);
-		private Color OVERLAP_COLOR = Color.FromArgb(255, 255, 255, 0);
 		private Color FORGROUND_COLOR = Color.White;
-		private Color BACKGROUND_COLOR;
-		private Color HIGHLIGHT_COLOR;
-		private Color SHADOW_COLOR;
-		private Pen downloadPen = new Pen(Color.FromArgb(255, 0, 255, 0), 1);
-		private Pen uploadPen = new Pen(Color.FromArgb(255, 255, 0, 0), 1);
-		private Pen overlapPen = new Pen(Color.FromArgb(255, 255, 255, 0), 1);
+
+        private Pen downloadPen = new Pen(Properties.Settings.Default.DownloadColor, 1);
+        private Pen uploadPen = new Pen(Properties.Settings.Default.UploadColor, 1);
+        private Pen overlapPen = new Pen(Properties.Settings.Default.OverlapColor, 1);
 
 		//Cool icon representation
 		private bool icon_representation = false;
@@ -129,11 +123,8 @@ namespace FreeMeterRevival.Forms
 			logs_form = new Totals_LogForm();
 
 
-			
-			BackColor = BACKGROUND_COLOR;
+
 			ForeColor = FORGROUND_COLOR;
-			HIGHLIGHT_COLOR = HSL_to_RGB(BACKGROUND_COLOR.GetHue(), BACKGROUND_COLOR.GetSaturation(), BACKGROUND_COLOR.GetBrightness() + .3);
-			SHADOW_COLOR = HSL_to_RGB(BACKGROUND_COLOR.GetHue(), BACKGROUND_COLOR.GetSaturation(), BACKGROUND_COLOR.GetBrightness() - .1);
 			
 
 			RestoreRegistry();
@@ -149,36 +140,16 @@ namespace FreeMeterRevival.Forms
 			Check_Menus();
 			Form1_Borders();
 
-            resizer.Location = new Point(ClientSize.Width - 13, ClientSize.Height - 13);
-			Make_Grabhandle();
-			Controls.Add(this.resizer);
-			
 
 
 			//full graph
-			FullMeter.Size = new Size(ClientSize.Width - 6, ClientSize.Height - 18);
-            label1.BackColor = BACKGROUND_COLOR;
-            label1.ForeColor = DOWNLOAD_COLOR;
-            label1.Location = new Point(10, WHeight - 14);
-            label1.Size = new Size(WLength / 2 - 10 - 5, 13);
-            label2.Location = new Point(WLength / 2 + 9 - 5, WHeight - 14);
-            label2.Size = new Size(WLength / 2 - 9 - 13 + 5, 13);
-            label2.BackColor = BACKGROUND_COLOR;
-            label2.ForeColor = DOWNLOAD_COLOR;
-            label3.Location = new Point(1, WHeight - 14);
-            label3.Size = new Size(9, 13);
-            label3.BackColor = BACKGROUND_COLOR;
-            label3.ForeColor = DOWNLOAD_COLOR;
+			//FullMeter.Size = new Size(ClientSize.Width - 6, ClientSize.Height - 18);
 
-            label4.Location = new Point(WLength / 2 - 5, WHeight - 14);
-            label4.BackColor = BACKGROUND_COLOR;
-            label4.ForeColor = DOWNLOAD_COLOR;
 
 			// Hue Trackbar
 			trackBar1.Location = new Point(2, WHeight - 14);
 			trackBar1.Size = new Size(WLength - 15, 15);
 
-            trackBar1.Value = (int)BACKGROUND_COLOR.GetHue();
 			trackBar1.SendToBack();
 			trackBar1.Hide();
 
@@ -188,10 +159,7 @@ namespace FreeMeterRevival.Forms
 			trackBar2.SendToBack();
 			trackBar2.Hide();
 
-			backgroundWorker1 = new Thread(new ThreadStart(backgroundWorker1_DoWork));
-			backgroundWorker1.IsBackground = false;
-			backgroundWorker1.Priority = ThreadPriority.AboveNormal;
-			backgroundWorker1.Start();
+            backgroundWorker1.RunWorkerAsync();
 
 			Check_Version(this, new EventArgs());
 
@@ -220,6 +188,9 @@ namespace FreeMeterRevival.Forms
 
 				icons_loaded = true;
 			}
+
+
+
 		}
 
 		void UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -227,35 +198,7 @@ namespace FreeMeterRevival.Forms
 			(new ErrorForm(e.ExceptionObject as Exception)).ShowDialog();
 		}
 
-		//the timer stuff
-		private void backgroundWorker1_DoWork()
-		{
-			long freq = 0;
-			if (QueryPerformanceFrequency(out freq))
-			{
-				if (freq != 0)
-				{
-					if (freq == 1000)
-						MessageBox.Show("Uses GetTickCount", "?");
-					long count1 = 0;
-					long count2 = 0;
-					while (!m_closing)
-					{
-						QueryPerformanceCounter(out count1);
-						ElapsedTimer();
-						QueryPerformanceCounter(out count2);
-						long time_ms = (count2 - count1) * 1000 / freq;
-						if (time_ms > (long)timerInterval)
-							time_ms = (long)timerInterval;
-						Thread.Sleep((int)((long)timerInterval - time_ms));
-					}
-				}
-				else
-					MessageBox.Show("I can't find QueryPerformanceFrequency()", "FreeMeter Revival Failed.");
-			}
-			else
-				MessageBox.Show("I failed to use QueryPerformanceFrequency()", "FreeMeter Revival Failed.");
-		}
+
 
 		private void ElapsedTimer()
 		{
@@ -269,19 +212,7 @@ namespace FreeMeterRevival.Forms
 			DrawIconRepresentation();
 			DrawFullMeter();
 
-			if (colorcycle.Checked && this.Visible)
-			{
-				double h = 0, sa = 0, l = 0;
-				RGB_to_HSL(BACKGROUND_COLOR, ref h, ref sa, ref l);
-				h = h + 1;
-				if (h > 360.0) h = 0;
-				BACKGROUND_COLOR = label1.BackColor = label2.BackColor = label3.BackColor = label4.BackColor = HSL_to_RGB(h, sa, l);
-				SetColor(this, BACKGROUND_COLOR);
-				HIGHLIGHT_COLOR = HSL_to_RGB(h, sa, l + .3);
-				SHADOW_COLOR = HSL_to_RGB(h, sa, l - .1);
-				Make_Grabhandle();
-				Form1_Borders();
-			}
+			
 		}
 		private bool checkingmail = false;
 		private void MailTimer_Tick(Object sender, EventArgs e)
@@ -298,84 +229,9 @@ namespace FreeMeterRevival.Forms
 			}
 		}
 		private void CheckMailWorker_DoWork(Object sender, DoWorkEventArgs e)
-		{
-			StringBuilder balloon_text = new StringBuilder();
-			bool ErrorOccured = false, NewMailOccurred = false;
-			ToolTipIcon TTI = ToolTipIcon.Info;
-			foreach (MailServer server in MailServers)
-			{
-				if (server.Enabled)
-				{
-					int newmsgcount = 0;
-					string errmsg = null;
-					if (server.Type == "1")
-					{ //imap
-						IMAP pop = new IMAP(server.Host, server.User, server.Pass);
-						newmsgcount = pop.GetNumberOfMessages();
-						errmsg = pop.ErrMsg;
-					}
-					else if (server.Type == "0")
-					{ //pop
-						POP3 pop = new POP3(server.Host, server.User, server.Pass);
-						newmsgcount = pop.GetNumberOfMessages();
-						errmsg = pop.ErrMsg;
-					}
+        {
 
-					if (newmsgcount == -1)
-					{ //error
-						balloon_text.Append(errmsg);
-						balloon_text.Append(" (");
-						balloon_text.Append(server.Host);
-						balloon_text.Append(")\n");
-						ErrorOccured = true;
-						//server.Enabled = false;
-					}
-					else if (newmsgcount == 0)
-					{
-						server.OldMsgCount = 0;
-						if (checkingmail)
-						{
-							balloon_text.Append("No New Messages on ");
-							balloon_text.Append(server.Host);
-							balloon_text.Append("\n");
-						}
-					}
-					else if (newmsgcount == server.OldMsgCount && checkingmail)
-					{
-						balloon_text.Append("No New Messages on ");
-						balloon_text.Append(server.Host);
-						balloon_text.Append("\n");
-					}
-					else if (newmsgcount > server.OldMsgCount)
-					{
-						balloon_text.Append(newmsgcount - server.OldMsgCount);
-						if (newmsgcount - server.OldMsgCount == 1)
-							balloon_text.Append(" new message on ");
-						else
-							balloon_text.Append(" new messages on ");
-						balloon_text.Append(server.Host);
-						balloon_text.Append("\n");
-						server.OldMsgCount = newmsgcount;
-						NewMailOccurred = true;
-					}
-				}
-			}
-			if (balloon_text.Length > 0)
-			{
-				string balloon_title = "";
-				if (ErrorOccured)
-				{
-					balloon_title = "There were errors checking your email.";
-					TTI = ToolTipIcon.Error;
-				}
-				else if (NewMailOccurred)
-					balloon_title = "You have new email!";
-				else
-					balloon_title = "No New Messages.";
-				m_notifyicon.ShowBalloonTip(1, balloon_title, balloon_text.ToString(), TTI);
-			}
-			checkingmail = false;
-		}
+        }
 		private void ClipTimer_Tick(object sender, EventArgs e)
 		{
 			if (clip_watch.Checked)
@@ -428,12 +284,7 @@ namespace FreeMeterRevival.Forms
 		{
 			double h = 0, sa = 0, l = 0;
 			TrackBar tb = (TrackBar)sender;
-			RGB_to_HSL(BACKGROUND_COLOR, ref h, ref sa, ref l);
 			h = tb.Value;
-			BackColor = BACKGROUND_COLOR = label1.BackColor = label2.BackColor = label3.BackColor = label4.BackColor = HSL_to_RGB(h, sa, l);
-			HIGHLIGHT_COLOR = HSL_to_RGB(h, sa, l + .3);
-			SHADOW_COLOR = HSL_to_RGB(h, sa, l - .1);
-			Make_Grabhandle();
 			Form1_Borders();
 		}
 		private void Trackbar1_Hide(Object sender, MouseEventArgs e)
@@ -444,30 +295,16 @@ namespace FreeMeterRevival.Forms
 		}
 		private void Trackbar1_Show(Object sender, EventArgs e)
 		{
-			colorcycle.Checked = false;
 			trackBar1.BringToFront();
 			trackBar1.Enabled = true;
 			trackBar1.Show();
 		}
-		private void Cycle_Colors(Object sender, EventArgs e)
-		{
-			if (colorcycle.Checked)
-				colorcycle.Checked = false;
-			else
-				colorcycle.Checked = true;
-		}
+
 		private void Color_Click(Object sender, EventArgs e)
 		{
 			double h = 0, sa = 0, l = 0;
-			colorcycle.Checked = false;
-			colorDialog1.Color = BACKGROUND_COLOR;
 			if (colorDialog1.ShowDialog() == DialogResult.OK)
 			{
-				BackColor = BACKGROUND_COLOR = label1.BackColor = label2.BackColor = label3.BackColor = label4.BackColor = colorDialog1.Color;
-				RGB_to_HSL(BACKGROUND_COLOR, ref h, ref sa, ref l);
-				HIGHLIGHT_COLOR = HSL_to_RGB(h, sa, l + .3);
-				SHADOW_COLOR = HSL_to_RGB(h, sa, l - .1);
-				Make_Grabhandle();
 				Form1_Borders();
 			}
 		}
@@ -476,20 +313,13 @@ namespace FreeMeterRevival.Forms
 			colorDialog1.Color = FORGROUND_COLOR;
 			if (colorDialog1.ShowDialog() == DialogResult.OK)
 			{
-				ForeColor = FORGROUND_COLOR = label1.ForeColor = label2.ForeColor = colorDialog1.Color;
+				ForeColor = FORGROUND_COLOR =  colorDialog1.Color;
 			}
 		}
 		private void DefaultColor_Click(Object sender, EventArgs e)
 		{
 			double h = 0, sa = 0, l = 0;
-			colorcycle.Checked = false;
-			ForeColor = FORGROUND_COLOR = label1.ForeColor = label2.ForeColor = Color.White;
-			BACKGROUND_COLOR = Color.FromArgb(255, 44, 81, 138);
-			RGB_to_HSL(BACKGROUND_COLOR, ref h, ref sa, ref l);
-			BackColor = BACKGROUND_COLOR = label1.BackColor = label2.BackColor = label3.BackColor = label4.BackColor = HSL_to_RGB(h, sa, l);
-			HIGHLIGHT_COLOR = HSL_to_RGB(h, sa, l + .3);
-			SHADOW_COLOR = HSL_to_RGB(h, sa, l - .1);
-			Make_Grabhandle();
+			ForeColor = FORGROUND_COLOR =   Color.White;
 			Form1_Borders();
 		}
 
@@ -527,14 +357,6 @@ namespace FreeMeterRevival.Forms
                 //do 3D borders
                 Bitmap borders = new Bitmap(ClientSize.Width, ClientSize.Height, PixelFormat.Format24bppRgb);
                 Graphics formGraphics = Graphics.FromImage((Image)borders);
-                formGraphics.Clear(BACKGROUND_COLOR);
-                formGraphics.DrawRectangle(new Pen(HIGHLIGHT_COLOR), 2, 2, WLength - 5, WHeight - 17);
-                formGraphics.DrawLine(new Pen(HIGHLIGHT_COLOR), 0, 0, WLength - 1, 0);
-                formGraphics.DrawLine(new Pen(HIGHLIGHT_COLOR), 0, 0, 0, WHeight - 1);
-                formGraphics.DrawLine(new Pen(SHADOW_COLOR), 0, WHeight - 1, WLength - 1, WHeight - 1);
-                formGraphics.DrawLine(new Pen(SHADOW_COLOR), WLength - 1, WHeight - 1, WLength - 1, 0);
-                formGraphics.DrawRectangle(new Pen(BACKGROUND_COLOR), WLength - 1, 0, 1, 1);
-                formGraphics.DrawRectangle(new Pen(BACKGROUND_COLOR), 0, WHeight - 1, 1, 1);
                 IntPtr oFB = borders.GetHbitmap();
                 this.BackgroundImage = Image.FromHbitmap(oFB);
                 DeleteObject(oFB);
@@ -543,30 +365,7 @@ namespace FreeMeterRevival.Forms
             }
 
 		}
-		private void Make_Grabhandle()
-		{
-			Bitmap grabhandle = new Bitmap(11, 11, PixelFormat.Format24bppRgb);
-			Graphics g = Graphics.FromImage((Image)grabhandle);
-			g.FillRectangle(new SolidBrush(BACKGROUND_COLOR), new Rectangle(0, 0, 11, 11));
-			Rectangle[] r = new Rectangle[] { new Rectangle(9, 1, 2, 2), new Rectangle(5, 5, 2, 2), new Rectangle(9, 5, 2, 2), new Rectangle(1, 9, 2, 2), new Rectangle(5, 9, 2, 2), new Rectangle(9, 9, 2, 2) };
-			g.FillRectangles(new SolidBrush(HIGHLIGHT_COLOR), r);
-			r = new Rectangle[] { new Rectangle(8, 0, 2, 2), new Rectangle(4, 4, 2, 2), new Rectangle(8, 4, 2, 2), new Rectangle(0, 8, 2, 2), new Rectangle(4, 8, 2, 2), new Rectangle(8, 8, 2, 2) };
-			g.FillRectangles(new SolidBrush(SHADOW_COLOR), r);
 
-			try
-			{
-				IntPtr oBm1 = grabhandle.GetHbitmap();
-				resizer.Image = Image.FromHbitmap(oBm1);
-				DeleteObject(oBm1);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e.ToString());
-			}
-
-			g.Dispose();
-			grabhandle.Dispose();
-		}
 
 		private void RefreshSpeeds()
 		{
@@ -1023,8 +822,8 @@ namespace FreeMeterRevival.Forms
 				else
 					m_notifyicon.Text = nText;
 			}
-			SetText(label1, label1text, 0);
-			SetText(label2, label2text, WLength / 2 - 5);
+            sbMainDownload.Text = label1text;
+            sbMainUpload.Text = label2text;
 		}
 
 		//Average and max functions
@@ -1152,14 +951,7 @@ namespace FreeMeterRevival.Forms
 				WHeight = ClientSize.Height;
 			}
 
-			label1.Location = new Point(10, WHeight - 14);
-			label1.Size = new Size(WLength / 2 - 9 - 5, 13);
-			label2.Location = new Point(WLength / 2 + 10 - 5, WHeight - 14);
-			label2.Size = new Size(WLength / 2 - 9 - 13 + 5, 13);
-			label3.Location = new Point(1, WHeight - 14);
-			label4.Location = new Point(WLength / 2 - 4, WHeight - 14);
-			FullMeter.Size = new Size(WLength - 6, WHeight - 18);
-			resizer.Location = new Point(WLength - 13, WHeight - 13);
+			FullMeter.Size = new Size(WLength - 18, WHeight - 30);
 			trackBar1.Location = new Point(2, WHeight - 14);
 			trackBar1.Size = new Size(WLength - 15, 15);
 			trackBar2.Location = new Point(2, WHeight - 14);
@@ -1197,26 +989,7 @@ namespace FreeMeterRevival.Forms
 				Array.Copy(full_upspeeds, full_upspeeds.Length - temp2.Length, temp2, 0, temp2.Length);
 			full_upspeeds = temp2;
 
-			int font_adjust = 0;
-			if (!font_small.Checked) font_adjust = 1;
-			if (WLength > 125)
-			{
-				if (font_large.Checked) label1.Font = label2.Font = new Font("MS Serif", 7 + font_adjust, FontStyle.Bold);
-				else label1.Font = label2.Font = new Font("MS Serif", 7 + font_adjust, FontStyle.Regular);
-				label1.TextAlign = label2.TextAlign = ContentAlignment.TopLeft;
-			}
-			else if (WLength > 95)
-			{
-				if (font_large.Checked) label1.Font = label2.Font = new Font("MS Serif", 6 + font_adjust, FontStyle.Bold);
-				else label1.Font = label2.Font = new Font("MS Serif", 6 + font_adjust, FontStyle.Regular);
-				label1.TextAlign = label2.TextAlign = ContentAlignment.MiddleLeft;
-			}
-			else
-			{
-				if (font_large.Checked) label1.Font = label2.Font = new Font("MS Serif", 5 + font_adjust, FontStyle.Bold);
-				else label1.Font = label2.Font = new Font("MS Serif", 5 + font_adjust, FontStyle.Regular);
-				label1.TextAlign = label2.TextAlign = ContentAlignment.MiddleLeft;
-			}
+			
 			ResizeScale();
 		}
 
@@ -1264,7 +1037,7 @@ namespace FreeMeterRevival.Forms
 			}
 			catch (ArgumentException)
 			{
-				return BACKGROUND_COLOR;
+                return Properties.Settings.Default.UploadColor;
 			}
 		}
 		public void RGB_to_HSL(Color c, ref double h, ref double s, ref double l)
@@ -1282,38 +1055,38 @@ namespace FreeMeterRevival.Forms
             //interval_tenth.Checked = interval_fifth.Checked = interval_half.Checked = interval_1.Checked = false;
             //scale_33.Checked = scale_56.Checked = scale_64.Checked = scale_128.Checked = scale_256.Checked = scale_512.Checked = scale_640.Checked = scale_1000.Checked = scale_1500.Checked = scale_2000.Checked = scale_3000.Checked = scale_5000.Checked = scale_7000.Checked = scale_10000.Checked = scale_11000.Checked = scale_32000.Checked = scale_54000.Checked = scale_100000.Checked = scale_1000000.Checked = scale_custom.Checked = false;
 
-            //if (timerInterval == 100) 
-            //    interval_tenth.Checked = true;
-            //else if (timerInterval == 200) 
-            //    interval_fifth.Checked = true;
-            //else if (timerInterval == 500) 
-            //    interval_half.Checked = true;
-            //else if (timerInterval == 1000) 
-            //    interval_1.Checked = true;
+            if (timerInterval == 100) 
+                interval_tenth.Checked = true;
+            else if (timerInterval == 200) 
+                interval_fifth.Checked = true;
+            else if (timerInterval == 500) 
+                interval_half.Checked = true;
+            else if (timerInterval == 1000) 
+                interval_1.Checked = true;
 
-            //switch (scale)
-            //{
-            //    case 4200: scale_33.Checked = true; display_yscale = "scale: 33.6 kb"; break;
-            //    case 7000: scale_56.Checked = true; display_yscale = "scale: 56 kb"; break;
-            //    case 8000: scale_64.Checked = true; display_yscale = "scale: 64 kb"; break;
-            //    case 16000: scale_128.Checked = true; display_yscale = "scale: 128 kb"; break;
-            //    case 32000: scale_256.Checked = true; display_yscale = "scale: 256 kb"; break;
-            //    case 64000: scale_512.Checked = true; display_yscale = "scale: 512 kb"; break;
-            //    case 80000: scale_640.Checked = true; display_yscale = "scale: 640 kb"; break;
-            //    case 128000: scale_1000.Checked = true; display_yscale = "scale: 1 mb"; break;
-            //    case 192000: scale_1500.Checked = true; display_yscale = "scale: 1.5 mb"; break;
-            //    case 256000: scale_2000.Checked = true; display_yscale = "scale: 2 mb"; break;
-            //    case 384000: scale_3000.Checked = true; display_yscale = "scale: 3 mb"; break;
-            //    case 640000: scale_5000.Checked = true; display_yscale = "scale: 5 mb"; break;
-            //    case 896000: scale_7000.Checked = true; display_yscale = "scale: 7 mb"; break;
-            //    case 1280000: scale_10000.Checked = true; display_yscale = "scale: 10 mb"; break;
-            //    case 1408000: scale_11000.Checked = true; display_yscale = "scale: 11 mb"; break;
-            //    case 4096000: scale_32000.Checked = true; display_yscale = "scale: 32 mb"; break;
-            //    case 6912000: scale_54000.Checked = true; display_yscale = "scale: 54 mb"; break;
-            //    case 12800000: scale_100000.Checked = true; display_yscale = "scale: 100 mb"; break;
-            //    case 128000000: scale_1000000.Checked = true; display_yscale = "scale: 1 gb"; break;
-            //    default: scale_custom.Checked = true; display_yscale = "scale: custom (" + Totals_LogForm.Value(scale, null) + ")"; break;
-            //}
+            switch (scale)
+            {
+                case 4200: scale_33.Checked = true; display_yscale = "scale: 33.6 kb"; break;
+                case 7000: scale_56.Checked = true; display_yscale = "scale: 56 kb"; break;
+                case 8000: scale_64.Checked = true; display_yscale = "scale: 64 kb"; break;
+                case 16000: scale_128.Checked = true; display_yscale = "scale: 128 kb"; break;
+                case 32000: scale_256.Checked = true; display_yscale = "scale: 256 kb"; break;
+                case 64000: scale_512.Checked = true; display_yscale = "scale: 512 kb"; break;
+                case 80000: scale_640.Checked = true; display_yscale = "scale: 640 kb"; break;
+                case 128000: scale_1000.Checked = true; display_yscale = "scale: 1 mb"; break;
+                case 192000: scale_1500.Checked = true; display_yscale = "scale: 1.5 mb"; break;
+                case 256000: scale_2000.Checked = true; display_yscale = "scale: 2 mb"; break;
+                case 384000: scale_3000.Checked = true; display_yscale = "scale: 3 mb"; break;
+                case 640000: scale_5000.Checked = true; display_yscale = "scale: 5 mb"; break;
+                case 896000: scale_7000.Checked = true; display_yscale = "scale: 7 mb"; break;
+                case 1280000: scale_10000.Checked = true; display_yscale = "scale: 10 mb"; break;
+                case 1408000: scale_11000.Checked = true; display_yscale = "scale: 11 mb"; break;
+                case 4096000: scale_32000.Checked = true; display_yscale = "scale: 32 mb"; break;
+                case 6912000: scale_54000.Checked = true; display_yscale = "scale: 54 mb"; break;
+                case 12800000: scale_100000.Checked = true; display_yscale = "scale: 100 mb"; break;
+                case 128000000: scale_1000000.Checked = true; display_yscale = "scale: 1 gb"; break;
+                default: scale_custom.Checked = true; display_yscale = "scale: custom (" + Totals_LogForm.Value(scale, null) + ")"; break;
+            }
 		}
 
 		// handlers for menu clicks
@@ -1498,7 +1271,7 @@ namespace FreeMeterRevival.Forms
 		
 		private void Avg_Click(Object sender, EventArgs e)
 		{
-			avg_checked.Checked = !avg_checked.Checked;
+			//avg_checked.Checked = !avg_checked.Checked;
 		}
 
 		private void Clip_Click(Object sender, EventArgs e)
@@ -1678,14 +1451,14 @@ namespace FreeMeterRevival.Forms
 		protected override void Dispose(bool disposing)
 		{
 			if (backgroundWorker1 != null)
-				backgroundWorker1.Abort();
+				backgroundWorker1.CancelAsync();
 
 			SaveConfiguration();
 			
 			if (disposing)
 				m_notifyicon.Dispose();
 
-			base.Dispose(disposing);
+			//base.Dispose(disposing);
 		}
 
 		private void LoadConfiguration()
@@ -1711,7 +1484,6 @@ namespace FreeMeterRevival.Forms
 			topmost_checked.Checked		= bool.Parse(xml["TopMost"].ToString());
 			simple_icon_checked.Checked = bool.Parse(xml["SimpleNotifyIcon"].ToString());
 			graph_label_checked.Checked = bool.Parse(xml["ShowGraphLabel"].ToString());
-			colorcycle.Checked			= bool.Parse(xml["ColorCycle"].ToString());
 			mailcheck.Checked			= bool.Parse(xml["MailCheck"].ToString());
 			clip_watch.Checked			= bool.Parse(xml["ClipWatch"].ToString());
 			LogEnabled					= bool.Parse(xml["LogEnabled"].ToString());
@@ -1743,7 +1515,7 @@ namespace FreeMeterRevival.Forms
 				Hide();
                
 			}
-
+            
 
 			if (int.Parse(xml["FontSize"].ToString()) == 2)
 				font_large.Checked = true;
@@ -1796,7 +1568,6 @@ namespace FreeMeterRevival.Forms
 			trackBar2.Value = int.Parse(xml["Trans"].ToString());
 			Opacity = ((float)trackBar2.Value) / 100;
 
-			BACKGROUND_COLOR = Color.FromArgb(255, int.Parse(xml["BackgroundRed"].ToString()), int.Parse(xml["BackgroundGreen"].ToString()), int.Parse(xml["BackgroundBlue"].ToString()));
 			FORGROUND_COLOR = Color.FromArgb(255, int.Parse(xml["ForegroundRed"].ToString()), int.Parse(xml["ForegroundGreen"].ToString()), int.Parse(xml["ForegroundBlue"].ToString()));
 
 			TopMost = topmost_checked.Checked;
@@ -1835,9 +1606,7 @@ namespace FreeMeterRevival.Forms
 			Show();
 
 			graph_label_checked.Checked = true;
-			colorcycle.Checked = false;
 
-			BACKGROUND_COLOR = Color.FromArgb(255, 44, 81, 138);
 			FORGROUND_COLOR = Color.FromArgb(255, 255, 255, 255);
 
 			mailcheck.Checked = false;
@@ -1869,6 +1638,7 @@ namespace FreeMeterRevival.Forms
 
 		private void SaveConfiguration()
 		{
+            Properties.Settings.Default.Save();
 			string app_dir = Application.ExecutablePath;
 			app_dir = app_dir.Remove(app_dir.LastIndexOf('\\'));
 
@@ -1888,7 +1658,6 @@ namespace FreeMeterRevival.Forms
 			writer.WriteElementString("TopMost", topmost_checked.Checked.ToString());
 			writer.WriteElementString("SimpleNotifyIcon", simple_icon_checked.Checked.ToString());
 			writer.WriteElementString("ShowGraphLabel", graph_label_checked.Checked.ToString());
-			writer.WriteElementString("ColorCycle", colorcycle.Checked.ToString());
 			writer.WriteElementString("MailCheck", mailcheck.Checked.ToString());
 			writer.WriteElementString("ClipWatch", clip_watch.Checked.ToString());
 			writer.WriteElementString("LogEnabled", LogEnabled.ToString());
@@ -1925,9 +1694,6 @@ namespace FreeMeterRevival.Forms
 
 			// TODO: save data regarding mail
 			writer.WriteElementString("MailCheckInterval", MailTimer.Interval.ToString());
-			writer.WriteElementString("BackgroundRed", ((int)BACKGROUND_COLOR.R).ToString());
-			writer.WriteElementString("BackgroundGreen", ((int)BACKGROUND_COLOR.G).ToString());
-			writer.WriteElementString("BackgroundBlue", ((int)BACKGROUND_COLOR.B).ToString());
 			writer.WriteElementString("ForegroundRed", ((int)FORGROUND_COLOR.R).ToString());
 			writer.WriteElementString("ForegroundGreen", ((int)FORGROUND_COLOR.G).ToString());
 			writer.WriteElementString("ForegroundBlue", ((int)FORGROUND_COLOR.B).ToString());
@@ -2007,75 +1773,47 @@ namespace FreeMeterRevival.Forms
 			ms.Close();
 			return Encoding.UTF8.GetString(plainBytes);
 		}
-
-		//set the text of a control in a thread safe manner
-		delegate void SetTextCallback(Label l, string t, int offset);
-		delegate void SetColorCallback(Control l, Color c);
-		private void SetText(Label l, string t, int offset)
-		{
-			if (l.InvokeRequired)
-			{
-				SetTextCallback d = new SetTextCallback(SetText);
-				try
-				{
-					this.Invoke(d, new Object[] { l, t, offset });
-				}
-				catch (ObjectDisposedException e)
-				{
-					Console.WriteLine(e.ToString());
-				}
-			}
-			else
-			{
-				if (ClientSize.Width > 40 && ClientSize.Height > 40)
-				{
-					WLength = ClientSize.Width;
-					WHeight = ClientSize.Height;
-				}
-
-				int font_adjust = 0;
-				if (!font_small.Checked) font_adjust = 1;
-				if (WLength > 125)
-				{
-					if (font_large.Checked) l.Font = new Font("MS Serif", 7 + font_adjust, FontStyle.Bold);
-					else l.Font = new Font("MS Serif", 7 + font_adjust, FontStyle.Regular);
-					l.TextAlign = ContentAlignment.TopLeft;
-					l.Location = new Point(10 + offset, WHeight - 14);
-				}
-				else if (WLength > 95)
-				{
-					if (font_large.Checked) l.Font = new Font("MS Serif", 6 + font_adjust, FontStyle.Bold);
-					else l.Font = new Font("MS Serif", 6 + font_adjust, FontStyle.Regular);
-					l.TextAlign = ContentAlignment.MiddleLeft;
-					l.Location = new Point(10 + offset, WHeight - 14);
-				}
-				else
-				{
-					if (font_large.Checked) l.Font = new Font("MS Serif", 5 + font_adjust, FontStyle.Bold);
-					else l.Font = new Font("MS Serif", 5 + font_adjust, FontStyle.Regular);
-					l.TextAlign = ContentAlignment.MiddleLeft;
-					l.Location = new Point(10 + offset, WHeight - 14);
-				}
-				l.Text = t;
-			}
-		}
-		private void SetColor(Control l, Color c)
-		{
-			if (l.InvokeRequired)
-			{
-				SetColorCallback d = new SetColorCallback(SetColor);
-				this.Invoke(d, new Object[] { l, c });
-			}
-			else
-				l.BackColor = c;
-		}
-
-
-
 		private void ShowTotalsLog_Click(Object sender, EventArgs e)
 		{
 			logs_form.Show(this);
 		}
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            long freq = 0;
+            if (QueryPerformanceFrequency(out freq))
+            {
+                if (freq != 0)
+                {
+                    if (freq == 1000)
+                        MessageBox.Show("Uses GetTickCount", "?");
+                    long count1 = 0;
+                    long count2 = 0;
+                    while (!m_closing)
+                    {
+                        QueryPerformanceCounter(out count1);
+                        ElapsedTimer();
+                        QueryPerformanceCounter(out count2);
+                        long time_ms = (count2 - count1) * 1000 / freq;
+                        if (time_ms > (long)timerInterval)
+                            time_ms = (long)timerInterval;
+                        Thread.Sleep((int)((long)timerInterval - time_ms));
+                    }
+                }
+                else
+                    MessageBox.Show("I can't find QueryPerformanceFrequency()", "FreeMeter Revival Failed.");
+            }
+            else
+                MessageBox.Show("I failed to use QueryPerformanceFrequency()", "FreeMeter Revival Failed.");
+
+        }
+
+
 
 
 	}

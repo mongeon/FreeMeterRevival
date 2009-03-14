@@ -146,6 +146,9 @@
     <Compile Include="Forms\EmailSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\EmailSettingsForm.Designer.cs">
+      <DependentUpon>EmailSettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\GetValueForm.Designer.cs">
       <DependentUpon>GetValueForm.cs</DependentUpon>
     </Compile>
@@ -204,6 +207,11 @@
     <Compile Include="Forms\UPnPForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="uPnPNat.cs" />
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -223,6 +231,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EmailSettingsForm.resx">
+      <DependentUpon>EmailSettingsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ErrorForm.resx">
@@ -266,7 +278,18 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="cdFreeMeterRevival.cd" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_up.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

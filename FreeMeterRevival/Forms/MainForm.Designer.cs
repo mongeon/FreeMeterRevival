@@ -17,8 +17,6 @@ namespace FreeMeterRevival.Forms
             this.topmost_checked = new System.Windows.Forms.ToolStripMenuItem();
             this.simple_icon_checked = new System.Windows.Forms.ToolStripMenuItem();
             this.m_colors = new System.Windows.Forms.ToolStripMenuItem();
-            this.colorcycle = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.hue_slider = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItem6 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItem7 = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,11 +84,6 @@ namespace FreeMeterRevival.Forms
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.about_menu = new System.Windows.Forms.ToolStripMenuItem();
             this.exit_menu = new System.Windows.Forms.ToolStripMenuItem();
-            this.resizer = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.FullMeter = new System.Windows.Forms.PictureBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
@@ -100,11 +93,16 @@ namespace FreeMeterRevival.Forms
             this.MailTimer = new System.Windows.Forms.Timer(this.components);
             this.ShrinkTimer = new System.Windows.Forms.Timer(this.components);
             this.LogTimer = new System.Windows.Forms.Timer(this.components);
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.sbMain = new System.Windows.Forms.StatusStrip();
+            this.sbMainStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.sbMainDownload = new System.Windows.Forms.ToolStripStatusLabel();
+            this.sbMainUpload = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_menu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.resizer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FullMeter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
+            this.sbMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // m_menu
@@ -127,36 +125,33 @@ namespace FreeMeterRevival.Forms
             this.about_menu,
             this.exit_menu});
             this.m_menu.Name = "m_menu";
-            this.m_menu.ShowImageMargin = false;
-            this.m_menu.Size = new System.Drawing.Size(178, 308);
+            this.m_menu.Size = new System.Drawing.Size(203, 308);
             // 
             // show_checked
             // 
             this.show_checked.Checked = true;
             this.show_checked.CheckState = System.Windows.Forms.CheckState.Checked;
             this.show_checked.Name = "show_checked";
-            this.show_checked.Size = new System.Drawing.Size(177, 22);
+            this.show_checked.Size = new System.Drawing.Size(202, 22);
             this.show_checked.Text = "Show Desktop Meter";
             this.show_checked.Click += new System.EventHandler(this.Show_Click);
             // 
             // topmost_checked
             // 
             this.topmost_checked.Name = "topmost_checked";
-            this.topmost_checked.Size = new System.Drawing.Size(177, 22);
+            this.topmost_checked.Size = new System.Drawing.Size(202, 22);
             this.topmost_checked.Text = "Always on Top";
             // 
             // simple_icon_checked
             // 
             this.simple_icon_checked.Name = "simple_icon_checked";
-            this.simple_icon_checked.Size = new System.Drawing.Size(177, 22);
+            this.simple_icon_checked.Size = new System.Drawing.Size(202, 22);
             this.simple_icon_checked.Text = "Simple Notify Icon";
             this.simple_icon_checked.Click += new System.EventHandler(this.SimpleNotifyIcon_Click);
             // 
             // m_colors
             // 
             this.m_colors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.colorcycle,
-            this.menuItem5,
             this.hue_slider,
             this.menuItem6,
             this.menuItem7,
@@ -165,20 +160,8 @@ namespace FreeMeterRevival.Forms
             this.menuItem10,
             this.menuItem11});
             this.m_colors.Name = "m_colors";
-            this.m_colors.Size = new System.Drawing.Size(177, 22);
+            this.m_colors.Size = new System.Drawing.Size(202, 22);
             this.m_colors.Text = "Colors/Opacity";
-            // 
-            // colorcycle
-            // 
-            this.colorcycle.Name = "colorcycle";
-            this.colorcycle.Size = new System.Drawing.Size(180, 22);
-            this.colorcycle.Text = "Cycle Colors";
-            this.colorcycle.Click += new System.EventHandler(this.Cycle_Colors);
-            // 
-            // menuItem5
-            // 
-            this.menuItem5.Name = "menuItem5";
-            this.menuItem5.Size = new System.Drawing.Size(177, 6);
             // 
             // hue_slider
             // 
@@ -230,12 +213,13 @@ namespace FreeMeterRevival.Forms
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(174, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(199, 6);
             // 
             // avg_checked
             // 
+            this.avg_checked.CheckOnClick = true;
             this.avg_checked.Name = "avg_checked";
-            this.avg_checked.Size = new System.Drawing.Size(177, 22);
+            this.avg_checked.Size = new System.Drawing.Size(202, 22);
             this.avg_checked.Text = "Display Averages";
             this.avg_checked.Click += new System.EventHandler(this.Avg_Click);
             // 
@@ -247,7 +231,7 @@ namespace FreeMeterRevival.Forms
             this.interval_half,
             this.interval_1});
             this.m_interval_menu.Name = "m_interval_menu";
-            this.m_interval_menu.Size = new System.Drawing.Size(177, 22);
+            this.m_interval_menu.Size = new System.Drawing.Size(202, 22);
             this.m_interval_menu.Text = "Update Interval";
             // 
             // interval_tenth
@@ -303,7 +287,7 @@ namespace FreeMeterRevival.Forms
             this.scale_1000000,
             this.scale_custom});
             this.m_scale_menu.Name = "m_scale_menu";
-            this.m_scale_menu.Size = new System.Drawing.Size(177, 22);
+            this.m_scale_menu.Size = new System.Drawing.Size(202, 22);
             this.m_scale_menu.Text = "Graph Scale";
             // 
             // autoscale_checked
@@ -466,7 +450,7 @@ namespace FreeMeterRevival.Forms
             this.font_medium,
             this.font_small});
             this.m_graphs.Name = "m_graphs";
-            this.m_graphs.Size = new System.Drawing.Size(177, 22);
+            this.m_graphs.Size = new System.Drawing.Size(202, 22);
             this.m_graphs.Text = "Graphs";
             // 
             // graph_label_checked
@@ -534,7 +518,7 @@ namespace FreeMeterRevival.Forms
             this.units_kbits,
             this.units_kbytes});
             this.m_units.Name = "m_units";
-            this.m_units.Size = new System.Drawing.Size(177, 22);
+            this.m_units.Size = new System.Drawing.Size(202, 22);
             this.m_units.Text = "Units";
             // 
             // units_kbits
@@ -554,13 +538,13 @@ namespace FreeMeterRevival.Forms
             // m_interfaces
             // 
             this.m_interfaces.Name = "m_interfaces";
-            this.m_interfaces.Size = new System.Drawing.Size(177, 22);
+            this.m_interfaces.Size = new System.Drawing.Size(202, 22);
             this.m_interfaces.Text = "Interfaces";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(174, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
             // 
             // m_utils
             // 
@@ -578,7 +562,7 @@ namespace FreeMeterRevival.Forms
             this.menuItem20,
             this.menuItem21});
             this.m_utils.Name = "m_utils";
-            this.m_utils.Size = new System.Drawing.Size(177, 22);
+            this.m_utils.Size = new System.Drawing.Size(202, 22);
             this.m_utils.Text = "Utilities";
             // 
             // clip_watch
@@ -662,84 +646,32 @@ namespace FreeMeterRevival.Forms
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(174, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
             // 
             // about_menu
             // 
             this.about_menu.Name = "about_menu";
-            this.about_menu.Size = new System.Drawing.Size(177, 22);
+            this.about_menu.Size = new System.Drawing.Size(202, 22);
             this.about_menu.Text = "About FreeMeterRevival";
             this.about_menu.Click += new System.EventHandler(this.About_Click);
             // 
             // exit_menu
             // 
             this.exit_menu.Name = "exit_menu";
-            this.exit_menu.Size = new System.Drawing.Size(177, 22);
+            this.exit_menu.Size = new System.Drawing.Size(202, 22);
             this.exit_menu.Text = "Exit FreeMeterRevival";
             this.exit_menu.Click += new System.EventHandler(this.Exit_Click);
             // 
-            // resizer
-            // 
-            this.resizer.Cursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.resizer.Location = new System.Drawing.Point(0, 0);
-            this.resizer.Name = "resizer";
-            this.resizer.Size = new System.Drawing.Size(11, 11);
-            this.resizer.TabIndex = 0;
-            this.resizer.TabStop = false;
-            this.resizer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Resize_MouseMove);
-            this.resizer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Resize_MouseDown);
-            this.resizer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Resize_MouseUp);
-            // 
-            // label1
-            // 
-            this.label1.ContextMenuStrip = this.m_menu;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 23);
-            this.label1.TabIndex = 0;
-            this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Main_MouseDown);
-            // 
-            // label2
-            // 
-            this.label2.ContextMenuStrip = this.m_menu;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 23);
-            this.label2.TabIndex = 1;
-            this.label2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Main_MouseDown);
-            // 
-            // label3
-            // 
-            this.label3.ContextMenuStrip = this.m_menu;
-            this.label3.Font = new System.Drawing.Font("Wingdings", 7F);
-            this.label3.Location = new System.Drawing.Point(0, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(100, 23);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "ê";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.label3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Main_MouseDown);
-            // 
-            // label4
-            // 
-            this.label4.ContextMenuStrip = this.m_menu;
-            this.label4.Font = new System.Drawing.Font("Wingdings", 7F);
-            this.label4.Location = new System.Drawing.Point(0, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(9, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "é";
-            this.label4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Main_MouseDown);
-            // 
             // FullMeter
             // 
+            this.FullMeter.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.FullMeter.BackColor = System.Drawing.Color.Black;
             this.FullMeter.ContextMenuStrip = this.m_menu;
-            this.FullMeter.Location = new System.Drawing.Point(3, 3);
+            this.FullMeter.Location = new System.Drawing.Point(12, 12);
             this.FullMeter.Name = "FullMeter";
-            this.FullMeter.Size = new System.Drawing.Size(314, 222);
+            this.FullMeter.Size = new System.Drawing.Size(608, 435);
             this.FullMeter.TabIndex = 0;
             this.FullMeter.TabStop = false;
             this.FullMeter.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
@@ -800,19 +732,57 @@ namespace FreeMeterRevival.Forms
             this.ShrinkTimer.Interval = 60000;
             this.ShrinkTimer.Tick += new System.EventHandler(this.ShrinkTimer_Tick);
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            // 
+            // sbMain
+            // 
+            this.sbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sbMainStatus,
+            this.sbMainDownload,
+            this.sbMainUpload});
+            this.sbMain.Location = new System.Drawing.Point(0, 450);
+            this.sbMain.Name = "sbMain";
+            this.sbMain.Size = new System.Drawing.Size(632, 22);
+            this.sbMain.TabIndex = 4;
+            // 
+            // sbMainStatus
+            // 
+            this.sbMainStatus.Name = "sbMainStatus";
+            this.sbMainStatus.Size = new System.Drawing.Size(467, 17);
+            this.sbMainStatus.Spring = true;
+            // 
+            // sbMainDownload
+            // 
+            this.sbMainDownload.AutoSize = false;
+            this.sbMainDownload.Image = global::FreeMeterRevival.Properties.Resources.arrow_down;
+            this.sbMainDownload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.sbMainDownload.Name = "sbMainDownload";
+            this.sbMainDownload.Size = new System.Drawing.Size(75, 17);
+            this.sbMainDownload.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // sbMainUpload
+            // 
+            this.sbMainUpload.AutoSize = false;
+            this.sbMainUpload.Image = global::FreeMeterRevival.Properties.Resources.arrow_up;
+            this.sbMainUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.sbMainUpload.Name = "sbMainUpload";
+            this.sbMainUpload.Size = new System.Drawing.Size(75, 17);
+            this.sbMainUpload.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(320, 240);
+            this.ClientSize = new System.Drawing.Size(632, 472);
             this.ControlBox = false;
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.sbMain);
             this.Controls.Add(this.trackBar1);
-            this.Controls.Add(this.FullMeter);
             this.Controls.Add(this.trackBar2);
+            this.Controls.Add(this.FullMeter);
             this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(640, 480);
@@ -823,19 +793,16 @@ namespace FreeMeterRevival.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.m_menu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.resizer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FullMeter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
+            this.sbMain.ResumeLayout(false);
+            this.sbMain.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private Label label4;
         private PictureBox FullMeter;
-        private PictureBox resizer;
         private ContextMenuStrip m_menu;
         private TrackBar trackBar1 ;
         private TrackBar trackBar2 ;
@@ -854,7 +821,7 @@ namespace FreeMeterRevival.Forms
         /* added by miechu */
         private ToolStripMenuItem simple_icon_checked;
         /* end of added by miechu */
-        private ToolStripMenuItem units_kbits, units_kbytes, graphs_download, graphs_upload, graphs_summary, colorcycle, m_update;
+        private ToolStripMenuItem units_kbits, units_kbytes, graphs_download, graphs_upload, graphs_summary, m_update;
         private ToolStripMenuItem font_large, font_medium, font_small, hue_slider;
         private ToolStripMenuItem menuItem6;
         private ToolStripMenuItem menuItem7;
@@ -871,7 +838,6 @@ namespace FreeMeterRevival.Forms
         private ToolStripSeparator toolStripMenuItem1;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripSeparator toolStripSeparator2;
-        private ToolStripSeparator menuItem5;
         private ToolStripSeparator menuItem9;
         private ToolStripSeparator menuItem12;
         private ToolStripSeparator menuItem13;
@@ -883,6 +849,11 @@ namespace FreeMeterRevival.Forms
         protected internal Timer MailTimer;
         private Timer ShrinkTimer;
         private Timer LogTimer;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private StatusStrip sbMain;
+        private ToolStripStatusLabel sbMainStatus;
+        private ToolStripStatusLabel sbMainDownload;
+        private ToolStripStatusLabel sbMainUpload;
     }
 }
 
