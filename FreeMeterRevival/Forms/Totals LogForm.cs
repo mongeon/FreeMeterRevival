@@ -7,9 +7,9 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.IO;
 
-namespace FreeMeterRevival
+namespace FreeMeterRevival.Forms
 {
-	public partial class Totals_Log : Form
+	public partial class Totals_LogForm : Form
 	{
 		enum TimeSpan { Day = 0, Week = 1, Month = 2, Year = 3 };
 		enum DownloadDirection { Upload, Download, Both };
@@ -91,7 +91,7 @@ namespace FreeMeterRevival
         }
 
         private Totals_LogData log_data;
-		private ContextMenu little_menu;
+		private ContextMenuStrip little_menu;
 
 		//limits
 		private double max_upload;
@@ -101,12 +101,12 @@ namespace FreeMeterRevival
 		private bool limits_check;
 		private bool limits_notified;
 
-		public Totals_Log()
+		public Totals_LogForm()
 		{
 			limits_notified = false;
 			InitializeComponent();
 
-			little_menu = new ContextMenu();
+			little_menu = new ContextMenuStrip();
             LoadData();
 		}
 
@@ -289,7 +289,7 @@ namespace FreeMeterRevival
 			string msg = string.Format("You have exceeded maximum {0} limit ({1}/{2}) for this {3}.", downloadDirection.ToString(), Value(amount, null), Value(max_allowed, null), limits_period.ToString());
 
 			limits_notified = true;
-			MainForm.m_notifyicon.ShowBalloonTip (int.MaxValue, "Bandwidth limit exceeded", msg, ToolTipIcon.Warning);
+			//MainForm.m_notifyicon.ShowBalloonTip (int.MaxValue, "Bandwidth limit exceeded", msg, ToolTipIcon.Warning);
 		}
 
 		private double GetTraffic(TimeSpan limits_period, DownloadDirection downloadDirection)
@@ -414,23 +414,23 @@ namespace FreeMeterRevival
 		{
 			string[] units = { "KB", "MB", "GB" };
 
-			little_menu.MenuItems.Clear();
+            little_menu.Items.Clear();
 
             foreach (string unit in units)
-                little_menu.MenuItems.Add(new MenuItem(unit, SetUnitClick));
+                little_menu.Items.Add(new ToolStripMenuItem(unit, null, SetUnitClick));
 
-			little_menu.Show(choose_unit, new Point(0, 0), LeftRightAlignment.Left);
+			little_menu.Show(choose_unit, new Point(0, 0),ToolStripDropDownDirection.Left);
 		}
 
         private void SetPeriodClick(object sender, EventArgs e)
         {
-            choose_period.Text = ((MenuItem) sender).Text;
+            choose_period.Text = ((ToolStripMenuItem) sender).Text;
             PopulateTable();
         }
 
         private void SetUnitClick(object sender, EventArgs e)
         {
-            choose_unit.Text = ((MenuItem) sender).Text;
+            choose_unit.Text = ((ToolStripMenuItem) sender).Text;
             PopulateTable();
         }
 
@@ -438,24 +438,24 @@ namespace FreeMeterRevival
 		{
 			string[] units = { "daily", "weekly", "monthly", "total" };
 
-			little_menu.MenuItems.Clear();
+			little_menu.Items.Clear();
 
 			foreach (string unit in units)
-                little_menu.MenuItems.Add(new MenuItem(unit, SetPeriodClick));
+                little_menu.Items.Add(new ToolStripMenuItem(unit,null, SetPeriodClick));
 
-			little_menu.Show(choose_period, new Point(choose_period.Width, 0), LeftRightAlignment.Right);
+			little_menu.Show(choose_period, new Point(choose_period.Width, 0),ToolStripDropDownDirection.Right);
 		}
 
         private void export_Click(object sender, EventArgs e)
         {
         	string[] units = { "csv", "html" };
 
-			little_menu.MenuItems.Clear();
+            little_menu.Items.Clear();
 
 			foreach (string unit in units)
-                little_menu.MenuItems.Add(new MenuItem(unit, ExportTheData));
+                little_menu.Items.Add(new ToolStripMenuItem(unit,null, ExportTheData));
 
-			little_menu.Show(export, new Point(0, 0), LeftRightAlignment.Left);    
+            little_menu.Show(export, new Point(0, 0), ToolStripDropDownDirection.Left);    
         }
 
         private void reset_Click(object sender, EventArgs e)
@@ -469,7 +469,7 @@ namespace FreeMeterRevival
         
         private void ExportTheData(object sender, EventArgs e)
         {
-            string export_type = ((MenuItem) sender).Text;
+            string export_type = ((ToolStripMenuItem) sender).Text;
             SaveFileDialog dialog = new SaveFileDialog();
             
             if (export_type == "csv")
