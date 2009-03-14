@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using System;
 
-namespace FreeMeterRevival
+namespace FreeMeterRevival.Forms
 {
-	public partial class GetValue : Form
+	public partial class GetValueForm : Form
 	{
+        private TextBox textBox1;
 		private string val;
 
 		public string Value
@@ -17,7 +13,7 @@ namespace FreeMeterRevival
 			get { return val; }
 		}
 
-		public GetValue(string text)
+		public GetValueForm(string text)
 		{
 			InitializeComponent();
 
@@ -38,5 +34,11 @@ namespace FreeMeterRevival
 				this.Close();
 			}
 		}
+
+
+
+       
+
+    
 	}
 }

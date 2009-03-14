@@ -1,19 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.Diagnostics;
+using System.Windows.Forms;
 
-namespace FreeMeterRevival
+namespace FreeMeterRevival.Forms
 {
-    public partial class Error : Form
+    public partial class ErrorForm : Form
     {
         private Exception ex;
 
-        public Error(Exception ex)
+        public ErrorForm(Exception ex)
         {
             InitializeComponent();
             this.ex = ex;
@@ -21,12 +16,12 @@ namespace FreeMeterRevival
 
         private void button_copy_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(textBox1.Text);
+            Clipboard.SetText(txtMessage.Text);
         }
 
         private void Error_Load(object sender, EventArgs e)
         {
-            textBox1.Text = string.Format("Message: {0}\r\nStack trace:\r\n\r\n{1}", ex.Message, ex.StackTrace);
+            txtMessage.Text = string.Format("Message: {0}\r\nStack trace:\r\n\r\n{1}", ex.Message, ex.StackTrace);
         }
 
         private void button_restart_Click(object sender, EventArgs e)

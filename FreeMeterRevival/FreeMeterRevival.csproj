@@ -29,7 +29,8 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>FreeMeterRevival</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <StartupObject>FreeMeterRevival.MainForm</StartupObject>
+    <StartupObject>
+    </StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -133,41 +134,85 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AboutForm2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EmailSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GetValueForm.Designer.cs">
+      <DependentUpon>GetValueForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PingForm.Designer.cs">
+      <DependentUpon>PingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TraceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Error.cs">
+    <Compile Include="Forms\ErrorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Error.Designer.cs">
-      <DependentUpon>Error.cs</DependentUpon>
+    <Compile Include="Forms\ErrorForm.Designer.cs">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GetValue.cs">
+    <Compile Include="Forms\GetValueForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GetValue.Designer.cs" />
+    <Compile Include="Forms\TraceForm.Designer.cs">
+      <DependentUpon>TraceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UPnPForm.Designer.cs">
+      <DependentUpon>UPnPForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IMAP.cs" />
+    <Compile Include="MailServer.cs" />
     <Compile Include="NatTraversal.Interop.cs" />
+    <Compile Include="NetworkAdapter.cs" />
+    <Compile Include="NetworkMonitor.cs" />
+    <Compile Include="POP3.cs" />
+    <Compile Include="PortMappingInfo.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Totals Log.cs">
+    <Compile Include="Forms\Totals LogForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Totals Log.Designer.cs">
-      <DependentUpon>Totals Log.cs</DependentUpon>
+    <Compile Include="Forms\Totals LogForm.Designer.cs">
+      <DependentUpon>Totals LogForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="MainForm.resx">
+    <Compile Include="Forms\UPnPForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="uPnPNat.cs" />
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FreeMeter.ico" />
-    <EmbeddedResource Include="GetValue.resx">
-      <DependentUpon>GetValue.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\GetValueForm.resx">
+      <DependentUpon>GetValueForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
@@ -176,15 +221,31 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Error.resx">
+    <EmbeddedResource Include="Forms\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
       <SubType>Designer</SubType>
-      <DependentUpon>Error.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ErrorForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PingForm.resx">
+      <DependentUpon>PingForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TraceForm.resx">
+      <DependentUpon>TraceForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UPnPForm.resx">
+      <DependentUpon>UPnPForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="lr.ico" />
     <EmbeddedResource Include="ly.ico" />
-    <EmbeddedResource Include="Totals Log.resx">
+    <EmbeddedResource Include="Forms\Totals LogForm.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>Totals Log.cs</DependentUpon>
+      <DependentUpon>Totals LogForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +264,9 @@
       <ProductName>.NET Framework 3.5</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cdFreeMeterRevival.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("FreeMeter Revival")]
-[assembly: AssemblyCopyright("Copyright © Gabriel Mongeon \n\nCopyright © 2005-2007\nDavid Schultz, Mieszko Lassota\nAll rights reserved.")]
+[assembly: AssemblyCopyright("Copyright © 2009 Gabriel Mongeon \n\nCopyright © 2005-2007\nDavid Schultz, Mieszko Lassota\nAll rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]		
 
@@ -27,7 +27,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("0.1.*")]
+[assembly: AssemblyVersion("9.3.14.*")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 

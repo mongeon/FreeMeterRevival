@@ -1,6 +1,6 @@
-﻿namespace FreeMeterRevival
+﻿namespace FreeMeterRevival.Forms
 {
-	partial class Totals_Log
+	partial class Totals_LogForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -689,7 +689,7 @@
             this.label19.TabIndex = 20;
             this.label19.Text = "period";
             // 
-            // Totals_Log
+            // Totals_LogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -705,7 +705,7 @@
             this.Controls.Add(this.export);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
-            this.Name = "Totals_Log";
+            this.Name = "Totals_LogForm";
             this.ShowIcon = false;
             this.Text = "Totals_Log";
             this.Load += new System.EventHandler(this.Totals_Log_Load);
