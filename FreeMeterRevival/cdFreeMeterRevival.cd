@@ -24,19 +24,19 @@
   <Class Name="FreeMeterRevival.Forms.MainForm" Collapsed="true">
     <Position X="6.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>Ifc9Tn3mSv2QarP+H7bXBXzy3UMBNMQM3+3ZinC/fNg=</HashCode>
+      <HashCode>Ifc9RmzvyP2QKrP/DzbXBXzz3UsBJsQMn+XZinC/fNg=</HashCode>
       <FileName>Forms\MainForm.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FreeMeterRevival.Forms.TraceForm" Collapsed="true">
-    <Position X="4.75" Y="3.5" Width="1.5" />
+    <Position X="6.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABCAAAAAFAABAAAoAACAACEBCCAIgAAEAARAwAQIA=</HashCode>
       <FileName>Forms\TraceForm.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FreeMeterRevival.PortMappingInfo" Collapsed="true">
-    <Position X="6.5" Y="2.5" Width="1.5" />
+    <Position X="8.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAgAIAAIACAAABABAAARAAAAAQCAAEABgA=</HashCode>
       <FileName>PortMappingInfo.cs</FileName>
@@ -44,27 +44,27 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FreeMeterRevival.Forms.Totals_LogForm" Collapsed="true">
-    <Position X="3" Y="3.5" Width="1.5" />
+    <Position X="4.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>/yCAAhAEECQ4SBEAAQnQTBBSoAQAAAFAEIDoC5hBjDA=</HashCode>
       <FileName>Forms\Totals LogForm.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="NatTraversal.Interop.UPnPNATCreator" Collapsed="true">
-    <Position X="8.25" Y="3.5" Width="1.5" />
+    <Position X="10" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>NatTraversal.Interop.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FreeMeterRevival.Properties.Resources" Collapsed="true">
-    <Position X="10" Y="2.5" Width="1.5" />
+    <Position X="3" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAEABEAAAAQAAEAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="FreeMeterRevival.Forms.PingForm" Collapsed="true">
-    <Position X="3" Y="2.5" Width="1.5" />
+    <Position X="4.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAhAAgBEBEoAACAACIhCCAIgAAkQAZAwAQIA=</HashCode>
       <FileName>Forms\PingForm.cs</FileName>
@@ -78,7 +78,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FreeMeterRevival.Forms.UPnPForm" Collapsed="true">
-    <Position X="6.5" Y="3.5" Width="1.5" />
+    <Position X="8.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABgkAAAAAIABgQAIAABUACAAIAAAgAAAAAAAACAAA=</HashCode>
       <FileName>Forms\UPnPForm.cs</FileName>
@@ -106,21 +106,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FreeMeterRevival.NetworkMonitor" Collapsed="true">
-    <Position X="10" Y="1.5" Width="1.5" />
+    <Position X="3" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAIAAAAA=</HashCode>
       <FileName>NetworkMonitor.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FreeMeterRevival.POP3" Collapsed="true">
-    <Position X="4.75" Y="2.5" Width="1.5" />
+    <Position X="6.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAwAAAUAAAAAAAAAAAAAAIAAAAAAggAAgAAAAAAAAYA=</HashCode>
       <FileName>POP3.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FreeMeterRevival.Program" Collapsed="true">
-    <Position X="8.25" Y="2.5" Width="1.5" />
+    <Position X="10" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
@@ -131,6 +131,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAAAAAAAIACAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>uPnPNat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FreeMeterRevival.Controls.NetworkGraph" Collapsed="true">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controls\NetworkGraph.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="NatTraversal.Interop.INATEventManager" Collapsed="true">
