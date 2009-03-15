@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.Drawing;
 using System.Collections;
+using System.Windows.Forms;
 
 namespace FreeMeterRevival.Forms
 {
@@ -30,7 +27,7 @@ namespace FreeMeterRevival.Forms
 
         public EmailSettingsForm()
         {
-            
+            InitializeComponent();
         }
 
         //comboBox fuctionality and events to synch data to main form

@@ -44,6 +44,8 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 using Microsoft.Win32;
+using System.Net;
+using System.Globalization;
 
 namespace FreeMeterRevival.Forms
 {
@@ -74,9 +76,6 @@ namespace FreeMeterRevival.Forms
 		public double downspeed = 0.0; //modified to from private -> public by miechu
 		public double upspeed = 0.0; //modified to from private -> public by miechu
 		private bool respond_to_latest = false;
-
-
-		private Color FORGROUND_COLOR = Color.White;
 
         private Pen downloadPen = new Pen(Properties.Settings.Default.DownloadColor, 1);
         private Pen uploadPen = new Pen(Properties.Settings.Default.UploadColor, 1);
@@ -122,11 +121,6 @@ namespace FreeMeterRevival.Forms
             }
 			logs_form = new Totals_LogForm();
 
-
-
-			ForeColor = FORGROUND_COLOR;
-			
-
 			RestoreRegistry();
 
 			try
@@ -138,20 +132,6 @@ namespace FreeMeterRevival.Forms
 			{}
 
 			Check_Menus();
-			Form1_Borders();
-
-
-
-			//full graph
-			//FullMeter.Size = new Size(ClientSize.Width - 6, ClientSize.Height - 18);
-
-
-			// Hue Trackbar
-			trackBar1.Location = new Point(2, WHeight - 14);
-			trackBar1.Size = new Size(WLength - 15, 15);
-
-			trackBar1.SendToBack();
-			trackBar1.Hide();
 
 			// Transparency Trackbar
 			trackBar2.Location = new Point(2, WHeight - 14);
@@ -188,7 +168,6 @@ namespace FreeMeterRevival.Forms
 
 				icons_loaded = true;
 			}
-
 
 
 		}
@@ -279,50 +258,17 @@ namespace FreeMeterRevival.Forms
 			catch { }
 		}
 
-		//cycle colors and color trackbar
-		private void Trackbar1_Update(Object sender, EventArgs e)
-		{
-			double h = 0, sa = 0, l = 0;
-			TrackBar tb = (TrackBar)sender;
-			h = tb.Value;
-			Form1_Borders();
-		}
-		private void Trackbar1_Hide(Object sender, MouseEventArgs e)
-		{
-			trackBar1.SendToBack();
-			trackBar1.Enabled = false;
-			trackBar1.Hide();
-		}
-		private void Trackbar1_Show(Object sender, EventArgs e)
-		{
-			trackBar1.BringToFront();
-			trackBar1.Enabled = true;
-			trackBar1.Show();
-		}
+		
 
-		private void Color_Click(Object sender, EventArgs e)
-		{
-			double h = 0, sa = 0, l = 0;
-			if (colorDialog1.ShowDialog() == DialogResult.OK)
-			{
-				Form1_Borders();
-			}
-		}
+
 		private void TextColor_Click(Object sender, EventArgs e)
 		{
-			colorDialog1.Color = FORGROUND_COLOR;
+			colorDialog1.Color = Properties.Settings.Default.ForegroundColor;
 			if (colorDialog1.ShowDialog() == DialogResult.OK)
 			{
-				ForeColor = FORGROUND_COLOR =  colorDialog1.Color;
+                Properties.Settings.Default.ForegroundColor = colorDialog1.Color;
 			}
 		}
-		private void DefaultColor_Click(Object sender, EventArgs e)
-		{
-			double h = 0, sa = 0, l = 0;
-			ForeColor = FORGROUND_COLOR =   Color.White;
-			Form1_Borders();
-		}
-
 
 		//transparency and opacity
 		private void Trackbar2_Update(Object sender, EventArgs e)
@@ -347,25 +293,6 @@ namespace FreeMeterRevival.Forms
 			this.Opacity = 1.00;
 			trackBar2.Value = 100;
 		}
-
-		//draw the UI
-		private void Form1_Borders()
-
-		{
-            if (ClientSize.Width != 0 && ClientSize.Height != 0)
-            {
-                //do 3D borders
-                Bitmap borders = new Bitmap(ClientSize.Width, ClientSize.Height, PixelFormat.Format24bppRgb);
-                Graphics formGraphics = Graphics.FromImage((Image)borders);
-                IntPtr oFB = borders.GetHbitmap();
-                this.BackgroundImage = Image.FromHbitmap(oFB);
-                DeleteObject(oFB);
-                formGraphics.Dispose();
-                borders.Dispose();
-            }
-
-		}
-
 
 		private void RefreshSpeeds()
 		{
@@ -495,6 +422,7 @@ namespace FreeMeterRevival.Forms
 		{
             if (this.Visible && FullMeter.Width != 0 && FullMeter.Height != 0)
 			{
+
 				int full_time_visible = timerInterval * FullMeter.Width / 1000;
 				Bitmap bm = new Bitmap(FullMeter.Width, FullMeter.Height, PixelFormat.Format16bppRgb555);
 				Graphics g = Graphics.FromImage((Image)bm);
@@ -647,7 +575,7 @@ namespace FreeMeterRevival.Forms
 				RectangleF rect = new RectangleF(new PointF(2, 2), size);
 
 				//graph.FillRectangle(new SolidBrush(Color.Black), rect);
-				graph.DrawString(text, f, new SolidBrush(Color.White), rect);
+                graph.DrawString(text, f, new SolidBrush(Properties.Settings.Default.ForegroundColor), rect);
 			}
 		}
 		private void DoStringOutput()
@@ -914,7 +842,6 @@ namespace FreeMeterRevival.Forms
 				this.Height = frmHeight;
 				frmIsResizing = false;
 			}
-			Form1_Borders();
 		}
 		private void Resize_MouseMove(object sender, MouseEventArgs e)
 		{
@@ -951,9 +878,7 @@ namespace FreeMeterRevival.Forms
 				WHeight = ClientSize.Height;
 			}
 
-			FullMeter.Size = new Size(WLength - 18, WHeight - 30);
-			trackBar1.Location = new Point(2, WHeight - 14);
-			trackBar1.Size = new Size(WLength - 15, 15);
+			FullMeter.Size = new Size(WLength - 18, WHeight - 60);
 			trackBar2.Location = new Point(2, WHeight - 14);
 			trackBar2.Size = new Size(WLength - 15, 15);
 
@@ -1120,20 +1045,25 @@ namespace FreeMeterRevival.Forms
 			autoscale_checked.Checked = !autoscale_checked.Checked;
 		}
 
-		private void ResizeScale()//resize line values in array to match new scale.
-		{
-   
-			for (int i = 0; i < full_downlines.Length; i++)
-			{
-				full_downlines[i] = (int)(FullMeter.ClientSize.Height * full_downspeeds[i] / scale);
-                full_uplines[i] = (int)(FullMeter.ClientSize.Height * full_upspeeds[i] / scale);
-			}
-			for (int i = 0; i < downlines.Length; i++)
-			{
-				downlines[i] = 16 * (int)full_downspeeds[full_downlines.Length - 16 + i] / scale;
-				uplines[i] = 16 * (int)full_upspeeds[full_downlines.Length - 16 + i] / scale;
-			}
-		}
+        private void ResizeScale()//resize line values in array to match new scale.
+        {
+
+            if (full_downlines.Length > 0)
+            {
+
+
+                for (int i = 0; i < full_downlines.Length; i++)
+                {
+                    full_downlines[i] = (int)(FullMeter.ClientSize.Height * full_downspeeds[i] / scale);
+                    full_uplines[i] = (int)(FullMeter.ClientSize.Height * full_upspeeds[i] / scale);
+                }
+                for (int i = 0; i < downlines.Length; i++)
+                {
+                    downlines[i] = 16 * (int)full_downspeeds[full_downlines.Length - 16 + i] / scale;
+                    uplines[i] = 16 * (int)full_upspeeds[full_downlines.Length - 16 + i] / scale;
+                }
+            }
+        }
 
 		private void SetScale_MenuClick(Object sender, EventArgs e)//from a menu click to change graph scale
 		{
@@ -1356,6 +1286,7 @@ namespace FreeMeterRevival.Forms
 		{
 			EmailSettingsForm frm = new EmailSettingsForm();
 			frm.MyParentForm = this;
+
 			if (frm.ShowDialog() == DialogResult.OK)
 			{
 				MailServers.Clear();
@@ -1403,38 +1334,39 @@ namespace FreeMeterRevival.Forms
 		private void CheckVersionWorker_DoWork(object sender, DoWorkEventArgs e)
 		{
             //TODO: Create my own web service to get this info
-            //AssemblyName ThisAssemblyName = myAssembly.GetName();
-            //string FriendlyVersion = "v" + ThisAssemblyName.Version.Major + "." + ThisAssemblyName.Version.Minor + "." + ThisAssemblyName.Version.Build;
-            //if (!respond_to_latest)
-            //    Thread.Sleep(30000);
-            //try
-            //{
-            //    WebRequest w = WebRequest.Create("http://freemeter.cvs.sourceforge.net/*checkout*/freemeter/FM_CVS/changelog.txt?revision=HEAD");
-            //    Stream sw = w.GetResponse().GetResponseStream();
-            //    StreamReader sr = new StreamReader(sw);
-            //    string line = sr.ReadLine();
+            AssemblyName ThisAssemblyName = myAssembly.GetName();
+            string FriendlyVersion = "v" + ThisAssemblyName.Version.Major + "." + ThisAssemblyName.Version.Minor + "." + ThisAssemblyName.Version.Build;
+            if (!respond_to_latest)
+                Thread.Sleep(30000);
+            try
+            {
+                WebRequest w = WebRequest.Create("http://freemeter.cvs.sourceforge.net/*checkout*/freemeter/FM_CVS/changelog.txt?revision=HEAD");
+            
+                Stream sw = w.GetResponse().GetResponseStream();
+                StreamReader sr = new StreamReader(sw);
+                string line = sr.ReadLine();
 
-            //    int result = String.Compare(line, 1, FriendlyVersion, 1, 8, true, CultureInfo.InvariantCulture);
+                int result = String.Compare(line, 1, FriendlyVersion, 1, 8, true, CultureInfo.InvariantCulture);
 
-            //    if (result < 0)
-            //        m_notifyicon.ShowBalloonTip(1, "Your version is newer.", line + " is online version. You have " + FriendlyVersion + ".", ToolTipIcon.Info);
-            //    else if (result > 0)
-            //        m_notifyicon.ShowBalloonTip(1, "New Update Is Available", line + " is available. You have " + FriendlyVersion + ".\nCheck About dialog for download site.", ToolTipIcon.Info);
-            //    else if (respond_to_latest)
-            //    {
-            //        m_notifyicon.ShowBalloonTip(1, "No New Updates", "You have the latest version (" + line + ").", ToolTipIcon.Info);
-            //        respond_to_latest = false;
-            //    }
+                if (result < 0)
+                    m_notifyicon.ShowBalloonTip(1, "Your version is newer.", line + " is online version. You have " + FriendlyVersion + ".", ToolTipIcon.Info);
+                else if (result > 0)
+                    m_notifyicon.ShowBalloonTip(1, "New Update Is Available", line + " is available. You have " + FriendlyVersion + ".\nCheck About dialog for download site.", ToolTipIcon.Info);
+                else if (respond_to_latest)
+                {
+                    m_notifyicon.ShowBalloonTip(1, "No New Updates", "You have the latest version (" + line + ").", ToolTipIcon.Info);
+                    respond_to_latest = false;
+                }
 
-            //    sr.Close();
-            //    sr.Dispose();
-            //    sw.Close();
-            //    sw.Dispose();
-            //}
-            //catch (Exception ex)
-            //{
-            //    m_notifyicon.ShowBalloonTip(1, "Check For Update", ex.Message, ToolTipIcon.Error);
-            //}
+                sr.Close();
+                sr.Dispose();
+                sw.Close();
+                sw.Dispose();
+            }
+            catch (Exception ex)
+            {
+                m_notifyicon.ShowBalloonTip(1, "Check For Update", ex.Message, ToolTipIcon.Error);
+            }
 		}
 
 		// Registry reading/writing, and form Dispose override
@@ -1568,7 +1500,6 @@ namespace FreeMeterRevival.Forms
 			trackBar2.Value = int.Parse(xml["Trans"].ToString());
 			Opacity = ((float)trackBar2.Value) / 100;
 
-			FORGROUND_COLOR = Color.FromArgb(255, int.Parse(xml["ForegroundRed"].ToString()), int.Parse(xml["ForegroundGreen"].ToString()), int.Parse(xml["ForegroundBlue"].ToString()));
 
 			TopMost = topmost_checked.Checked;
 			icon_representation = simple_icon_checked.Checked;
@@ -1606,8 +1537,6 @@ namespace FreeMeterRevival.Forms
 			Show();
 
 			graph_label_checked.Checked = true;
-
-			FORGROUND_COLOR = Color.FromArgb(255, 255, 255, 255);
 
 			mailcheck.Checked = false;
 
@@ -1694,9 +1623,6 @@ namespace FreeMeterRevival.Forms
 
 			// TODO: save data regarding mail
 			writer.WriteElementString("MailCheckInterval", MailTimer.Interval.ToString());
-			writer.WriteElementString("ForegroundRed", ((int)FORGROUND_COLOR.R).ToString());
-			writer.WriteElementString("ForegroundGreen", ((int)FORGROUND_COLOR.G).ToString());
-			writer.WriteElementString("ForegroundBlue", ((int)FORGROUND_COLOR.B).ToString());
 
             if (this.Visible)
             {
@@ -1780,7 +1706,7 @@ namespace FreeMeterRevival.Forms
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-
+            ElapsedTimer();
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -1797,7 +1723,8 @@ namespace FreeMeterRevival.Forms
                     while (!m_closing)
                     {
                         QueryPerformanceCounter(out count1);
-                        ElapsedTimer();
+                        backgroundWorker1.ReportProgress(0);
+                        
                         QueryPerformanceCounter(out count2);
                         long time_ms = (count2 - count1) * 1000 / freq;
                         if (time_ms > (long)timerInterval)
@@ -1813,6 +1740,35 @@ namespace FreeMeterRevival.Forms
 
         }
 
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            switch (e.CloseReason)
+            {
+                case CloseReason.ApplicationExitCall:
+                case CloseReason.None:
+                case CloseReason.TaskManagerClosing:
+                case CloseReason.WindowsShutDown:
+                case CloseReason.FormOwnerClosing:
+
+                case CloseReason.MdiFormClosing:
+                    e.Cancel = false;
+                    m_closing = true;
+                    break;
+
+                case CloseReason.UserClosing:
+                    this.Hide();
+                    e.Cancel = true;
+                    m_closing = false;
+                
+                    break;
+            }
+        }
+
+        private void msMainFileExit_Click(object sender, EventArgs e)
+        {
+            m_closing = true;
+            Application.Exit();
+        }
 
 
 
