@@ -58,5 +58,17 @@ namespace FreeMeterRevival.Properties {
                 this["OverlapColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("White")]
+        public global::System.Drawing.Color ForegroundColor {
+            get {
+                return ((global::System.Drawing.Color)(this["ForegroundColor"]));
+            }
+            set {
+                this["ForegroundColor"] = value;
+            }
+        }
     }
 }
