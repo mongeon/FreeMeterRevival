@@ -35,7 +35,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
@@ -44,8 +46,6 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 using Microsoft.Win32;
-using System.Net;
-using System.Globalization;
 
 namespace FreeMeterRevival.Forms
 {
@@ -71,15 +71,11 @@ namespace FreeMeterRevival.Forms
 		private string display_xscale, display_yscale;
 		private int[] downlines = new int[16];
 		private int[] uplines = new int[16];
-		private int[] full_downlines, full_uplines;
+		private int[] m_full_downlines, m_full_uplines; 
 		private double[] full_downspeeds, full_upspeeds;
 		public double downspeed = 0.0; //modified to from private -> public by miechu
 		public double upspeed = 0.0; //modified to from private -> public by miechu
 		private bool respond_to_latest = false;
-
-        private Pen downloadPen = new Pen(Properties.Settings.Default.DownloadColor, 1);
-        private Pen uploadPen = new Pen(Properties.Settings.Default.UploadColor, 1);
-        private Pen overlapPen = new Pen(Properties.Settings.Default.OverlapColor, 1);
 
 		//Cool icon representation
 		private bool icon_representation = false;
@@ -154,20 +150,7 @@ namespace FreeMeterRevival.Forms
 
 			ShrinkTimer.Start();
 
-			if (File.Exists("upload.bmp") && File.Exists("upload2.bmp") && File.Exists("download.bmp") && File.Exists("download2.bmp"))
-			{
-				upload_icon_red = Bitmap.FromFile("upload.bmp");
-				upload_icon_green = Bitmap.FromFile("upload2.bmp");
-				download_icon_red = Bitmap.FromFile("download.bmp");
-				download_icon_green = Bitmap.FromFile("download2.bmp");
 
-				((Bitmap)upload_icon_red).MakeTransparent(Color.FromArgb(255, 0, 255));
-				((Bitmap)upload_icon_green).MakeTransparent(Color.FromArgb(255, 0, 255));
-				((Bitmap)download_icon_red).MakeTransparent(Color.FromArgb(255, 0, 255));
-				((Bitmap)download_icon_green).MakeTransparent(Color.FromArgb(255, 0, 255));
-
-				icons_loaded = true;
-			}
 
 
 		}
@@ -189,7 +172,7 @@ namespace FreeMeterRevival.Forms
 
 			RefreshSpeeds();
 			DrawIconRepresentation();
-			DrawFullMeter();
+			DrawFullMeter(m_full_downlines,m_full_uplines);
 
 			
 		}
@@ -309,8 +292,8 @@ namespace FreeMeterRevival.Forms
 				{
 					full_downspeeds[i] = full_downspeeds[i + 1];
 					full_upspeeds[i] = full_upspeeds[i + 1];
-					full_downlines[i] = full_downlines[i + 1];
-					full_uplines[i] = full_uplines[i + 1];
+					m_full_downlines[i] = m_full_downlines[i + 1];
+					m_full_uplines[i] = m_full_uplines[i + 1];
 				}
 			}
 
@@ -340,13 +323,15 @@ namespace FreeMeterRevival.Forms
 			uplines[15] = (int)(16 * upspeed / scale);
 			if (downlines[15] > 16) downlines[15] = 16;
 			if (uplines[15] > 16) uplines[15] = 16;
+
 			//calculate latest large values
+
 			full_downspeeds[full_downspeeds.Length - 1] = downspeed;
 			full_upspeeds[full_downspeeds.Length - 1] = upspeed;
-			full_downlines[full_downspeeds.Length - 1] = (int)(FullMeter.Height * downspeed / scale);
-			full_uplines[full_downspeeds.Length - 1] = (int)(FullMeter.Height * upspeed / scale);
-			if (full_downlines[full_downspeeds.Length - 1] > FullMeter.Height) full_downlines[full_downspeeds.Length - 1] = FullMeter.Height;
-			if (full_uplines[full_downspeeds.Length - 1] > FullMeter.Height) full_uplines[full_downspeeds.Length - 1] = FullMeter.Height;
+			m_full_downlines[full_downspeeds.Length - 1] = (int)(FullMeter.Height * downspeed / scale);
+			m_full_uplines[full_downspeeds.Length - 1] = (int)(FullMeter.Height * upspeed / scale);
+			if (m_full_downlines[full_downspeeds.Length - 1] > FullMeter.Height) m_full_downlines[full_downspeeds.Length - 1] = FullMeter.Height;
+			if (m_full_uplines[full_downspeeds.Length - 1] > FullMeter.Height) m_full_uplines[full_downspeeds.Length - 1] = FullMeter.Height;
 
 			if (autoscale_checked.Checked)
 				Auto_Scale();
@@ -356,12 +341,12 @@ namespace FreeMeterRevival.Forms
 		{
 			Bitmap b = new Bitmap(16, 16, PixelFormat.Format16bppRgb555);
 			Graphics g = Graphics.FromImage((Image)b);
-            g.FillRegion(new LinearGradientBrush(new PointF(b.Width / 2, 0), new PointF(b.Width / 2, b.Width ), Color.Gray, Color.Black), new Region(new Rectangle(0, 0, 16, 16)));
+            g.FillRegion(new LinearGradientBrush(new PointF(b.Width / 2, 0), new PointF(b.Width / 2, b.Height ), Color.Gray, Color.Black), new Region(new Rectangle(0, 0, 16, 16)));
 
 			if (!icon_representation)
 			{
 				//draw each line in the graph
-				DrawGraph(g, 16, downlines, uplines, true);
+				//DrawGraph(g, 16, downlines, uplines, true);
 			}
 			else
 			{
@@ -418,26 +403,11 @@ namespace FreeMeterRevival.Forms
 			}
 		}
 
-		private void DrawFullMeter()
+        private void DrawFullMeter(int[] full_downlines, int[] full_uplines)
 		{
             if (this.Visible && FullMeter.Width != 0 && FullMeter.Height != 0)
 			{
-
-				int full_time_visible = timerInterval * FullMeter.Width / 1000;
-				Bitmap bm = new Bitmap(FullMeter.Width, FullMeter.Height, PixelFormat.Format16bppRgb555);
-				Graphics g = Graphics.FromImage((Image)bm);
-                g.FillRegion(new LinearGradientBrush(new PointF(bm.Width / 2, 0), new PointF(bm.Width / 2, bm.Width), Color.Gray, Color.Black), new Region(new Rectangle(0, 0, bm.Width, bm.Height)));
-
-				//draw each line in the graph
-				DrawGraph(g, FullMeter.Height, full_downlines, full_uplines, false);
-
-				IntPtr oBm = bm.GetHbitmap();
-				FullMeter.Image = Image.FromHbitmap(oBm);
-
-
-				DeleteObject(oBm);
-				bm.Dispose();
-				g.Dispose();
+                FullMeter.UpdateGraph(full_downlines, full_uplines);
 			}
 			DoStringOutput();
 		}
@@ -494,88 +464,6 @@ namespace FreeMeterRevival.Forms
 				}
 				ResizeScale();
 				Check_Menus();
-			}
-		}
-		private void DrawGraph(Graphics graph, int height, int[] dlines, int[] ulines, bool drawingIcon)
-		{
-			for (int i = 0; i < dlines.Length; i++)
-			{
-				if (dlines[i] > 0 || ulines[i] > 0)
-				{
-					if (dlines[i] > ulines[i])
-					{
-						if (graphs_download.Checked && graphs_upload.Checked)
-						{
-							graph.DrawLine(downloadPen, i, height, i, height - dlines[i]);
-							graph.DrawLine(overlapPen, i, height, i, height - ulines[i]);
-						}
-						else if (graphs_download.Checked && !graphs_upload.Checked)
-							graph.DrawLine(downloadPen, i, height, i, height - dlines[i]);
-						else if (!graphs_download.Checked && graphs_upload.Checked)
-							graph.DrawLine(uploadPen, i, height, i, height - ulines[i]);
-					}
-					else if (dlines[i] < ulines[i])
-					{
-						if (graphs_download.Checked && graphs_upload.Checked)
-						{
-							graph.DrawLine(uploadPen, i, height, i, height - ulines[i]);
-							graph.DrawLine(overlapPen, i, height, i, height - dlines[i]);
-						}
-						else if (!graphs_download.Checked && graphs_upload.Checked)
-							graph.DrawLine(uploadPen, i, height, i, height - ulines[i]);
-						else if (graphs_download.Checked && !graphs_upload.Checked)
-							graph.DrawLine(downloadPen, i, height, i, height - dlines[i]);
-					}
-					else if (dlines[i] == ulines[i])
-					{
-						if (graphs_upload.Checked && graphs_download.Checked)
-							graph.DrawLine(overlapPen, i, height, i, height - ulines[i]);
-						else if (!graphs_upload.Checked && graphs_download.Checked)
-							graph.DrawLine(downloadPen, i, height, i, height - dlines[i]);
-						else if (graphs_upload.Checked && !graphs_download.Checked)
-							graph.DrawLine(uploadPen, i, height, i, height - ulines[i]);
-					}
-				}
-			}
-
-
-			int down = dlines[dlines.Length - 1];
-			int up = ulines[ulines.Length - 1];
-
-			if (graphs_download.Checked && graphs_summary.Checked)
-			{
-				graph.DrawLine(Pens.Black, dlines.Length - 2, 0, dlines.Length - 2, height);
-				graph.DrawLine(Pens.Black, dlines.Length - 1, 0, dlines.Length - 1, height - down);
-				graph.DrawLine(Pens.White, dlines.Length - 1, height, dlines.Length - 1, height - down);
-			}
-
-			if (graphs_upload.Checked && graphs_summary.Checked)
-			{
-				graph.DrawLine(Pens.Black, 1, 0, 1, height);
-				graph.DrawLine(Pens.Black, 0, 0, 0, height - up);
-				graph.DrawLine(Pens.White, 0, height, 0, height - up);
-			}
-
-
-			if (graph_label_checked.Checked && !drawingIcon)
-			{
-				Font f;
-				string fontName = "Verdana";
-				int fontSize = 6;
-
-				if (font_large.Checked)
-					f = new Font(fontName, fontSize + 2, FontStyle.Regular);
-				else if (font_medium.Checked)
-					f = new Font(fontName, fontSize + 1, FontStyle.Regular);
-				else
-					f = new Font(fontName, fontSize, FontStyle.Regular);
-
-				string text = display_xscale + " " + display_yscale;
-				SizeF size = graph.MeasureString(text, f);
-				RectangleF rect = new RectangleF(new PointF(2, 2), size);
-
-				//graph.FillRectangle(new SolidBrush(Color.Black), rect);
-                graph.DrawString(text, f, new SolidBrush(Properties.Settings.Default.ForegroundColor), rect);
 			}
 		}
 		private void DoStringOutput()
@@ -790,9 +678,8 @@ namespace FreeMeterRevival.Forms
 		{
 			if (e.Button == MouseButtons.Left)
 			{
-				if (WindowState == FormWindowState.Normal)
+				if (this.Visible)
 				{
-					WindowState = FormWindowState.Minimized;
 					show_checked.Checked = false;
 					Hide();
 				}
@@ -800,7 +687,6 @@ namespace FreeMeterRevival.Forms
 				{
 					this.Show();
 					show_checked.Checked = true;
-					WindowState = FormWindowState.Normal;
 				}
 			}
 			else Check_Menus();
@@ -870,7 +756,7 @@ namespace FreeMeterRevival.Forms
 				this.Size = frmRectangle.Size;
 			}
 		}
-		private void Form1_Resize(Object sender, EventArgs e)
+		private void MainForm_Resize(Object sender, EventArgs e)
 		{
 			if (ClientSize.Width > 40 && ClientSize.Height > 40)
 			{
@@ -887,18 +773,18 @@ namespace FreeMeterRevival.Forms
 			//resize arrays to match new window size
 			int[] temp = new int[FullMeter.Width];
 			double[] temp2 = new double[FullMeter.Width];
-			if (full_downlines.Length <= temp.Length)
-				Array.Copy(full_downlines, 0, temp, temp.Length - full_downlines.Length, full_downlines.Length);
+			if (m_full_downlines.Length <= temp.Length)
+				Array.Copy(m_full_downlines, 0, temp, temp.Length - m_full_downlines.Length, m_full_downlines.Length);
 			else
-				Array.Copy(full_downlines, full_downlines.Length - temp.Length, temp, 0, temp.Length);
-			full_downlines = temp;
+				Array.Copy(m_full_downlines, m_full_downlines.Length - temp.Length, temp, 0, temp.Length);
+			m_full_downlines = temp;
 
 			temp = new int[FullMeter.Width];
-			if (full_uplines.Length <= temp.Length)
-				Array.Copy(full_uplines, 0, temp, temp.Length - full_uplines.Length, full_uplines.Length);
+			if (m_full_uplines.Length <= temp.Length)
+				Array.Copy(m_full_uplines, 0, temp, temp.Length - m_full_uplines.Length, m_full_uplines.Length);
 			else
-				Array.Copy(full_uplines, full_uplines.Length - temp.Length, temp, 0, temp.Length);
-			full_uplines = temp;
+				Array.Copy(m_full_uplines, m_full_uplines.Length - temp.Length, temp, 0, temp.Length);
+			m_full_uplines = temp;
 
 			temp2 = new double[FullMeter.Width];
 			if (full_downspeeds.Length <= temp2.Length)
@@ -1048,19 +934,19 @@ namespace FreeMeterRevival.Forms
         private void ResizeScale()//resize line values in array to match new scale.
         {
 
-            if (full_downlines.Length > 0)
+            if (m_full_downlines.Length > 0)
             {
 
 
-                for (int i = 0; i < full_downlines.Length; i++)
+                for (int i = 0; i < m_full_downlines.Length; i++)
                 {
-                    full_downlines[i] = (int)(FullMeter.ClientSize.Height * full_downspeeds[i] / scale);
-                    full_uplines[i] = (int)(FullMeter.ClientSize.Height * full_upspeeds[i] / scale);
+                    m_full_downlines[i] = (int)(FullMeter.ClientSize.Height * full_downspeeds[i] / scale);
+                    m_full_uplines[i] = (int)(FullMeter.ClientSize.Height * full_upspeeds[i] / scale);
                 }
                 for (int i = 0; i < downlines.Length; i++)
                 {
-                    downlines[i] = 16 * (int)full_downspeeds[full_downlines.Length - 16 + i] / scale;
-                    uplines[i] = 16 * (int)full_upspeeds[full_downlines.Length - 16 + i] / scale;
+                    downlines[i] = 16 * (int)full_downspeeds[m_full_downlines.Length - 16 + i] / scale;
+                    uplines[i] = 16 * (int)full_upspeeds[m_full_downlines.Length - 16 + i] / scale;
                 }
             }
         }
@@ -1164,6 +1050,7 @@ namespace FreeMeterRevival.Forms
 		private void SetGraph_Summary(Object sender, EventArgs e)
 		{
 			graphs_summary.Checked = !graphs_summary.Checked;
+            FullMeter.ShowSummary = graphs_summary.Checked;
 		}
 
 		private void SetGraph_Label(Object sender, EventArgs e)
@@ -1222,9 +1109,8 @@ namespace FreeMeterRevival.Forms
 
 		private void Show_Click(Object sender, EventArgs e)
 		{
-			if (WindowState == FormWindowState.Normal)
+			if (this.Visible)
 			{
-				WindowState = FormWindowState.Minimized;
 				show_checked.Checked = false;
 				Hide();
 			}
@@ -1232,7 +1118,6 @@ namespace FreeMeterRevival.Forms
 			{
 				Show();
 				show_checked.Checked = true;
-				WindowState = FormWindowState.Normal;
 
 				Rectangle rect = Screen.PrimaryScreen.WorkingArea;
 
@@ -1426,8 +1311,8 @@ namespace FreeMeterRevival.Forms
 
 			WLength = int.Parse(xml["DispWidth"].ToString());
 			WHeight = int.Parse(xml["DispHeight"].ToString());
-			full_downlines = new int[WLength];
-			full_uplines = new int[WLength];
+			m_full_downlines = new int[WLength];
+			m_full_uplines = new int[WLength];
 			full_downspeeds = new double[WLength];
 			full_upspeeds = new double[WLength];
 			ClientSize = new Size(WLength, WHeight);
@@ -1437,12 +1322,10 @@ namespace FreeMeterRevival.Forms
 				Show();
 				Location = new Point(int.Parse(xml["WindowX"].ToString()), int.Parse(xml["WindowY"].ToString()));
 				show_checked.Checked = true;
-				WindowState = FormWindowState.Normal;
 			}
 			else
 			{
 				Location = new Point(int.Parse(xml["WindowX"].ToString()), int.Parse(xml["WindowY"].ToString()));
-				WindowState = FormWindowState.Minimized;
 				show_checked.Checked = false;
 				Hide();
                
@@ -1507,6 +1390,7 @@ namespace FreeMeterRevival.Forms
 			logs_form.LoadConfiguration(xml);
 
 			graphs_summary.Checked = bool.Parse(xml["GraphSummary"].ToString());
+            FullMeter.ShowSummary = graphs_summary.Checked;
 		}
 
 		private void SetDefaults()
@@ -1517,8 +1401,8 @@ namespace FreeMeterRevival.Forms
 
 			WLength = 126;
 			WHeight = 64;
-			full_downlines = new int[WLength];
-			full_uplines = new int[WLength];
+			m_full_downlines = new int[WLength];
+			m_full_uplines = new int[WLength];
 			full_downspeeds = new double[WLength];
 			full_upspeeds = new double[WLength];
 			ClientSize = new Size(WLength, WHeight);
@@ -1533,7 +1417,6 @@ namespace FreeMeterRevival.Forms
 			topmost_checked.Checked = true;
 
 			show_checked.Checked = true;
-			WindowState = FormWindowState.Normal;
 			Show();
 
 			graph_label_checked.Checked = true;
@@ -1629,8 +1512,8 @@ namespace FreeMeterRevival.Forms
 
                 writer.WriteElementString("WindowX", this.Location.X.ToString());
                 writer.WriteElementString("WindowY", this.Location.Y.ToString());
-                writer.WriteElementString("DispWidth", ClientSize.Width.ToString());
-                writer.WriteElementString("DispHeight", ClientSize.Height.ToString());
+                //writer.WriteElementString("DispWidth", ClientSize.Width.ToString());
+                //writer.WriteElementString("DispHeight", ClientSize.Height.ToString());
             }
             else
             {
@@ -1639,8 +1522,10 @@ namespace FreeMeterRevival.Forms
                 writer.WriteElementString("DispWidth","640"/*ClientSize.Width.ToString()*/);
                 writer.WriteElementString("DispHeight","480" /*ClientSize.Height.ToString()*/);
             }
+            writer.WriteElementString("DispWidth", "640"/*ClientSize.Width.ToString()*/);
+            writer.WriteElementString("DispHeight", "480" /*ClientSize.Height.ToString()*/);
 
-			if (WindowState == FormWindowState.Normal)
+			if (this.Visible)
 				writer.WriteElementString("WindowIsVisible", "True");
 			else
 				writer.WriteElementString("WindowIsVisible", "False");
