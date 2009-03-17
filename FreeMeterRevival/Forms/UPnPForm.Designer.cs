@@ -10,7 +10,7 @@ using System.IO;
 
 namespace FreeMeterRevival.Forms
 {
-    public partial class UPnPForm : Form
+    public partial class UPnPForm : ComponentFactory.Krypton.Toolkit.KryptonForm
     {
         
         private Label label1 ;
@@ -176,7 +176,8 @@ namespace FreeMeterRevival.Forms
             this.MaximizeBox = false;
             this.Name = "UPnPForm";
             this.ShowIcon = false;
-            this.Text = "FreeMeter Revival UPnP NAT Utility";
+            this.Text = "UPnP NAT Utility";
+            this.TextExtra = "FreeMeter Revival";
             this.Load += new System.EventHandler(this.frmUPnP_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

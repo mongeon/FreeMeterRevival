@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace FreeMeterRevival.Forms
 {
-    public partial class ErrorForm : Form
+    public partial class ErrorForm : ComponentFactory.Krypton.Toolkit.KryptonForm
     {
         private Exception ex;
 

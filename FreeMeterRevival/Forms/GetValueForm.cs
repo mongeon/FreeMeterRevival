@@ -3,7 +3,7 @@ using System;
 
 namespace FreeMeterRevival.Forms
 {
-	public partial class GetValueForm : Form
+	public partial class GetValueForm : ComponentFactory.Krypton.Toolkit.KryptonForm
 	{
         private TextBox textBox1;
 		private string val;

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace FreeMeterRevival.Forms
 {
-    public partial class TraceForm : Form
+    public partial class TraceForm : ComponentFactory.Krypton.Toolkit.KryptonForm
     {
         public MainForm MyParentForm;
         

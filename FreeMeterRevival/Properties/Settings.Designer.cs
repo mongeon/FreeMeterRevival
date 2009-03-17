@@ -70,5 +70,29 @@ namespace FreeMeterRevival.Properties {
                 this["ForegroundColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool StatusBarVisible {
+            get {
+                return ((bool)(this["StatusBarVisible"]));
+            }
+            set {
+                this["StatusBarVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sparkle - Blue")]
+        public global::ComponentFactory.Krypton.Toolkit.PaletteModeManager GlobalPaletteMode {
+            get {
+                return ((global::ComponentFactory.Krypton.Toolkit.PaletteModeManager)(this["GlobalPaletteMode"]));
+            }
+            set {
+                this["GlobalPaletteMode"] = value;
+            }
+        }
     }
 }

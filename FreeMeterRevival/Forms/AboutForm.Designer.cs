@@ -127,8 +127,9 @@
             this.Name = "AboutForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About:";
+            this.TextExtra = "FreeMeter Revival";
             this.Load += new System.EventHandler(this.AboutForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.IconBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.IconBox3)).EndInit();

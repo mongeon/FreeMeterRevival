@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace FreeMeterRevival.Forms
 {
-    public partial class PingForm : Form
+    public partial class PingForm : ComponentFactory.Krypton.Toolkit.KryptonForm
     {
 
         private void InitializeComponent() 
@@ -187,7 +187,8 @@ namespace FreeMeterRevival.Forms
             this.MaximizeBox = false;
             this.Name = "PingForm";
             this.ShowIcon = false;
-            this.Text = "FreeMeter Revival Ping Utility";
+            this.Text = "Ping Utility";
+            this.TextExtra = "FreeMeter Revival";
             this.Load += new System.EventHandler(this.AdvPing_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -94,6 +94,7 @@ namespace FreeMeterRevival.Forms
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "ErrorForm";
             this.Text = "FreeMeter Revival - Fatal Error";
+            this.TextExtra = "FreeMeter Revival";
             this.Load += new System.EventHandler(this.Error_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

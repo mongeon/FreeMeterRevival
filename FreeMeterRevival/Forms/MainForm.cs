@@ -50,7 +50,7 @@ using Microsoft.Win32;
 namespace FreeMeterRevival.Forms
 {
 
-	public partial class MainForm : System.Windows.Forms.Form
+	public partial class MainForm : ComponentFactory.Krypton.Toolkit.KryptonForm
 	{
 
 		public string ClipData = "";
@@ -1056,6 +1056,7 @@ namespace FreeMeterRevival.Forms
 		private void SetGraph_Label(Object sender, EventArgs e)
 		{
 			graph_label_checked.Checked = !graph_label_checked.Checked;
+            FullMeter.ShowTitle = graph_label_checked.Checked;
 		}
 
 		private void SetGraph_Download(Object sender, EventArgs e)
@@ -1070,18 +1071,24 @@ namespace FreeMeterRevival.Forms
 		
 		private void SetFont_Large(Object sender, EventArgs e)
 		{
+            FullMeter.TitleSize = FreeMeterRevival.Controls.FontSize.Large;
+
 			font_large.Checked = true;
 			font_medium.Checked = font_small.Checked = false;
 		}
 		
 		private void SetFont_Medium(Object sender, EventArgs e)
-		{
+        {
+            FullMeter.TitleSize = FreeMeterRevival.Controls.FontSize.Normal;
+
 			font_medium.Checked = true;
 			font_large.Checked = font_small.Checked = false;
 		}
 		
 		private void SetFont_Small(Object sender, EventArgs e)
-		{
+        {
+            FullMeter.TitleSize = FreeMeterRevival.Controls.FontSize.Small;
+
 			font_small.Checked = true;
 			font_medium.Checked = font_large.Checked = false;
 		}
@@ -1219,39 +1226,39 @@ namespace FreeMeterRevival.Forms
 		private void CheckVersionWorker_DoWork(object sender, DoWorkEventArgs e)
 		{
             //TODO: Create my own web service to get this info
-            AssemblyName ThisAssemblyName = myAssembly.GetName();
-            string FriendlyVersion = "v" + ThisAssemblyName.Version.Major + "." + ThisAssemblyName.Version.Minor + "." + ThisAssemblyName.Version.Build;
-            if (!respond_to_latest)
-                Thread.Sleep(30000);
-            try
-            {
-                WebRequest w = WebRequest.Create("http://freemeter.cvs.sourceforge.net/*checkout*/freemeter/FM_CVS/changelog.txt?revision=HEAD");
+            //AssemblyName ThisAssemblyName = myAssembly.GetName();
+            //string FriendlyVersion = "v" + ThisAssemblyName.Version.Major + "." + ThisAssemblyName.Version.Minor + "." + ThisAssemblyName.Version.Build;
+            //if (!respond_to_latest)
+            //    Thread.Sleep(30000);
+            //try
+            //{
+            //    WebRequest w = WebRequest.Create("http://freemeter.cvs.sourceforge.net/*checkout*/freemeter/FM_CVS/changelog.txt?revision=HEAD");
             
-                Stream sw = w.GetResponse().GetResponseStream();
-                StreamReader sr = new StreamReader(sw);
-                string line = sr.ReadLine();
+            //    Stream sw = w.GetResponse().GetResponseStream();
+            //    StreamReader sr = new StreamReader(sw);
+            //    string line = sr.ReadLine();
 
-                int result = String.Compare(line, 1, FriendlyVersion, 1, 8, true, CultureInfo.InvariantCulture);
+            //    int result = String.Compare(line, 1, FriendlyVersion, 1, 8, true, CultureInfo.InvariantCulture);
 
-                if (result < 0)
-                    m_notifyicon.ShowBalloonTip(1, "Your version is newer.", line + " is online version. You have " + FriendlyVersion + ".", ToolTipIcon.Info);
-                else if (result > 0)
-                    m_notifyicon.ShowBalloonTip(1, "New Update Is Available", line + " is available. You have " + FriendlyVersion + ".\nCheck About dialog for download site.", ToolTipIcon.Info);
-                else if (respond_to_latest)
-                {
-                    m_notifyicon.ShowBalloonTip(1, "No New Updates", "You have the latest version (" + line + ").", ToolTipIcon.Info);
-                    respond_to_latest = false;
-                }
+            //    if (result < 0)
+            //        m_notifyicon.ShowBalloonTip(1, "Your version is newer.", line + " is online version. You have " + FriendlyVersion + ".", ToolTipIcon.Info);
+            //    else if (result > 0)
+            //        m_notifyicon.ShowBalloonTip(1, "New Update Is Available", line + " is available. You have " + FriendlyVersion + ".\nCheck About dialog for download site.", ToolTipIcon.Info);
+            //    else if (respond_to_latest)
+            //    {
+            //        m_notifyicon.ShowBalloonTip(1, "No New Updates", "You have the latest version (" + line + ").", ToolTipIcon.Info);
+            //        respond_to_latest = false;
+            //    }
 
-                sr.Close();
-                sr.Dispose();
-                sw.Close();
-                sw.Dispose();
-            }
-            catch (Exception ex)
-            {
-                m_notifyicon.ShowBalloonTip(1, "Check For Update", ex.Message, ToolTipIcon.Error);
-            }
+            //    sr.Close();
+            //    sr.Dispose();
+            //    sw.Close();
+            //    sw.Dispose();
+            //}
+            //catch (Exception ex)
+            //{
+            //    m_notifyicon.ShowBalloonTip(1, "Check For Update", ex.Message, ToolTipIcon.Error);
+            //}
 		}
 
 		// Registry reading/writing, and form Dispose override
@@ -1649,11 +1656,30 @@ namespace FreeMeterRevival.Forms
             }
         }
 
+        #region Menus
         private void msMainFileExit_Click(object sender, EventArgs e)
         {
             m_closing = true;
             Application.Exit();
         }
+        ///----------------------------------------------------------------------------------------
+        /// <summary>
+        /// Show / Hide the status bar when the checked state change
+        /// </summary>
+        ///----------------------------------------------------------------------------------------
+        private void msMainWindowStatusBar_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.StatusBarVisible = msMainWindowStatusBar.Checked;
+        }
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OptionsForm frmOptions = new OptionsForm();
+            FullMeter.DownloadColor = Properties.Settings.Default.DownloadColor;
+            frmOptions.ShowDialog();
+        }
+        #endregion
+
+
 
 
 

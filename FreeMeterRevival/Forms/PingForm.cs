@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FreeMeterRevival.Forms
 {
-    public partial class PingForm : Form
+    public partial class PingForm : ComponentFactory.Krypton.Toolkit.KryptonForm
     {
         public MainForm MyParentForm;
         

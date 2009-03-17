@@ -707,7 +707,8 @@
             this.MaximizeBox = false;
             this.Name = "Totals_LogForm";
             this.ShowIcon = false;
-            this.Text = "Totals_Log";
+            this.Text = "Logs";
+            this.TextExtra = "FreeMeter Revival";
             this.Load += new System.EventHandler(this.Totals_Log_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Totals_Log_FormClosing);
             this.panel3.ResumeLayout(false);
