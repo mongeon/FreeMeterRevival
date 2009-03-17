@@ -7,7 +7,7 @@ using FreeMeterRevival.Controls;
 
 namespace FreeMeterRevival.Forms
 {
-    public partial class MainForm : Form
+    public partial class MainForm : ComponentFactory.Krypton.Toolkit.KryptonForm
     {
         private void InitializeComponent()
         {
@@ -77,12 +77,8 @@ namespace FreeMeterRevival.Forms
             this.ShrinkTimer = new System.Windows.Forms.Timer(this.components);
             this.LogTimer = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.sbMain = new System.Windows.Forms.StatusStrip();
-            this.sbMainStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.sbMainDownload = new System.Windows.Forms.ToolStripStatusLabel();
-            this.sbMainUpload = new System.Windows.Forms.ToolStripStatusLabel();
             this.msMain = new System.Windows.Forms.MenuStrip();
-            this.m_utils = new System.Windows.Forms.ToolStripMenuItem();
+            this.msMainTools = new System.Windows.Forms.ToolStripMenuItem();
             this.clip_watch = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mailcheck = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,21 +92,28 @@ namespace FreeMeterRevival.Forms
             this.menuItem20 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.msMainWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.msMainAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItem21 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.msMainAboutAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripPanel1 = new System.Windows.Forms.ToolStripPanel();
-            this.tsMain = new System.Windows.Forms.ToolStrip();
             this.tsMainGraph = new System.Windows.Forms.ToolStrip();
+            this.tsMain = new System.Windows.Forms.ToolStrip();
             this.FullMeter = new FreeMeterRevival.Controls.NetworkGraph(this.components);
+            this.sbMain = new System.Windows.Forms.StatusStrip();
+            this.sbMainStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.sbMainDownload = new System.Windows.Forms.ToolStripStatusLabel();
+            this.sbMainUpload = new System.Windows.Forms.ToolStripStatusLabel();
+            this.msMainWindowStatusBar = new System.Windows.Forms.ToolStripMenuItem();
+            this.kryptonManager1 = new ComponentFactory.Krypton.Toolkit.KryptonManager(this.components);
             this.m_menu.SuspendLayout();
             this.cmMenuGraph.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
-            this.sbMain.SuspendLayout();
             this.msMain.SuspendLayout();
             this.toolStripPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FullMeter)).BeginInit();
+            this.sbMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // m_menu
@@ -164,11 +167,12 @@ namespace FreeMeterRevival.Forms
             // 
             this.msMainFile.DropDown = this.m_menu;
             this.msMainFile.Name = "msMainFile";
-            this.msMainFile.Size = new System.Drawing.Size(35, 20);
+            this.msMainFile.Size = new System.Drawing.Size(37, 20);
             this.msMainFile.Text = "&File";
             // 
             // cmMenuGraph
             // 
+            this.cmMenuGraph.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.cmMenuGraph.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.m_Opacity,
             this.toolStripMenuItem2,
@@ -179,10 +183,9 @@ namespace FreeMeterRevival.Forms
             this.m_units,
             this.m_interfaces});
             this.cmMenuGraph.Name = "cmMenuGraph";
-            this.cmMenuGraph.OwnerItem = this.msMainGraph;
             this.cmMenuGraph.ShowCheckMargin = true;
             this.cmMenuGraph.ShowImageMargin = false;
-            this.cmMenuGraph.Size = new System.Drawing.Size(169, 164);
+            this.cmMenuGraph.Size = new System.Drawing.Size(168, 164);
             // 
             // m_Opacity
             // 
@@ -190,7 +193,7 @@ namespace FreeMeterRevival.Forms
             this.menuItem10,
             this.menuItem11});
             this.m_Opacity.Name = "m_Opacity";
-            this.m_Opacity.Size = new System.Drawing.Size(168, 22);
+            this.m_Opacity.Size = new System.Drawing.Size(167, 22);
             this.m_Opacity.Text = "Opacity";
             // 
             // menuItem10
@@ -210,13 +213,13 @@ namespace FreeMeterRevival.Forms
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(165, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(164, 6);
             // 
             // avg_checked
             // 
             this.avg_checked.CheckOnClick = true;
             this.avg_checked.Name = "avg_checked";
-            this.avg_checked.Size = new System.Drawing.Size(168, 22);
+            this.avg_checked.Size = new System.Drawing.Size(167, 22);
             this.avg_checked.Text = "Display Averages";
             this.avg_checked.Click += new System.EventHandler(this.Avg_Click);
             // 
@@ -245,153 +248,153 @@ namespace FreeMeterRevival.Forms
             this.scale_100000,
             this.scale_1000000});
             this.m_scale_menu.Name = "m_scale_menu";
-            this.m_scale_menu.Size = new System.Drawing.Size(168, 22);
+            this.m_scale_menu.Size = new System.Drawing.Size(167, 22);
             this.m_scale_menu.Text = "Graph Scale";
             // 
             // autoscale_checked
             // 
             this.autoscale_checked.Name = "autoscale_checked";
-            this.autoscale_checked.Size = new System.Drawing.Size(121, 22);
+            this.autoscale_checked.Size = new System.Drawing.Size(120, 22);
             this.autoscale_checked.Text = "Auto";
             this.autoscale_checked.Click += new System.EventHandler(this.SetAutoScale);
             // 
             // scale_custom
             // 
             this.scale_custom.Name = "scale_custom";
-            this.scale_custom.Size = new System.Drawing.Size(121, 22);
+            this.scale_custom.Size = new System.Drawing.Size(120, 22);
             this.scale_custom.Text = "Custom";
             this.scale_custom.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_33
             // 
             this.scale_33.Name = "scale_33";
-            this.scale_33.Size = new System.Drawing.Size(121, 22);
+            this.scale_33.Size = new System.Drawing.Size(120, 22);
             this.scale_33.Text = "33.6 kb";
             this.scale_33.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_56
             // 
             this.scale_56.Name = "scale_56";
-            this.scale_56.Size = new System.Drawing.Size(121, 22);
+            this.scale_56.Size = new System.Drawing.Size(120, 22);
             this.scale_56.Text = "56 kb";
             this.scale_56.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_64
             // 
             this.scale_64.Name = "scale_64";
-            this.scale_64.Size = new System.Drawing.Size(121, 22);
+            this.scale_64.Size = new System.Drawing.Size(120, 22);
             this.scale_64.Text = "64 kb";
             this.scale_64.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_128
             // 
             this.scale_128.Name = "scale_128";
-            this.scale_128.Size = new System.Drawing.Size(121, 22);
+            this.scale_128.Size = new System.Drawing.Size(120, 22);
             this.scale_128.Text = "128 kb";
             this.scale_128.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_256
             // 
             this.scale_256.Name = "scale_256";
-            this.scale_256.Size = new System.Drawing.Size(121, 22);
+            this.scale_256.Size = new System.Drawing.Size(120, 22);
             this.scale_256.Text = "256 kb";
             this.scale_256.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_512
             // 
             this.scale_512.Name = "scale_512";
-            this.scale_512.Size = new System.Drawing.Size(121, 22);
+            this.scale_512.Size = new System.Drawing.Size(120, 22);
             this.scale_512.Text = "512 kb";
             this.scale_512.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_640
             // 
             this.scale_640.Name = "scale_640";
-            this.scale_640.Size = new System.Drawing.Size(121, 22);
+            this.scale_640.Size = new System.Drawing.Size(120, 22);
             this.scale_640.Text = "640 kb";
             this.scale_640.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_1000
             // 
             this.scale_1000.Name = "scale_1000";
-            this.scale_1000.Size = new System.Drawing.Size(121, 22);
+            this.scale_1000.Size = new System.Drawing.Size(120, 22);
             this.scale_1000.Text = "1 mb";
             this.scale_1000.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_1500
             // 
             this.scale_1500.Name = "scale_1500";
-            this.scale_1500.Size = new System.Drawing.Size(121, 22);
+            this.scale_1500.Size = new System.Drawing.Size(120, 22);
             this.scale_1500.Text = "1.5 mb";
             this.scale_1500.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_2000
             // 
             this.scale_2000.Name = "scale_2000";
-            this.scale_2000.Size = new System.Drawing.Size(121, 22);
+            this.scale_2000.Size = new System.Drawing.Size(120, 22);
             this.scale_2000.Text = "2 mb";
             this.scale_2000.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_3000
             // 
             this.scale_3000.Name = "scale_3000";
-            this.scale_3000.Size = new System.Drawing.Size(121, 22);
+            this.scale_3000.Size = new System.Drawing.Size(120, 22);
             this.scale_3000.Text = "3 mb";
             this.scale_3000.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_5000
             // 
             this.scale_5000.Name = "scale_5000";
-            this.scale_5000.Size = new System.Drawing.Size(121, 22);
+            this.scale_5000.Size = new System.Drawing.Size(120, 22);
             this.scale_5000.Text = "5 mb";
             this.scale_5000.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_7000
             // 
             this.scale_7000.Name = "scale_7000";
-            this.scale_7000.Size = new System.Drawing.Size(121, 22);
+            this.scale_7000.Size = new System.Drawing.Size(120, 22);
             this.scale_7000.Text = "7 mb";
             this.scale_7000.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_10000
             // 
             this.scale_10000.Name = "scale_10000";
-            this.scale_10000.Size = new System.Drawing.Size(121, 22);
+            this.scale_10000.Size = new System.Drawing.Size(120, 22);
             this.scale_10000.Text = "10 mb";
             this.scale_10000.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_11000
             // 
             this.scale_11000.Name = "scale_11000";
-            this.scale_11000.Size = new System.Drawing.Size(121, 22);
+            this.scale_11000.Size = new System.Drawing.Size(120, 22);
             this.scale_11000.Text = "11 mb";
             this.scale_11000.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_32000
             // 
             this.scale_32000.Name = "scale_32000";
-            this.scale_32000.Size = new System.Drawing.Size(121, 22);
+            this.scale_32000.Size = new System.Drawing.Size(120, 22);
             this.scale_32000.Text = "32 mb";
             this.scale_32000.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_54000
             // 
             this.scale_54000.Name = "scale_54000";
-            this.scale_54000.Size = new System.Drawing.Size(121, 22);
+            this.scale_54000.Size = new System.Drawing.Size(120, 22);
             this.scale_54000.Text = "54 mb";
             this.scale_54000.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_100000
             // 
             this.scale_100000.Name = "scale_100000";
-            this.scale_100000.Size = new System.Drawing.Size(121, 22);
+            this.scale_100000.Size = new System.Drawing.Size(120, 22);
             this.scale_100000.Text = "100 mb";
             this.scale_100000.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
             // scale_1000000
             // 
             this.scale_1000000.Name = "scale_1000000";
-            this.scale_1000000.Size = new System.Drawing.Size(121, 22);
+            this.scale_1000000.Size = new System.Drawing.Size(120, 22);
             this.scale_1000000.Text = "1 gb";
             this.scale_1000000.Click += new System.EventHandler(this.SetScale_MenuClick);
             // 
@@ -403,34 +406,34 @@ namespace FreeMeterRevival.Forms
             this.interval_half,
             this.interval_1});
             this.m_interval_menu.Name = "m_interval_menu";
-            this.m_interval_menu.Size = new System.Drawing.Size(168, 22);
+            this.m_interval_menu.Size = new System.Drawing.Size(167, 22);
             this.m_interval_menu.Text = "Update Interval";
             // 
             // interval_tenth
             // 
             this.interval_tenth.Name = "interval_tenth";
-            this.interval_tenth.Size = new System.Drawing.Size(144, 22);
+            this.interval_tenth.Size = new System.Drawing.Size(143, 22);
             this.interval_tenth.Text = "1/10 second";
             this.interval_tenth.Click += new System.EventHandler(this.SetTimerInterval);
             // 
             // interval_fifth
             // 
             this.interval_fifth.Name = "interval_fifth";
-            this.interval_fifth.Size = new System.Drawing.Size(144, 22);
+            this.interval_fifth.Size = new System.Drawing.Size(143, 22);
             this.interval_fifth.Text = "1/5 second";
             this.interval_fifth.Click += new System.EventHandler(this.SetTimerInterval);
             // 
             // interval_half
             // 
             this.interval_half.Name = "interval_half";
-            this.interval_half.Size = new System.Drawing.Size(144, 22);
+            this.interval_half.Size = new System.Drawing.Size(143, 22);
             this.interval_half.Text = "1/2 second";
             this.interval_half.Click += new System.EventHandler(this.SetTimerInterval);
             // 
             // interval_1
             // 
             this.interval_1.Name = "interval_1";
-            this.interval_1.Size = new System.Drawing.Size(144, 22);
+            this.interval_1.Size = new System.Drawing.Size(143, 22);
             this.interval_1.Text = "1 second";
             this.interval_1.Click += new System.EventHandler(this.SetTimerInterval);
             // 
@@ -448,72 +451,73 @@ namespace FreeMeterRevival.Forms
             this.font_medium,
             this.font_small});
             this.m_graphs.Name = "m_graphs";
-            this.m_graphs.Size = new System.Drawing.Size(168, 22);
+            this.m_graphs.Size = new System.Drawing.Size(167, 22);
             this.m_graphs.Text = "Graphs";
             // 
             // graph_label_checked
             // 
+            this.graph_label_checked.Enabled = false;
             this.graph_label_checked.Name = "graph_label_checked";
-            this.graph_label_checked.Size = new System.Drawing.Size(300, 22);
+            this.graph_label_checked.Size = new System.Drawing.Size(310, 22);
             this.graph_label_checked.Text = "Show Graph Heading";
             this.graph_label_checked.Click += new System.EventHandler(this.SetGraph_Label);
             // 
             // graphs_summary
             // 
             this.graphs_summary.Name = "graphs_summary";
-            this.graphs_summary.Size = new System.Drawing.Size(300, 22);
+            this.graphs_summary.Size = new System.Drawing.Size(310, 22);
             this.graphs_summary.Text = "Show Summary On Left(up) and Right(down)";
             this.graphs_summary.Click += new System.EventHandler(this.SetGraph_Summary);
             // 
             // menuItem12
             // 
             this.menuItem12.Name = "menuItem12";
-            this.menuItem12.Size = new System.Drawing.Size(297, 6);
+            this.menuItem12.Size = new System.Drawing.Size(307, 6);
             // 
             // graphs_download
             // 
             this.graphs_download.Name = "graphs_download";
-            this.graphs_download.Size = new System.Drawing.Size(300, 22);
+            this.graphs_download.Size = new System.Drawing.Size(310, 22);
             this.graphs_download.Text = "Download";
             this.graphs_download.Click += new System.EventHandler(this.SetGraph_Download);
             // 
             // graphs_upload
             // 
             this.graphs_upload.Name = "graphs_upload";
-            this.graphs_upload.Size = new System.Drawing.Size(300, 22);
+            this.graphs_upload.Size = new System.Drawing.Size(310, 22);
             this.graphs_upload.Text = "Upload";
             this.graphs_upload.Click += new System.EventHandler(this.SetGraph_Upload);
             // 
             // menuItem13
             // 
             this.menuItem13.Name = "menuItem13";
-            this.menuItem13.Size = new System.Drawing.Size(297, 6);
+            this.menuItem13.Size = new System.Drawing.Size(307, 6);
             // 
             // menuItem7
             // 
             this.menuItem7.Name = "menuItem7";
-            this.menuItem7.Size = new System.Drawing.Size(300, 22);
+            this.menuItem7.Size = new System.Drawing.Size(310, 22);
             this.menuItem7.Text = "Text Color";
             this.menuItem7.Click += new System.EventHandler(this.TextColor_Click);
             // 
             // font_large
             // 
             this.font_large.Name = "font_large";
-            this.font_large.Size = new System.Drawing.Size(300, 22);
+            this.font_large.Size = new System.Drawing.Size(310, 22);
             this.font_large.Text = "Large Font";
             this.font_large.Click += new System.EventHandler(this.SetFont_Large);
             // 
             // font_medium
             // 
             this.font_medium.Name = "font_medium";
-            this.font_medium.Size = new System.Drawing.Size(300, 22);
+            this.font_medium.Size = new System.Drawing.Size(310, 22);
             this.font_medium.Text = "Medium Font";
             this.font_medium.Click += new System.EventHandler(this.SetFont_Medium);
             // 
             // font_small
             // 
             this.font_small.Name = "font_small";
-            this.font_small.Size = new System.Drawing.Size(300, 22);
+            this.font_small.Size = new System.Drawing.Size(310, 22);
             this.font_small.Text = "Small Font";
             this.font_small.Click += new System.EventHandler(this.SetFont_Small);
             // 
@@ -523,35 +527,35 @@ namespace FreeMeterRevival.Forms
             this.units_kbits,
             this.units_kbytes});
             this.m_units.Name = "m_units";
-            this.m_units.Size = new System.Drawing.Size(168, 22);
+            this.m_units.Size = new System.Drawing.Size(167, 22);
             this.m_units.Text = "Units";
             // 
             // units_kbits
             // 
             this.units_kbits.Name = "units_kbits";
-            this.units_kbits.Size = new System.Drawing.Size(196, 22);
+            this.units_kbits.Size = new System.Drawing.Size(194, 22);
             this.units_kbits.Text = "Bits per sec (eg kbps)";
             this.units_kbits.Click += new System.EventHandler(this.SetUnits_kbits);
             // 
             // units_kbytes
             // 
             this.units_kbytes.Name = "units_kbytes";
-            this.units_kbytes.Size = new System.Drawing.Size(196, 22);
+            this.units_kbytes.Size = new System.Drawing.Size(194, 22);
             this.units_kbytes.Text = "Bytes per sec (eg kB/s)";
             this.units_kbytes.Click += new System.EventHandler(this.SetUnits_kbytes);
             // 
             // m_interfaces
             // 
             this.m_interfaces.Name = "m_interfaces";
-            this.m_interfaces.Size = new System.Drawing.Size(168, 22);
+            this.m_interfaces.Size = new System.Drawing.Size(167, 22);
             this.m_interfaces.Text = "Interfaces";
             // 
             // msMainGraph
             // 
             this.msMainGraph.DropDown = this.cmMenuGraph;
             this.msMainGraph.Name = "msMainGraph";
-            this.msMainGraph.Size = new System.Drawing.Size(48, 20);
-            this.msMainGraph.Text = "Graph";
+            this.msMainGraph.Size = new System.Drawing.Size(51, 20);
+            this.msMainGraph.Text = "&Graph";
             // 
             // colorDialog1
             // 
@@ -601,21 +605,230 @@ namespace FreeMeterRevival.Forms
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             // 
+            // msMain
+            // 
+            this.msMain.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.msMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.msMainFile,
+            this.msMainGraph,
+            this.msMainTools,
+            this.msMainWindow,
+            this.msMainAbout});
+            this.msMain.Location = new System.Drawing.Point(0, 0);
+            this.msMain.Name = "msMain";
+            this.msMain.Size = new System.Drawing.Size(352, 24);
+            this.msMain.TabIndex = 5;
+            this.msMain.Text = "menuStrip1";
+            // 
+            // msMainTools
+            // 
+            this.msMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clip_watch,
+            this.menuItem1,
+            this.mailcheck,
+            this.mailchecknow,
+            this.menuItem14,
+            this.menuItem15,
+            this.menuItem16,
+            this.menuItem17,
+            this.menuItem18,
+            this.menuItem19,
+            this.menuItem20,
+            this.toolStripMenuItem4,
+            this.optionsToolStripMenuItem});
+            this.msMainTools.Name = "msMainTools";
+            this.msMainTools.Size = new System.Drawing.Size(46, 20);
+            this.msMainTools.Text = "&Tools";
+            // 
+            // clip_watch
+            // 
+            this.clip_watch.Name = "clip_watch";
+            this.clip_watch.Size = new System.Drawing.Size(191, 22);
+            this.clip_watch.Text = "URL Grabber Enabled";
+            // 
+            // menuItem1
+            // 
+            this.menuItem1.Name = "menuItem1";
+            this.menuItem1.Size = new System.Drawing.Size(188, 6);
+            // 
+            // mailcheck
+            // 
+            this.mailcheck.Name = "mailcheck";
+            this.mailcheck.Size = new System.Drawing.Size(191, 22);
+            this.mailcheck.Text = "Email Notify Enabled";
+            this.mailcheck.Click += new System.EventHandler(this.CheckMail_Auto);
+            // 
+            // mailchecknow
+            // 
+            this.mailchecknow.Name = "mailchecknow";
+            this.mailchecknow.Size = new System.Drawing.Size(191, 22);
+            this.mailchecknow.Text = "Check Email Now";
+            this.mailchecknow.Click += new System.EventHandler(this.CheckMail_Now);
+            // 
+            // menuItem14
+            // 
+            this.menuItem14.Name = "menuItem14";
+            this.menuItem14.Size = new System.Drawing.Size(191, 22);
+            this.menuItem14.Text = "Email Server Settings";
+            this.menuItem14.Click += new System.EventHandler(this.CheckMail_Settings);
+            // 
+            // menuItem15
+            // 
+            this.menuItem15.Name = "menuItem15";
+            this.menuItem15.Size = new System.Drawing.Size(188, 6);
+            // 
+            // menuItem16
+            // 
+            this.menuItem16.Name = "menuItem16";
+            this.menuItem16.Size = new System.Drawing.Size(191, 22);
+            this.menuItem16.Text = "Ping Utility";
+            this.menuItem16.Click += new System.EventHandler(this.Ping_Click);
+            // 
+            // menuItem17
+            // 
+            this.menuItem17.Name = "menuItem17";
+            this.menuItem17.Size = new System.Drawing.Size(191, 22);
+            this.menuItem17.Text = "Traceroute Utility";
+            this.menuItem17.Click += new System.EventHandler(this.Trace_Click);
+            // 
+            // menuItem18
+            // 
+            this.menuItem18.Name = "menuItem18";
+            this.menuItem18.Size = new System.Drawing.Size(191, 22);
+            this.menuItem18.Text = "UPnP NAT Utility";
+            this.menuItem18.Click += new System.EventHandler(this.UPnP_Click);
+            // 
+            // menuItem19
+            // 
+            this.menuItem19.Name = "menuItem19";
+            this.menuItem19.Size = new System.Drawing.Size(188, 6);
+            // 
+            // menuItem20
+            // 
+            this.menuItem20.Name = "menuItem20";
+            this.menuItem20.Size = new System.Drawing.Size(191, 22);
+            this.menuItem20.Text = "Totals Log";
+            this.menuItem20.Click += new System.EventHandler(this.ShowTotalsLog_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(188, 6);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Enabled = false;
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.optionsToolStripMenuItem.Text = "Options...";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+            // 
+            // msMainWindow
+            // 
+            this.msMainWindow.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.msMainWindowStatusBar});
+            this.msMainWindow.Name = "msMainWindow";
+            this.msMainWindow.Size = new System.Drawing.Size(63, 20);
+            this.msMainWindow.Text = "&Window";
+            // 
+            // msMainAbout
+            // 
+            this.msMainAbout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItem21,
+            this.toolStripMenuItem3,
+            this.msMainAboutAbout});
+            this.msMainAbout.Name = "msMainAbout";
+            this.msMainAbout.Size = new System.Drawing.Size(24, 20);
+            this.msMainAbout.Text = "&?";
+            // 
+            // menuItem21
+            // 
+            this.menuItem21.Enabled = false;
+            this.menuItem21.Name = "menuItem21";
+            this.menuItem21.Size = new System.Drawing.Size(178, 22);
+            this.menuItem21.Text = "Check For Updates";
+            this.menuItem21.Click += new System.EventHandler(this.Check_Version);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(175, 6);
+            // 
+            // msMainAboutAbout
+            // 
+            this.msMainAboutAbout.Name = "msMainAboutAbout";
+            this.msMainAboutAbout.Size = new System.Drawing.Size(178, 22);
+            this.msMainAboutAbout.Text = "&About...";
+            this.msMainAboutAbout.Click += new System.EventHandler(this.About_Click);
+            // 
+            // toolStripPanel1
+            // 
+            this.toolStripPanel1.Controls.Add(this.tsMainGraph);
+            this.toolStripPanel1.Controls.Add(this.tsMain);
+            this.toolStripPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.toolStripPanel1.Location = new System.Drawing.Point(0, 24);
+            this.toolStripPanel1.Name = "toolStripPanel1";
+            this.toolStripPanel1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.toolStripPanel1.RowMargin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.toolStripPanel1.Size = new System.Drawing.Size(632, 25);
+            this.toolStripPanel1.Visible = false;
+            // 
+            // tsMainGraph
+            // 
+            this.tsMainGraph.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsMainGraph.Location = new System.Drawing.Point(3, 0);
+            this.tsMainGraph.Name = "tsMainGraph";
+            this.tsMainGraph.Size = new System.Drawing.Size(111, 25);
+            this.tsMainGraph.TabIndex = 8;
+            // 
+            // tsMain
+            // 
+            this.tsMain.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsMain.Location = new System.Drawing.Point(114, 0);
+            this.tsMain.Name = "tsMain";
+            this.tsMain.Size = new System.Drawing.Size(111, 25);
+            this.tsMain.TabIndex = 7;
+            this.tsMain.Text = "toolStrip1";
+            // 
+            // FullMeter
+            // 
+            this.FullMeter.ContextMenuStrip = this.cmMenuGraph;
+            this.FullMeter.DataBindings.Add(new System.Windows.Forms.Binding("DownloadColor", global::FreeMeterRevival.Properties.Settings.Default, "DownloadColor", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.FullMeter.DataBindings.Add(new System.Windows.Forms.Binding("OverlapColor", global::FreeMeterRevival.Properties.Settings.Default, "OverlapColor", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.FullMeter.DataBindings.Add(new System.Windows.Forms.Binding("UploadColor", global::FreeMeterRevival.Properties.Settings.Default, "UploadColor", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.FullMeter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FullMeter.DownloadColor = global::FreeMeterRevival.Properties.Settings.Default.DownloadColor;
+            this.FullMeter.Location = new System.Drawing.Point(0, 24);
+            this.FullMeter.Name = "FullMeter";
+            this.FullMeter.OverlapColor = global::FreeMeterRevival.Properties.Settings.Default.OverlapColor;
+            this.FullMeter.ShowSummary = false;
+            this.FullMeter.ShowTitle = false;
+            this.FullMeter.Size = new System.Drawing.Size(352, 237);
+            this.FullMeter.TabIndex = 0;
+            this.FullMeter.TabStop = false;
+            this.FullMeter.UploadColor = global::FreeMeterRevival.Properties.Settings.Default.UploadColor;
+            this.FullMeter.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
+            this.FullMeter.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Main_MouseDown);
+            // 
             // sbMain
             // 
+            this.sbMain.DataBindings.Add(new System.Windows.Forms.Binding("Visible", global::FreeMeterRevival.Properties.Settings.Default, "StatusBarVisible", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.sbMain.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.sbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sbMainStatus,
             this.sbMainDownload,
             this.sbMainUpload});
-            this.sbMain.Location = new System.Drawing.Point(0, 432);
+            this.sbMain.Location = new System.Drawing.Point(0, 261);
             this.sbMain.Name = "sbMain";
-            this.sbMain.Size = new System.Drawing.Size(632, 22);
+            this.sbMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.ManagerRenderMode;
+            this.sbMain.Size = new System.Drawing.Size(352, 22);
             this.sbMain.TabIndex = 4;
+            this.sbMain.Visible = global::FreeMeterRevival.Properties.Settings.Default.StatusBarVisible;
             // 
             // sbMainStatus
             // 
             this.sbMainStatus.Name = "sbMainStatus";
-            this.sbMainStatus.Size = new System.Drawing.Size(467, 17);
+            this.sbMainStatus.Size = new System.Drawing.Size(187, 17);
             this.sbMainStatus.Spring = true;
             // 
             // sbMainDownload
@@ -636,201 +849,23 @@ namespace FreeMeterRevival.Forms
             this.sbMainUpload.Size = new System.Drawing.Size(75, 17);
             this.sbMainUpload.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // msMain
+            // msMainWindowStatusBar
             // 
-            this.msMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.msMainFile,
-            this.msMainGraph,
-            this.m_utils,
-            this.msMainAbout});
-            this.msMain.Location = new System.Drawing.Point(0, 0);
-            this.msMain.Name = "msMain";
-            this.msMain.Size = new System.Drawing.Size(632, 24);
-            this.msMain.TabIndex = 5;
-            this.msMain.Text = "menuStrip1";
+            this.msMainWindowStatusBar.Checked = global::FreeMeterRevival.Properties.Settings.Default.StatusBarVisible;
+            this.msMainWindowStatusBar.CheckOnClick = true;
+            this.msMainWindowStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.msMainWindowStatusBar.Name = "msMainWindowStatusBar";
+            this.msMainWindowStatusBar.Size = new System.Drawing.Size(133, 22);
+            this.msMainWindowStatusBar.Text = "&Status bar";
+            this.msMainWindowStatusBar.CheckedChanged += new System.EventHandler(this.msMainWindowStatusBar_CheckedChanged);
             // 
-            // m_utils
+            // kryptonManager1
             // 
-            this.m_utils.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clip_watch,
-            this.menuItem1,
-            this.mailcheck,
-            this.mailchecknow,
-            this.menuItem14,
-            this.menuItem15,
-            this.menuItem16,
-            this.menuItem17,
-            this.menuItem18,
-            this.menuItem19,
-            this.menuItem20,
-            this.toolStripMenuItem4,
-            this.optionsToolStripMenuItem});
-            this.m_utils.Name = "m_utils";
-            this.m_utils.Size = new System.Drawing.Size(44, 20);
-            this.m_utils.Text = "Tools";
-            // 
-            // clip_watch
-            // 
-            this.clip_watch.Name = "clip_watch";
-            this.clip_watch.Size = new System.Drawing.Size(187, 22);
-            this.clip_watch.Text = "URL Grabber Enabled";
-            // 
-            // menuItem1
-            // 
-            this.menuItem1.Name = "menuItem1";
-            this.menuItem1.Size = new System.Drawing.Size(184, 6);
-            // 
-            // mailcheck
-            // 
-            this.mailcheck.Name = "mailcheck";
-            this.mailcheck.Size = new System.Drawing.Size(187, 22);
-            this.mailcheck.Text = "Email Notify Enabled";
-            this.mailcheck.Click += new System.EventHandler(this.CheckMail_Auto);
-            // 
-            // mailchecknow
-            // 
-            this.mailchecknow.Name = "mailchecknow";
-            this.mailchecknow.Size = new System.Drawing.Size(187, 22);
-            this.mailchecknow.Text = "Check Email Now";
-            this.mailchecknow.Click += new System.EventHandler(this.CheckMail_Now);
-            // 
-            // menuItem14
-            // 
-            this.menuItem14.Name = "menuItem14";
-            this.menuItem14.Size = new System.Drawing.Size(187, 22);
-            this.menuItem14.Text = "Email Server Settings";
-            this.menuItem14.Click += new System.EventHandler(this.CheckMail_Settings);
-            // 
-            // menuItem15
-            // 
-            this.menuItem15.Name = "menuItem15";
-            this.menuItem15.Size = new System.Drawing.Size(184, 6);
-            // 
-            // menuItem16
-            // 
-            this.menuItem16.Name = "menuItem16";
-            this.menuItem16.Size = new System.Drawing.Size(187, 22);
-            this.menuItem16.Text = "Ping Utility";
-            this.menuItem16.Click += new System.EventHandler(this.Ping_Click);
-            // 
-            // menuItem17
-            // 
-            this.menuItem17.Name = "menuItem17";
-            this.menuItem17.Size = new System.Drawing.Size(187, 22);
-            this.menuItem17.Text = "Traceroute Utility";
-            this.menuItem17.Click += new System.EventHandler(this.Trace_Click);
-            // 
-            // menuItem18
-            // 
-            this.menuItem18.Name = "menuItem18";
-            this.menuItem18.Size = new System.Drawing.Size(187, 22);
-            this.menuItem18.Text = "UPnP NAT Utility";
-            this.menuItem18.Click += new System.EventHandler(this.UPnP_Click);
-            // 
-            // menuItem19
-            // 
-            this.menuItem19.Name = "menuItem19";
-            this.menuItem19.Size = new System.Drawing.Size(184, 6);
-            // 
-            // menuItem20
-            // 
-            this.menuItem20.Name = "menuItem20";
-            this.menuItem20.Size = new System.Drawing.Size(187, 22);
-            this.menuItem20.Text = "Totals Log";
-            this.menuItem20.Click += new System.EventHandler(this.ShowTotalsLog_Click);
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(184, 6);
-            // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.Enabled = false;
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.optionsToolStripMenuItem.Text = "Options...";
-            // 
-            // msMainAbout
-            // 
-            this.msMainAbout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItem21,
-            this.toolStripMenuItem3,
-            this.msMainAboutAbout});
-            this.msMainAbout.Name = "msMainAbout";
-            this.msMainAbout.Size = new System.Drawing.Size(24, 20);
-            this.msMainAbout.Text = "&?";
-            // 
-            // menuItem21
-            // 
-            this.menuItem21.Name = "menuItem21";
-            this.menuItem21.Size = new System.Drawing.Size(176, 22);
-            this.menuItem21.Text = "Check For Updates";
-            this.menuItem21.Click += new System.EventHandler(this.Check_Version);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(173, 6);
-            // 
-            // msMainAboutAbout
-            // 
-            this.msMainAboutAbout.Name = "msMainAboutAbout";
-            this.msMainAboutAbout.Size = new System.Drawing.Size(176, 22);
-            this.msMainAboutAbout.Text = "&About...";
-            this.msMainAboutAbout.Click += new System.EventHandler(this.About_Click);
-            // 
-            // toolStripPanel1
-            // 
-            this.toolStripPanel1.Controls.Add(this.tsMain);
-            this.toolStripPanel1.Controls.Add(this.tsMainGraph);
-            this.toolStripPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.toolStripPanel1.Location = new System.Drawing.Point(0, 24);
-            this.toolStripPanel1.Name = "toolStripPanel1";
-            this.toolStripPanel1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            this.toolStripPanel1.RowMargin = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.toolStripPanel1.Size = new System.Drawing.Size(632, 25);
-            this.toolStripPanel1.Visible = false;
-            // 
-            // tsMain
-            // 
-            this.tsMain.Dock = System.Windows.Forms.DockStyle.None;
-            this.tsMain.Location = new System.Drawing.Point(3, 0);
-            this.tsMain.Name = "tsMain";
-            this.tsMain.Size = new System.Drawing.Size(111, 25);
-            this.tsMain.TabIndex = 7;
-            this.tsMain.Text = "toolStrip1";
-            // 
-            // tsMainGraph
-            // 
-            this.tsMainGraph.Dock = System.Windows.Forms.DockStyle.None;
-            this.tsMainGraph.Location = new System.Drawing.Point(126, 0);
-            this.tsMainGraph.Name = "tsMainGraph";
-            this.tsMainGraph.Size = new System.Drawing.Size(111, 25);
-            this.tsMainGraph.TabIndex = 8;
-            // 
-            // FullMeter
-            // 
-            this.FullMeter.ContextMenuStrip = this.cmMenuGraph;
-            this.FullMeter.DataBindings.Add(new System.Windows.Forms.Binding("DownloadColor", global::FreeMeterRevival.Properties.Settings.Default, "DownloadColor", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.FullMeter.DataBindings.Add(new System.Windows.Forms.Binding("OverlapColor", global::FreeMeterRevival.Properties.Settings.Default, "OverlapColor", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.FullMeter.DataBindings.Add(new System.Windows.Forms.Binding("UploadColor", global::FreeMeterRevival.Properties.Settings.Default, "UploadColor", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.FullMeter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FullMeter.DownloadColor = global::FreeMeterRevival.Properties.Settings.Default.DownloadColor;
-            this.FullMeter.Location = new System.Drawing.Point(0, 24);
-            this.FullMeter.Name = "FullMeter";
-            this.FullMeter.OverlapColor = global::FreeMeterRevival.Properties.Settings.Default.OverlapColor;
-            this.FullMeter.ShowSummary = false;
-            this.FullMeter.Size = new System.Drawing.Size(632, 408);
-            this.FullMeter.TabIndex = 0;
-            this.FullMeter.TabStop = false;
-            this.FullMeter.UploadColor = global::FreeMeterRevival.Properties.Settings.Default.UploadColor;
-            this.FullMeter.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
-            this.FullMeter.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Main_MouseDown);
+            this.kryptonManager1.GlobalPaletteMode = global::FreeMeterRevival.Properties.Settings.Default.GlobalPaletteMode;
             // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(632, 454);
+            this.ClientSize = new System.Drawing.Size(352, 283);
             this.Controls.Add(this.toolStripPanel1);
             this.Controls.Add(this.FullMeter);
             this.Controls.Add(this.sbMain);
@@ -840,10 +875,7 @@ namespace FreeMeterRevival.Forms
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.msMain;
-            this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(640, 480);
-            this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(320, 240);
+            this.MinimumSize = new System.Drawing.Size(200, 75);
             this.Name = "MainForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -853,13 +885,13 @@ namespace FreeMeterRevival.Forms
             this.m_menu.ResumeLayout(false);
             this.cmMenuGraph.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
-            this.sbMain.ResumeLayout(false);
-            this.sbMain.PerformLayout();
             this.msMain.ResumeLayout(false);
             this.msMain.PerformLayout();
             this.toolStripPanel1.ResumeLayout(false);
             this.toolStripPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FullMeter)).EndInit();
+            this.sbMain.ResumeLayout(false);
+            this.sbMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -942,7 +974,7 @@ namespace FreeMeterRevival.Forms
         private ToolStripMenuItem menuItem10;
         private ToolStripMenuItem menuItem11;
         private ToolStripSeparator toolStripMenuItem2;
-        private ToolStripMenuItem m_utils;
+        private ToolStripMenuItem msMainTools;
         private ToolStripMenuItem clip_watch;
         private ToolStripSeparator menuItem1;
         private ToolStripMenuItem mailcheck;
@@ -959,6 +991,9 @@ namespace FreeMeterRevival.Forms
         private ToolStripMenuItem menuItem21;
         private ToolStripSeparator toolStripMenuItem3;
         private ContextMenuStrip cmMenuGraph;
+        private ToolStripMenuItem msMainWindow;
+        private ToolStripMenuItem msMainWindowStatusBar;
+        private ComponentFactory.Krypton.Toolkit.KryptonManager kryptonManager1;
     }
 }
 

@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace FreeMeterRevival.Forms
 {
-    public partial class EmailSettingsForm : Form
+    public partial class EmailSettingsForm : ComponentFactory.Krypton.Toolkit.KryptonForm
     {
 
         private void InitializeComponent()
@@ -258,6 +258,7 @@ namespace FreeMeterRevival.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Email Server Settings";
+            this.TextExtra = "FreeMeter Revival";
             this.Load += new System.EventHandler(this.EmailSettings_Form_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.groupBox1.ResumeLayout(false);

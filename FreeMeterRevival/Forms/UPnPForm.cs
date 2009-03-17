@@ -10,7 +10,7 @@ using System.IO;
 
 namespace FreeMeterRevival.Forms
 {
-    public partial class UPnPForm : Form
+    public partial class UPnPForm : ComponentFactory.Krypton.Toolkit.KryptonForm
     {
         public MainForm MyParentForm;
 

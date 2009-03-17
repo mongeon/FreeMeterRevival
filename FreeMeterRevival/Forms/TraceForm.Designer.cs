@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace FreeMeterRevival.Forms
 {
-    public partial class TraceForm : Form
+    public partial class TraceForm : ComponentFactory.Krypton.Toolkit.KryptonForm
     {
         private void InitializeComponent()
         {
@@ -162,7 +162,8 @@ namespace FreeMeterRevival.Forms
             this.MaximizeBox = false;
             this.Name = "TraceForm";
             this.ShowIcon = false;
-            this.Text = "FreeMeter Revival Traceroute Utility";
+            this.Text = "Traceroute Utility";
+            this.TextExtra = "FreeMeter Revival";
             this.Load += new System.EventHandler(this.AdvTrace_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

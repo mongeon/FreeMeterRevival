@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace FreeMeterRevival.Forms
 {
-    public partial class AboutForm : Form
+    public partial class AboutForm : ComponentFactory.Krypton.Toolkit.KryptonForm
     {
         public AboutForm()
         {
@@ -44,7 +44,8 @@ namespace FreeMeterRevival.Forms
                     Title = ((AssemblyTitleAttribute)o).Title;
                 else if (o is AssemblyCopyrightAttribute)
                     Copyright = ((AssemblyCopyrightAttribute)o).Copyright;
-            this.Text = "About " + Title;
+            this.Text = "About";
+
             txtArea.Text = Title + " v" + FriendlyVersion + "\n\n" + Copyright;
         }
 

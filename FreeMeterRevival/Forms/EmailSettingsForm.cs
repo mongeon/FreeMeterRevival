@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace FreeMeterRevival.Forms
 {
-    public partial class EmailSettingsForm : Form
+    public partial class EmailSettingsForm : ComponentFactory.Krypton.Toolkit.KryptonForm
     {
         public MainForm MyParentForm;
 

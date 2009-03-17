@@ -10,6 +10,17 @@ namespace FreeMeterRevival.Controls
 {
     ///============================================================================================
     /// <summary>
+    /// Font size enumeration
+    /// </summary>
+    ///============================================================================================
+    public enum FontSize
+    {
+        Small,
+        Normal,
+        Large
+    }
+    ///============================================================================================
+    /// <summary>
     /// This control will show the Networking traffic of a computer / Network card
     /// </summary>
     ///============================================================================================
@@ -30,14 +41,18 @@ namespace FreeMeterRevival.Controls
         private bool m_uploadActive = true;
         private bool m_downloadActive = true;
         private bool m_showSummary = false;
+        private bool m_showTitle = false;
+
+        private FontSize m_fontSize = FontSize.Normal;
         #endregion
 
         #region Properties
 
-        
-        public Color DownloadColor { 
+
+        public Color DownloadColor
+        {
             get { return m_downloadColor; }
-            set { m_downloadColor = value; } 
+            set { m_downloadColor = value; }
         }
         public Color UploadColor
         {
@@ -67,6 +82,18 @@ namespace FreeMeterRevival.Controls
         {
             get { return m_showSummary; }
             set { m_showSummary = value; }
+        }
+        [DefaultValue(true)]
+        public bool ShowTitle
+        {
+            get { return m_showTitle; }
+            set { m_showTitle = value; }
+        }
+        [DefaultValue(FontSize.Normal)]
+        public FontSize TitleSize
+        {
+            get { return m_fontSize; }
+            set { m_fontSize = value; }
         }
         #endregion
 
@@ -192,29 +219,37 @@ namespace FreeMeterRevival.Controls
             }
 
 
-            //if (graph_label_checked.Checked && !drawingIcon)
-            //{
-            //    Font f;
-            //    string fontName = "Verdana";
-            //    int fontSize = 6;
+            if (m_showTitle && !drawingIcon)
+            {
+                Font f = null;
+                string fontName = "Verdana";
+                int fontSize = 6;
 
-            //    if (font_large.Checked)
-            //        f = new Font(fontName, fontSize + 2, FontStyle.Regular);
-            //    else if (font_medium.Checked)
-            //        f = new Font(fontName, fontSize + 1, FontStyle.Regular);
-            //    else
-            //        f = new Font(fontName, fontSize, FontStyle.Regular);
+                switch (m_fontSize)
+                {
+                    case FontSize.Small:
+                         f = new Font(fontName, fontSize, FontStyle.Regular);
+                        break;
+                    case FontSize.Normal:
+                         f = new Font(fontName, fontSize + 1, FontStyle.Regular);
+                        break;
+                    case FontSize.Large:
+                        f = new Font(fontName, fontSize + 2, FontStyle.Regular);
+                        break;
+                }
 
-            //    string text = display_xscale + " " + display_yscale;
-            //    SizeF size = graph.MeasureString(text, f);
-            //    RectangleF rect = new RectangleF(new PointF(2, 2), size);
 
-            //    //graph.FillRectangle(new SolidBrush(Color.Black), rect);
-            //    graph.DrawString(text, f, new SolidBrush(Properties.Settings.Default.ForegroundColor), rect);
+                string text = "TEST";// display_xscale + " " + display_yscale;
+                SizeF size = graph.MeasureString(text, f);
+                RectangleF rect = new RectangleF(new PointF(2, 2), size);
+
+                //graph.FillRectangle(new SolidBrush(Color.Black), rect);
+                graph.DrawString(text, f, new SolidBrush(Properties.Settings.Default.ForegroundColor), rect);
             }
         }
 
 
 
     }
+}
 

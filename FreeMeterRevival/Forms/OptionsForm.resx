@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,14 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="arrow_up" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\arrow_up.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="arrow_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\arrow_down.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="chart_bar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\chart_bar.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <metadata name="kryptonManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAEAGABoAwAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAAAAAABMLAAATCwAAAAAAAAAA
+        AACAgID///////////////////////////////////////////////////////////+AgIAAgAAA2wAA
+        2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wD///+AgIAAAAAAgAAA2wAA2wAA2wAA2wAA
+        2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wD///+AgIAAgAAAgAAAgAAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA
+        2wAA2wAA2wAA2wD///+AgIAAAAAAgAAAAAAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wD/
+        //+AgIAAgAAAgAAAgAAAgAAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wD///+AgIAAAAAAgAAA
+        AAAAgAAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wD///+AgIAAgAAAgAAAgAAAgAAA2wAA2wAA
+        2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wD///+AgIAAAAAAgAAAAAAAgAAAAAAA2wAA2wAA2wAA2wAA2wAA
+        2wAA2wAA2wAA2wD///+AgIAAgAAAgAAAgAAAgAAAgAAAgAAA2wAA2wAA2wAA2wAA2wAA2wAA2wAA2wD/
+        //+AgIAAAAAAgAAAAAAAgAAAAAAAgAAA2wAA2wAA2wAA2wAA2wAA2wAAAAAA2wD///+AgIAAgAAAgAAA
+        gAAAgAAAgAAAgAAA2wAA2wAAgAAA2wAA2wAAgAAAgAAAgAD///+AgIAAAAAAgAAAAAAAgAAAAAAAgAAA
+        2wAAgAAAAAAA2wAAAAAAgAAAAAAAgAD///+AgIAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAA2wAA
+        gAAAgAAAgAAAgAD///+AgIAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgAD/
+        //+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgID///8AAP//AAD//wAA
+        //8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//
+</value>
   </data>
 </root>

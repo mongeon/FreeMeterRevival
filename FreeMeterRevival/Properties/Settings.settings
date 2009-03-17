@@ -14,5 +14,11 @@
     <Setting Name="ForegroundColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">White</Value>
     </Setting>
+    <Setting Name="StatusBarVisible" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="GlobalPaletteMode" Type="ComponentFactory.Krypton.Toolkit.PaletteModeManager" Scope="User">
+      <Value Profile="(Default)">Sparkle - Blue</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -9,7 +9,7 @@ using System.IO;
 
 namespace FreeMeterRevival.Forms
 {
-	public partial class Totals_LogForm : Form
+	public partial class Totals_LogForm : ComponentFactory.Krypton.Toolkit.KryptonForm
 	{
 		enum TimeSpan { Day = 0, Week = 1, Month = 2, Year = 3 };
 		enum DownloadDirection { Upload, Download, Both };

@@ -73,5 +73,12 @@ namespace FreeMeterRevival.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap chart_bar {
+            get {
+                object obj = ResourceManager.GetObject("chart_bar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
