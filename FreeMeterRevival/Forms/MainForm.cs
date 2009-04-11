@@ -46,6 +46,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 using Microsoft.Win32;
+using System.Text.RegularExpressions;
 
 namespace FreeMeterRevival.Forms
 {
@@ -346,14 +347,13 @@ namespace FreeMeterRevival.Forms
 			if (!icon_representation)
 			{
 				//draw each line in the graph
-				//DrawGraph(g, 16, downlines, uplines, true);
+				DrawNetworkGraph.DrawGraph(g, downlines, uplines,16,16 ,true);
 			}
 			else
 			{
 				//draw cool icon
 				DrawCoolIcon(g);
 				b.MakeTransparent(Color.FromArgb(255, 0, 255));
-
 			}
 
 			IntPtr oIcon = b.GetHicon();
@@ -362,7 +362,7 @@ namespace FreeMeterRevival.Forms
 			b.Dispose();
 			DestroyIcon(oIcon);
 		}
-
+        
 		private void DrawCoolIcon(Graphics graph)
 		{
 			graph.Clear(Color.FromArgb(255, 0, 255));
@@ -1226,39 +1226,45 @@ namespace FreeMeterRevival.Forms
 		private void CheckVersionWorker_DoWork(object sender, DoWorkEventArgs e)
 		{
             //TODO: Create my own web service to get this info
-            //AssemblyName ThisAssemblyName = myAssembly.GetName();
-            //string FriendlyVersion = "v" + ThisAssemblyName.Version.Major + "." + ThisAssemblyName.Version.Minor + "." + ThisAssemblyName.Version.Build;
-            //if (!respond_to_latest)
-            //    Thread.Sleep(30000);
-            //try
-            //{
-            //    WebRequest w = WebRequest.Create("http://freemeter.cvs.sourceforge.net/*checkout*/freemeter/FM_CVS/changelog.txt?revision=HEAD");
+            AssemblyName ThisAssemblyName = myAssembly.GetName();
+            string FriendlyVersion =  ThisAssemblyName.Version.Major + "." + ThisAssemblyName.Version.Minor + "." + ThisAssemblyName.Version.Build;
+            if (!respond_to_latest)
+                Thread.Sleep(30000);
+            try
+            {
+                WebRequest w = WebRequest.Create("http://freemeterrevival.codeplex.com/Wiki/View.aspx?title=version");
             
-            //    Stream sw = w.GetResponse().GetResponseStream();
-            //    StreamReader sr = new StreamReader(sw);
-            //    string line = sr.ReadLine();
+                Stream sw = w.GetResponse().GetResponseStream();
+                StreamReader sr = new StreamReader(sw);
+                string line = sr.ReadLine();
+                while (!line.Contains(":::::"))
+                {
+                     line = sr.ReadLine();
+                }
+                
+                string[] split = line.Split(new char[]{':'}, StringSplitOptions.RemoveEmptyEntries);
+                line = split[1];
+                int result = String.Compare(line, 1, FriendlyVersion, 1, 8, true, CultureInfo.InvariantCulture);
 
-            //    int result = String.Compare(line, 1, FriendlyVersion, 1, 8, true, CultureInfo.InvariantCulture);
+                if (result < 0)
+                    m_notifyicon.ShowBalloonTip(1, "Your version is newer.", line + " is online version. You have " + FriendlyVersion + ".", ToolTipIcon.Info);
+                else if (result > 0)
+                    m_notifyicon.ShowBalloonTip(1, "New Update Is Available", line + " is available. You have " + FriendlyVersion + ".\nCheck About dialog for download site.", ToolTipIcon.Info);
+                else if (respond_to_latest)
+                {
+                    m_notifyicon.ShowBalloonTip(1, "No New Updates", "You have the latest version (" + line + ").", ToolTipIcon.Info);
+                    respond_to_latest = false;
+                }
 
-            //    if (result < 0)
-            //        m_notifyicon.ShowBalloonTip(1, "Your version is newer.", line + " is online version. You have " + FriendlyVersion + ".", ToolTipIcon.Info);
-            //    else if (result > 0)
-            //        m_notifyicon.ShowBalloonTip(1, "New Update Is Available", line + " is available. You have " + FriendlyVersion + ".\nCheck About dialog for download site.", ToolTipIcon.Info);
-            //    else if (respond_to_latest)
-            //    {
-            //        m_notifyicon.ShowBalloonTip(1, "No New Updates", "You have the latest version (" + line + ").", ToolTipIcon.Info);
-            //        respond_to_latest = false;
-            //    }
-
-            //    sr.Close();
-            //    sr.Dispose();
-            //    sw.Close();
-            //    sw.Dispose();
-            //}
-            //catch (Exception ex)
-            //{
-            //    m_notifyicon.ShowBalloonTip(1, "Check For Update", ex.Message, ToolTipIcon.Error);
-            //}
+                sr.Close();
+                sr.Dispose();
+                sw.Close();
+                sw.Dispose();
+            }
+            catch (Exception ex)
+            {
+                m_notifyicon.ShowBalloonTip(1, "Check For Update", ex.Message, ToolTipIcon.Error);
+            }
 		}
 
 		// Registry reading/writing, and form Dispose override
@@ -1674,8 +1680,8 @@ namespace FreeMeterRevival.Forms
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OptionsForm frmOptions = new OptionsForm();
-            FullMeter.DownloadColor = Properties.Settings.Default.DownloadColor;
             frmOptions.ShowDialog();
+            
         }
         #endregion
 

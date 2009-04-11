@@ -26,6 +26,10 @@ namespace FreeMeterRevival.Forms
         ///----------------------------------------------------------------------------------------
         private void btnOK_Click(object sender, EventArgs e)
         {
+
+            Properties.Settings.Default.DownloadColor = btnDownloadColor.SelectedColor;
+            Properties.Settings.Default.UploadColor = btnUploadColor.SelectedColor;
+            Properties.Settings.Default.OverlapColor = btnOverlapColor.SelectedColor;
             Properties.Settings.Default.Save();
             this.Close();
         }
