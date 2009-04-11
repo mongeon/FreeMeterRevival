@@ -2,14 +2,19 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeMeterRevival", "FreeMeterRevival.csproj", "{203C5D9D-D6B2-454B-90BF-37881958B8D3}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "FreeMeterRevivalSetup", "..\FreeMeterRevivalSetup\FreeMeterRevivalSetup.vdproj", "{514CAB64-3C74-4FAA-A1E2-0DBA75F10544}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
+		SccNumberOfProjects = 3
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs08.codeplex.com/
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = FreeMeterRevival.csproj
 		SccLocalPath1 = .
+		SccProjectUniqueName2 = ..\\FreeMeterRevivalSetup\\FreeMeterRevivalSetup.vdproj
+		SccProjectName2 = ../FreeMeterRevivalSetup
+		SccLocalPath2 = ..\\FreeMeterRevivalSetup
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +31,10 @@ Global
 		{203C5D9D-D6B2-454B-90BF-37881958B8D3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{203C5D9D-D6B2-454B-90BF-37881958B8D3}.Release|x86.ActiveCfg = Release|x86
 		{203C5D9D-D6B2-454B-90BF-37881958B8D3}.Release|x86.Build.0 = Release|x86
+		{514CAB64-3C74-4FAA-A1E2-0DBA75F10544}.Debug|Any CPU.ActiveCfg = Debug
+		{514CAB64-3C74-4FAA-A1E2-0DBA75F10544}.Debug|x86.ActiveCfg = Debug
+		{514CAB64-3C74-4FAA-A1E2-0DBA75F10544}.Release|Any CPU.ActiveCfg = Release
+		{514CAB64-3C74-4FAA-A1E2-0DBA75F10544}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

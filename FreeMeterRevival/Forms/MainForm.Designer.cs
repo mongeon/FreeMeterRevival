@@ -93,6 +93,7 @@ namespace FreeMeterRevival.Forms
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msMainWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.msMainWindowStatusBar = new System.Windows.Forms.ToolStripMenuItem();
             this.msMainAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItem21 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
@@ -104,7 +105,6 @@ namespace FreeMeterRevival.Forms
             this.sbMainStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbMainDownload = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbMainUpload = new System.Windows.Forms.ToolStripStatusLabel();
-            this.msMainWindowStatusBar = new System.Windows.Forms.ToolStripMenuItem();
             this.kryptonManager1 = new ComponentFactory.Krypton.Toolkit.KryptonManager(this.components);
             this.FullMeter = new FreeMeterRevival.Controls.NetworkGraph(this.components);
             this.m_menu.SuspendLayout();
@@ -719,6 +719,7 @@ namespace FreeMeterRevival.Forms
             // 
             // optionsToolStripMenuItem
             // 
+            this.optionsToolStripMenuItem.Enabled = false;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.optionsToolStripMenuItem.Text = "Options...";
@@ -731,6 +732,16 @@ namespace FreeMeterRevival.Forms
             this.msMainWindow.Name = "msMainWindow";
             this.msMainWindow.Size = new System.Drawing.Size(63, 20);
             this.msMainWindow.Text = "&Window";
+            // 
+            // msMainWindowStatusBar
+            // 
+            this.msMainWindowStatusBar.Checked = global::FreeMeterRevival.Properties.Settings.Default.StatusBarVisible;
+            this.msMainWindowStatusBar.CheckOnClick = true;
+            this.msMainWindowStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.msMainWindowStatusBar.Name = "msMainWindowStatusBar";
+            this.msMainWindowStatusBar.Size = new System.Drawing.Size(133, 22);
+            this.msMainWindowStatusBar.Text = "&Status bar";
+            this.msMainWindowStatusBar.CheckedChanged += new System.EventHandler(this.msMainWindowStatusBar_CheckedChanged);
             // 
             // msMainAbout
             // 
@@ -829,16 +840,6 @@ namespace FreeMeterRevival.Forms
             this.sbMainUpload.Name = "sbMainUpload";
             this.sbMainUpload.Size = new System.Drawing.Size(75, 17);
             this.sbMainUpload.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // msMainWindowStatusBar
-            // 
-            this.msMainWindowStatusBar.Checked = global::FreeMeterRevival.Properties.Settings.Default.StatusBarVisible;
-            this.msMainWindowStatusBar.CheckOnClick = true;
-            this.msMainWindowStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.msMainWindowStatusBar.Name = "msMainWindowStatusBar";
-            this.msMainWindowStatusBar.Size = new System.Drawing.Size(133, 22);
-            this.msMainWindowStatusBar.Text = "&Status bar";
-            this.msMainWindowStatusBar.CheckedChanged += new System.EventHandler(this.msMainWindowStatusBar_CheckedChanged);
             // 
             // kryptonManager1
             // 
