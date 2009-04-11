@@ -54,16 +54,10 @@ namespace FreeMeterRevival.Forms
             this.interval_half = new System.Windows.Forms.ToolStripMenuItem();
             this.interval_1 = new System.Windows.Forms.ToolStripMenuItem();
             this.m_graphs = new System.Windows.Forms.ToolStripMenuItem();
-            this.graph_label_checked = new System.Windows.Forms.ToolStripMenuItem();
             this.graphs_summary = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItem12 = new System.Windows.Forms.ToolStripSeparator();
             this.graphs_download = new System.Windows.Forms.ToolStripMenuItem();
             this.graphs_upload = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItem13 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuItem7 = new System.Windows.Forms.ToolStripMenuItem();
-            this.font_large = new System.Windows.Forms.ToolStripMenuItem();
-            this.font_medium = new System.Windows.Forms.ToolStripMenuItem();
-            this.font_small = new System.Windows.Forms.ToolStripMenuItem();
             this.m_units = new System.Windows.Forms.ToolStripMenuItem();
             this.units_kbits = new System.Windows.Forms.ToolStripMenuItem();
             this.units_kbytes = new System.Windows.Forms.ToolStripMenuItem();
@@ -187,7 +181,7 @@ namespace FreeMeterRevival.Forms
             this.cmMenuGraph.OwnerItem = this.msMainGraph;
             this.cmMenuGraph.ShowCheckMargin = true;
             this.cmMenuGraph.ShowImageMargin = false;
-            this.cmMenuGraph.Size = new System.Drawing.Size(168, 164);
+            this.cmMenuGraph.Size = new System.Drawing.Size(168, 186);
             // 
             // m_Opacity
             // 
@@ -442,27 +436,13 @@ namespace FreeMeterRevival.Forms
             // m_graphs
             // 
             this.m_graphs.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.graph_label_checked,
             this.graphs_summary,
             this.menuItem12,
             this.graphs_download,
-            this.graphs_upload,
-            this.menuItem13,
-            this.menuItem7,
-            this.font_large,
-            this.font_medium,
-            this.font_small});
+            this.graphs_upload});
             this.m_graphs.Name = "m_graphs";
             this.m_graphs.Size = new System.Drawing.Size(167, 22);
             this.m_graphs.Text = "Graphs";
-            // 
-            // graph_label_checked
-            // 
-            this.graph_label_checked.Enabled = false;
-            this.graph_label_checked.Name = "graph_label_checked";
-            this.graph_label_checked.Size = new System.Drawing.Size(310, 22);
-            this.graph_label_checked.Text = "Show Graph Heading";
-            this.graph_label_checked.Click += new System.EventHandler(this.SetGraph_Label);
             // 
             // graphs_summary
             // 
@@ -489,39 +469,6 @@ namespace FreeMeterRevival.Forms
             this.graphs_upload.Size = new System.Drawing.Size(310, 22);
             this.graphs_upload.Text = "Upload";
             this.graphs_upload.Click += new System.EventHandler(this.SetGraph_Upload);
-            // 
-            // menuItem13
-            // 
-            this.menuItem13.Name = "menuItem13";
-            this.menuItem13.Size = new System.Drawing.Size(307, 6);
-            // 
-            // menuItem7
-            // 
-            this.menuItem7.Name = "menuItem7";
-            this.menuItem7.Size = new System.Drawing.Size(310, 22);
-            this.menuItem7.Text = "Text Color";
-            this.menuItem7.Click += new System.EventHandler(this.TextColor_Click);
-            // 
-            // font_large
-            // 
-            this.font_large.Name = "font_large";
-            this.font_large.Size = new System.Drawing.Size(310, 22);
-            this.font_large.Text = "Large Font";
-            this.font_large.Click += new System.EventHandler(this.SetFont_Large);
-            // 
-            // font_medium
-            // 
-            this.font_medium.Name = "font_medium";
-            this.font_medium.Size = new System.Drawing.Size(310, 22);
-            this.font_medium.Text = "Medium Font";
-            this.font_medium.Click += new System.EventHandler(this.SetFont_Medium);
-            // 
-            // font_small
-            // 
-            this.font_small.Name = "font_small";
-            this.font_small.Size = new System.Drawing.Size(310, 22);
-            this.font_small.Text = "Small Font";
-            this.font_small.Click += new System.EventHandler(this.SetFont_Small);
             // 
             // m_units
             // 
@@ -822,6 +769,7 @@ namespace FreeMeterRevival.Forms
             this.sbMainStatus.Name = "sbMainStatus";
             this.sbMainStatus.Size = new System.Drawing.Size(187, 17);
             this.sbMainStatus.Spring = true;
+            this.sbMainStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // sbMainDownload
             // 
@@ -857,7 +805,6 @@ namespace FreeMeterRevival.Forms
             this.FullMeter.Name = "FullMeter";
             this.FullMeter.OverlapColor = global::FreeMeterRevival.Properties.Settings.Default.OverlapColor;
             this.FullMeter.ShowSummary = false;
-            this.FullMeter.ShowTitle = false;
             this.FullMeter.Size = new System.Drawing.Size(352, 237);
             this.FullMeter.TabIndex = 0;
             this.FullMeter.TabStop = false;
@@ -958,16 +905,10 @@ namespace FreeMeterRevival.Forms
         private ToolStripMenuItem interval_half;
         private ToolStripMenuItem interval_1;
         private ToolStripMenuItem m_graphs;
-        private ToolStripMenuItem graph_label_checked;
         private ToolStripMenuItem graphs_summary;
         private ToolStripSeparator menuItem12;
         private ToolStripMenuItem graphs_download;
         private ToolStripMenuItem graphs_upload;
-        private ToolStripSeparator menuItem13;
-        private ToolStripMenuItem menuItem7;
-        private ToolStripMenuItem font_large;
-        private ToolStripMenuItem font_medium;
-        private ToolStripMenuItem font_small;
         private ToolStripMenuItem m_units;
         private ToolStripMenuItem units_kbits;
         private ToolStripMenuItem units_kbytes;

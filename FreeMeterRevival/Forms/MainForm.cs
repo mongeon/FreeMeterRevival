@@ -242,17 +242,6 @@ namespace FreeMeterRevival.Forms
 			catch { }
 		}
 
-		
-
-
-		private void TextColor_Click(Object sender, EventArgs e)
-		{
-			colorDialog1.Color = Properties.Settings.Default.ForegroundColor;
-			if (colorDialog1.ShowDialog() == DialogResult.OK)
-			{
-                Properties.Settings.Default.ForegroundColor = colorDialog1.Color;
-			}
-		}
 
 		//transparency and opacity
 		private void Trackbar2_Update(Object sender, EventArgs e)
@@ -408,6 +397,7 @@ namespace FreeMeterRevival.Forms
             if (this.Visible && FullMeter.Width != 0 && FullMeter.Height != 0)
 			{
                 FullMeter.UpdateGraph(full_downlines, full_uplines);
+                sbMainStatus.Text = display_xscale + " " + display_yscale;
 			}
 			DoStringOutput();
 		}
@@ -768,7 +758,7 @@ namespace FreeMeterRevival.Forms
 			trackBar2.Location = new Point(2, WHeight - 14);
 			trackBar2.Size = new Size(WLength - 15, 15);
 
-			display_xscale = "time: " + (timerInterval * FullMeter.Width / 1000).ToString() + "s ";
+			display_xscale = "Time: " + (timerInterval * FullMeter.Width / 1000).ToString() + "s ";
 
 			//resize arrays to match new window size
 			int[] temp = new int[FullMeter.Width];
@@ -877,26 +867,26 @@ namespace FreeMeterRevival.Forms
 
             switch (scale)
             {
-                case 4200: scale_33.Checked = true; display_yscale = "scale: 33.6 kb"; break;
-                case 7000: scale_56.Checked = true; display_yscale = "scale: 56 kb"; break;
-                case 8000: scale_64.Checked = true; display_yscale = "scale: 64 kb"; break;
-                case 16000: scale_128.Checked = true; display_yscale = "scale: 128 kb"; break;
-                case 32000: scale_256.Checked = true; display_yscale = "scale: 256 kb"; break;
-                case 64000: scale_512.Checked = true; display_yscale = "scale: 512 kb"; break;
-                case 80000: scale_640.Checked = true; display_yscale = "scale: 640 kb"; break;
-                case 128000: scale_1000.Checked = true; display_yscale = "scale: 1 mb"; break;
-                case 192000: scale_1500.Checked = true; display_yscale = "scale: 1.5 mb"; break;
-                case 256000: scale_2000.Checked = true; display_yscale = "scale: 2 mb"; break;
-                case 384000: scale_3000.Checked = true; display_yscale = "scale: 3 mb"; break;
-                case 640000: scale_5000.Checked = true; display_yscale = "scale: 5 mb"; break;
-                case 896000: scale_7000.Checked = true; display_yscale = "scale: 7 mb"; break;
-                case 1280000: scale_10000.Checked = true; display_yscale = "scale: 10 mb"; break;
-                case 1408000: scale_11000.Checked = true; display_yscale = "scale: 11 mb"; break;
-                case 4096000: scale_32000.Checked = true; display_yscale = "scale: 32 mb"; break;
-                case 6912000: scale_54000.Checked = true; display_yscale = "scale: 54 mb"; break;
-                case 12800000: scale_100000.Checked = true; display_yscale = "scale: 100 mb"; break;
-                case 128000000: scale_1000000.Checked = true; display_yscale = "scale: 1 gb"; break;
-                default: scale_custom.Checked = true; display_yscale = "scale: custom (" + Totals_LogForm.Value(scale, null) + ")"; break;
+                case 4200: scale_33.Checked = true; display_yscale = "Scale: 33.6 kb"; break;
+                case 7000: scale_56.Checked = true; display_yscale = "Scale: 56 kb"; break;
+                case 8000: scale_64.Checked = true; display_yscale = "Scale: 64 kb"; break;
+                case 16000: scale_128.Checked = true; display_yscale = "Scale: 128 kb"; break;
+                case 32000: scale_256.Checked = true; display_yscale = "Scale: 256 kb"; break;
+                case 64000: scale_512.Checked = true; display_yscale = "Scale: 512 kb"; break;
+                case 80000: scale_640.Checked = true; display_yscale = "Scale: 640 kb"; break;
+                case 128000: scale_1000.Checked = true; display_yscale = "Scale: 1 mb"; break;
+                case 192000: scale_1500.Checked = true; display_yscale = "Scale: 1.5 mb"; break;
+                case 256000: scale_2000.Checked = true; display_yscale = "Scale: 2 mb"; break;
+                case 384000: scale_3000.Checked = true; display_yscale = "Scale: 3 mb"; break;
+                case 640000: scale_5000.Checked = true; display_yscale = "Scale: 5 mb"; break;
+                case 896000: scale_7000.Checked = true; display_yscale = "Scale: 7 mb"; break;
+                case 1280000: scale_10000.Checked = true; display_yscale = "Scale: 10 mb"; break;
+                case 1408000: scale_11000.Checked = true; display_yscale = "Scale: 11 mb"; break;
+                case 4096000: scale_32000.Checked = true; display_yscale = "Scale: 32 mb"; break;
+                case 6912000: scale_54000.Checked = true; display_yscale = "Scale: 54 mb"; break;
+                case 12800000: scale_100000.Checked = true; display_yscale = "Scale: 100 mb"; break;
+                case 128000000: scale_1000000.Checked = true; display_yscale = "Scale: 1 gb"; break;
+                default: scale_custom.Checked = true; display_yscale = "Scale: custom (" + Totals_LogForm.Value(scale, null) + ")"; break;
             }
 		}
 
@@ -917,7 +907,7 @@ namespace FreeMeterRevival.Forms
 						case "1/2 second": timerInterval = 500; break;
 						case "1 second": timerInterval = 1000; break;
 					}
-					display_xscale = "time: " + timerInterval * FullMeter.Width / 1000 + "s ";
+					display_xscale = "Time: " + timerInterval * FullMeter.Width / 1000 + "s ";
 				}
 				else
 				{
@@ -1053,12 +1043,6 @@ namespace FreeMeterRevival.Forms
             FullMeter.ShowSummary = graphs_summary.Checked;
 		}
 
-		private void SetGraph_Label(Object sender, EventArgs e)
-		{
-			graph_label_checked.Checked = !graph_label_checked.Checked;
-            FullMeter.ShowTitle = graph_label_checked.Checked;
-		}
-
 		private void SetGraph_Download(Object sender, EventArgs e)
 		{
 			graphs_download.Checked = !graphs_download.Checked;
@@ -1069,29 +1053,6 @@ namespace FreeMeterRevival.Forms
 			graphs_upload.Checked = !graphs_upload.Checked;
 		}
 		
-		private void SetFont_Large(Object sender, EventArgs e)
-		{
-            FullMeter.TitleSize = FreeMeterRevival.Controls.FontSize.Large;
-
-			font_large.Checked = true;
-			font_medium.Checked = font_small.Checked = false;
-		}
-		
-		private void SetFont_Medium(Object sender, EventArgs e)
-        {
-            FullMeter.TitleSize = FreeMeterRevival.Controls.FontSize.Normal;
-
-			font_medium.Checked = true;
-			font_large.Checked = font_small.Checked = false;
-		}
-		
-		private void SetFont_Small(Object sender, EventArgs e)
-        {
-            FullMeter.TitleSize = FreeMeterRevival.Controls.FontSize.Small;
-
-			font_small.Checked = true;
-			font_medium.Checked = font_large.Checked = false;
-		}
 		
 		private void Avg_Click(Object sender, EventArgs e)
 		{
@@ -1313,7 +1274,6 @@ namespace FreeMeterRevival.Forms
 			autoscale_checked.Checked	= bool.Parse(xml["AutoScale"].ToString());
 			topmost_checked.Checked		= bool.Parse(xml["TopMost"].ToString());
 			simple_icon_checked.Checked = bool.Parse(xml["SimpleNotifyIcon"].ToString());
-			graph_label_checked.Checked = bool.Parse(xml["ShowGraphLabel"].ToString());
 			mailcheck.Checked			= bool.Parse(xml["MailCheck"].ToString());
 			clip_watch.Checked			= bool.Parse(xml["ClipWatch"].ToString());
 			LogEnabled					= bool.Parse(xml["LogEnabled"].ToString());
@@ -1344,14 +1304,6 @@ namespace FreeMeterRevival.Forms
                
 			}
             
-
-			if (int.Parse(xml["FontSize"].ToString()) == 2)
-				font_large.Checked = true;
-			else if (int.Parse(xml["FontSize"].ToString()) == 1)
-				font_medium.Checked = true;
-			else
-				font_small.Checked = true;
-
 			string host = xml["PopServer"].ToString();
 			string user = xml["PopUser"].ToString();
 			string pass = xml["PopPass"].ToString();
@@ -1432,7 +1384,6 @@ namespace FreeMeterRevival.Forms
 			show_checked.Checked = true;
 			Show();
 
-			graph_label_checked.Checked = true;
 
 			mailcheck.Checked = false;
 
@@ -1456,9 +1407,6 @@ namespace FreeMeterRevival.Forms
 			LogInterval = 5;
 			LogEnabled = false;
 
-			font_large.Checked = false;
-			font_medium.Checked = false;
-			font_small.Checked = true;
 		}
 
 		private void SaveConfiguration()
@@ -1482,7 +1430,6 @@ namespace FreeMeterRevival.Forms
 			writer.WriteElementString("AutoScale", autoscale_checked.Checked.ToString());
 			writer.WriteElementString("TopMost", topmost_checked.Checked.ToString());
 			writer.WriteElementString("SimpleNotifyIcon", simple_icon_checked.Checked.ToString());
-			writer.WriteElementString("ShowGraphLabel", graph_label_checked.Checked.ToString());
 			writer.WriteElementString("MailCheck", mailcheck.Checked.ToString());
 			writer.WriteElementString("ClipWatch", clip_watch.Checked.ToString());
 			writer.WriteElementString("LogEnabled", LogEnabled.ToString());
@@ -1545,13 +1492,6 @@ namespace FreeMeterRevival.Forms
 
 			writer.WriteElementString("GraphScale", scale.ToString());
 			writer.WriteElementString("Trans", trackBar2.Value.ToString());
-
-			if (font_large.Checked)
-				writer.WriteElementString("FontSize", "2");
-			else if (font_medium.Checked)
-				writer.WriteElementString("FontSize", "1");
-			else
-				writer.WriteElementString("FontSize", "0");
 
 			logs_form.SaveConfiguration(writer);
 
