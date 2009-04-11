@@ -162,14 +162,6 @@ namespace FreeMeterRevival
                         f = new Font(fontName, fontSize + 2, FontStyle.Regular);
                         break;
                 }
-
-
-                string text = "TEST";// display_xscale + " " + display_yscale;
-                SizeF size = graph.MeasureString(text, f);
-                RectangleF rect = new RectangleF(new PointF(2, 2), size);
-
-                //graph.FillRectangle(new SolidBrush(Color.Black), rect);
-                graph.DrawString(text, f, new SolidBrush(Properties.Settings.Default.ForegroundColor), rect);
             }
         }
 

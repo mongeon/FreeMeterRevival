@@ -41,7 +41,6 @@ namespace FreeMeterRevival.Controls
         private bool m_uploadActive = true;
         private bool m_downloadActive = true;
         private bool m_showSummary = false;
-        private bool m_showTitle = false;
 
         private FontSize m_fontSize = FontSize.Normal;
         #endregion
@@ -82,12 +81,6 @@ namespace FreeMeterRevival.Controls
         {
             get { return m_showSummary; }
             set { m_showSummary = value; }
-        }
-        [DefaultValue(true)]
-        public bool ShowTitle
-        {
-            get { return m_showTitle; }
-            set { m_showTitle = value; }
         }
         [DefaultValue(FontSize.Normal)]
         public FontSize TitleSize
