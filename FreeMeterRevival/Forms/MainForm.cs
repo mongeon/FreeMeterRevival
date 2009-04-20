@@ -177,24 +177,7 @@ namespace FreeMeterRevival.Forms
 
 			
 		}
-		private bool checkingmail = false;
-		private void MailTimer_Tick(Object sender, EventArgs e)
-		{
-			if (mailcheck.Checked || sender.Equals(mailchecknow))
-			{
-				if (sender.Equals(mailchecknow))
-					checkingmail = true;
-				BackgroundWorker checkmailWorker = new BackgroundWorker();
-				checkmailWorker.WorkerReportsProgress = false;
-				checkmailWorker.DoWork += new DoWorkEventHandler(CheckMailWorker_DoWork);
-				checkmailWorker.RunWorkerAsync();
-				checkmailWorker.Dispose();
-			}
-		}
-		private void CheckMailWorker_DoWork(Object sender, DoWorkEventArgs e)
-        {
 
-        }
 		private void ClipTimer_Tick(object sender, EventArgs e)
 		{
 			if (clip_watch.Checked)
@@ -670,13 +653,13 @@ namespace FreeMeterRevival.Forms
 			{
 				if (this.Visible)
 				{
-					show_checked.Checked = false;
+					msMainFileShowMeter.Checked = false;
 					Hide();
 				}
 				else
 				{
 					this.Show();
-					show_checked.Checked = true;
+					msMainFileShowMeter.Checked = true;
 				}
 			}
 			else Check_Menus();
@@ -1079,13 +1062,13 @@ namespace FreeMeterRevival.Forms
 		{
 			if (this.Visible)
 			{
-				show_checked.Checked = false;
+				msMainFileShowMeter.Checked = false;
 				Hide();
 			}
 			else
 			{
 				Show();
-				show_checked.Checked = true;
+				msMainFileShowMeter.Checked = true;
 
 				Rectangle rect = Screen.PrimaryScreen.WorkingArea;
 
@@ -1096,14 +1079,14 @@ namespace FreeMeterRevival.Forms
 
 		private void TopMost_Click(Object sender, EventArgs e)
 		{
-			topmost_checked.Checked = !topmost_checked.Checked;
-			TopMost = topmost_checked.Checked;
+			msMainFileTopmost.Checked = !msMainFileTopmost.Checked;
+			TopMost = msMainFileTopmost.Checked;
 		}
 
 		private void SimpleNotifyIcon_Click(Object sender, EventArgs e)
 		{
-			simple_icon_checked.Checked = !simple_icon_checked.Checked;
-			icon_representation = simple_icon_checked.Checked;
+			msMainFileSimpleIcon.Checked = !msMainFileSimpleIcon.Checked;
+			icon_representation = msMainFileSimpleIcon.Checked;
 		}
 
 		private void Exit_Click(Object sender, EventArgs e)
@@ -1116,44 +1099,7 @@ namespace FreeMeterRevival.Forms
 		{
 			AboutForm.ShowAboutForm(this);
 		}
-		//handlers for mail menu clicks
-		private void CheckMail_Auto(Object sender, EventArgs e)
-		{
-			if (mailcheck.Checked)
-			{
-				mailcheck.Checked = false;
-				MailTimer.Stop();
-			}
-			else
-			{
-				mailcheck.Checked = true;
-				MailTimer.Start();
-			}
-		}
-		private void CheckMail_Now(Object sender, EventArgs e)
-		{
-			MailTimer_Tick(sender, e);
-		}
-
-		private void CheckMail_Settings(Object sender, EventArgs e)
-		{
-			EmailSettingsForm frm = new EmailSettingsForm();
-			frm.MyParentForm = this;
-
-			if (frm.ShowDialog() == DialogResult.OK)
-			{
-				MailServers.Clear();
-				for (int i = 0; i < frm.har.Count; i++)
-				{
-					MailServer server = new MailServer();
-					server.Host = frm.har[i].ToString(); server.User = frm.uar[i].ToString(); server.Pass = frm.par[i].ToString(); server.Enabled = (bool)frm.ear[i]; server.Type = frm.tar[i].ToString();
-					MailServers.Add(server);
-				}
-				MailTimer.Interval = frm.Time * 1000 * 60;
-			}
-			frm.Dispose();
-		}
-
+		
 		private void Ping_Click(Object sender, EventArgs e)
 		{
 			PingForm frm = new PingForm();
@@ -1272,9 +1218,8 @@ namespace FreeMeterRevival.Forms
 			graphs_upload.Checked		= bool.Parse(xml["GraphUpload"].ToString());
 			
 			autoscale_checked.Checked	= bool.Parse(xml["AutoScale"].ToString());
-			topmost_checked.Checked		= bool.Parse(xml["TopMost"].ToString());
-			simple_icon_checked.Checked = bool.Parse(xml["SimpleNotifyIcon"].ToString());
-			mailcheck.Checked			= bool.Parse(xml["MailCheck"].ToString());
+			msMainFileTopmost.Checked		= bool.Parse(xml["TopMost"].ToString());
+			msMainFileSimpleIcon.Checked = bool.Parse(xml["SimpleNotifyIcon"].ToString());
 			clip_watch.Checked			= bool.Parse(xml["ClipWatch"].ToString());
 			LogEnabled					= bool.Parse(xml["LogEnabled"].ToString());
 
@@ -1294,46 +1239,16 @@ namespace FreeMeterRevival.Forms
 			{
 				Show();
 				Location = new Point(int.Parse(xml["WindowX"].ToString()), int.Parse(xml["WindowY"].ToString()));
-				show_checked.Checked = true;
+				msMainFileShowMeter.Checked = true;
 			}
 			else
 			{
 				Location = new Point(int.Parse(xml["WindowX"].ToString()), int.Parse(xml["WindowY"].ToString()));
-				show_checked.Checked = false;
+				msMainFileShowMeter.Checked = false;
 				Hide();
                
 			}
             
-			string host = xml["PopServer"].ToString();
-			string user = xml["PopUser"].ToString();
-			string pass = xml["PopPass"].ToString();
-			string enab = xml["PopEnabled"].ToString();
-			string type = xml["PopType"].ToString();
-
-			string[] htokens = host.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-			string[] utokens = user.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-			string[] ptokens = pass.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-			string[] etokens = enab.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-			string[] ttokens = type.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-			
-			for (int i = 0; i < htokens.Length; i++)
-			{
-				MailServer server = new MailServer();
-				server.Host = htokens[i]; server.User = utokens[i]; server.Pass = Decrypt(ptokens[i], utokens[i]); server.Type = ttokens[i];
-				if (etokens[i] == "True")
-					server.Enabled = true;
-				else
-					server.Enabled = false;
-				server.OldMsgCount = 0;
-				MailServers.Add(server);
-			}
-
-			MailServers.RemoveAt(0); //remove the default value
-			MailTimer.Interval = int.Parse(xml["MailCheckInterval"].ToString());
-
-			if (mailcheck.Checked)
-				MailTimer.Start();
 
 			if (clip_watch.Checked)
 				ClipTimer.Start();
@@ -1349,8 +1264,8 @@ namespace FreeMeterRevival.Forms
 			Opacity = ((float)trackBar2.Value) / 100;
 
 
-			TopMost = topmost_checked.Checked;
-			icon_representation = simple_icon_checked.Checked;
+			TopMost = msMainFileTopmost.Checked;
+			icon_representation = msMainFileSimpleIcon.Checked;
 
 			logs_form.LoadConfiguration(xml);
 
@@ -1379,24 +1294,11 @@ namespace FreeMeterRevival.Forms
 
 			autoscale_checked.Checked = true;
 			this.CenterToScreen(); // Location
-			topmost_checked.Checked = true;
+			msMainFileTopmost.Checked = true;
 
-			show_checked.Checked = true;
+			msMainFileShowMeter.Checked = true;
 			Show();
 
-
-			mailcheck.Checked = false;
-
-			MailServer server = new MailServer();
-			server.Host = "mail.exampleserver.com";
-			server.User = "username";
-			server.Pass = Decrypt(Encrypt("password", "username"), "username");
-			server.Type = "0";
-			server.Enabled = false;
-			server.OldMsgCount = 0;
-			MailServers.Add(server);
-
-			MailTimer.Interval = 600000;
 
 			trackBar2.Maximum = 100;
 			trackBar2.Minimum = 30;
@@ -1428,44 +1330,14 @@ namespace FreeMeterRevival.Forms
 			writer.WriteElementString("GraphUpload", graphs_upload.Checked.ToString());
 			writer.WriteElementString("GraphSummary", graphs_summary.Checked.ToString());
 			writer.WriteElementString("AutoScale", autoscale_checked.Checked.ToString());
-			writer.WriteElementString("TopMost", topmost_checked.Checked.ToString());
-			writer.WriteElementString("SimpleNotifyIcon", simple_icon_checked.Checked.ToString());
-			writer.WriteElementString("MailCheck", mailcheck.Checked.ToString());
+			writer.WriteElementString("TopMost", msMainFileTopmost.Checked.ToString());
+			writer.WriteElementString("SimpleNotifyIcon", msMainFileSimpleIcon.Checked.ToString());
 			writer.WriteElementString("ClipWatch", clip_watch.Checked.ToString());
 			writer.WriteElementString("LogEnabled", LogEnabled.ToString());
 
 			writer.WriteElementString("TimerInterval", timerInterval.ToString());
 			writer.WriteElementString("LogInterval", LogInterval.ToString());
 
-			// TODO: save data regarding mail
-
-			string hstring = null;
-			string ustring = null;
-			string pstring = null;
-			string estring = null;
-			string tstring = null;
-			foreach (MailServer server in MailServers)
-			{
-				hstring += server.Host + ",";
-				ustring += server.User + ",";
-				pstring += Encrypt(server.Pass, server.User) + ",";
-				estring += server.Enabled.ToString() + ",";
-				tstring += server.Type.ToString() + ",";
-			}
-			hstring = hstring.Substring(0, hstring.Length - 1);
-			ustring = ustring.Substring(0, ustring.Length - 1);
-			pstring = pstring.Substring(0, pstring.Length - 1);
-			estring = estring.Substring(0, estring.Length - 1);
-			tstring = tstring.Substring(0, tstring.Length - 1);
-
-			writer.WriteElementString("PopServer", hstring);
-			writer.WriteElementString("PopUser", ustring);
-			writer.WriteElementString("PopPass", pstring);
-			writer.WriteElementString("PopEnabled", estring);
-			writer.WriteElementString("PopType", tstring);
-
-			// TODO: save data regarding mail
-			writer.WriteElementString("MailCheckInterval", MailTimer.Interval.ToString());
 
             if (this.Visible)
             {
@@ -1624,6 +1496,7 @@ namespace FreeMeterRevival.Forms
             
         }
         #endregion
+
 
 
 

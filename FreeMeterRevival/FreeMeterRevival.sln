@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeMeterRevival", "FreeMeterRevival.csproj", "{203C5D9D-D6B2-454B-90BF-37881958B8D3}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "FreeMeterRevivalSetup", "FreeMeterRevivalSetup\FreeMeterRevivalSetup.vdproj", "{95F0ADA7-4D0E-4742-8004-7E5A31A88565}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "FreeMeterRevivalSetup", "FreeMeterRevivalSetup\FreeMeterRevivalSetup.vdproj", "{EA9E1158-4F4B-436A-B961-0E003B115A87}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -31,14 +31,14 @@ Global
 		{203C5D9D-D6B2-454B-90BF-37881958B8D3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{203C5D9D-D6B2-454B-90BF-37881958B8D3}.Release|x86.ActiveCfg = Release|x86
 		{203C5D9D-D6B2-454B-90BF-37881958B8D3}.Release|x86.Build.0 = Release|x86
-		{95F0ADA7-4D0E-4742-8004-7E5A31A88565}.Debug|Any CPU.ActiveCfg = Debug
-		{95F0ADA7-4D0E-4742-8004-7E5A31A88565}.Debug|Any CPU.Build.0 = Debug
-		{95F0ADA7-4D0E-4742-8004-7E5A31A88565}.Debug|x86.ActiveCfg = Debug
-		{95F0ADA7-4D0E-4742-8004-7E5A31A88565}.Debug|x86.Build.0 = Debug
-		{95F0ADA7-4D0E-4742-8004-7E5A31A88565}.Release|Any CPU.ActiveCfg = Release
-		{95F0ADA7-4D0E-4742-8004-7E5A31A88565}.Release|Any CPU.Build.0 = Release
-		{95F0ADA7-4D0E-4742-8004-7E5A31A88565}.Release|x86.ActiveCfg = Release
-		{95F0ADA7-4D0E-4742-8004-7E5A31A88565}.Release|x86.Build.0 = Release
+		{EA9E1158-4F4B-436A-B961-0E003B115A87}.Debug|Any CPU.ActiveCfg = Debug
+		{EA9E1158-4F4B-436A-B961-0E003B115A87}.Debug|Any CPU.Build.0 = Debug
+		{EA9E1158-4F4B-436A-B961-0E003B115A87}.Debug|x86.ActiveCfg = Debug
+		{EA9E1158-4F4B-436A-B961-0E003B115A87}.Debug|x86.Build.0 = Debug
+		{EA9E1158-4F4B-436A-B961-0E003B115A87}.Release|Any CPU.ActiveCfg = Release
+		{EA9E1158-4F4B-436A-B961-0E003B115A87}.Release|Any CPU.Build.0 = Release
+		{EA9E1158-4F4B-436A-B961-0E003B115A87}.Release|x86.ActiveCfg = Release
+		{EA9E1158-4F4B-436A-B961-0E003B115A87}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

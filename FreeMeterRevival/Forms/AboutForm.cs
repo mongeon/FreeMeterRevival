@@ -86,5 +86,10 @@ namespace FreeMeterRevival.Forms
              "possibility\nof such damage.", "FreeMeter Revival GPL License"
            );
         }
+
+        private void lnkIcons_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("http://www.famfamfam.com/");
+        }
     }
 }
