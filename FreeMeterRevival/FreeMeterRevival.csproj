@@ -118,7 +118,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ComponentFactory.Krypton.Toolkit, Version=3.0.8.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e" />
+    <Reference Include="ComponentFactory.Krypton.Toolkit, Version=3.5.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL" />
     <Reference Include="CustomMarshalers" />
     <Reference Include="System">
       <Name>System</Name>
@@ -148,12 +148,6 @@
     </Compile>
     <Compile Include="Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\EmailSettingsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\EmailSettingsForm.Designer.cs">
-      <DependentUpon>EmailSettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\GetValueForm.Designer.cs">
       <DependentUpon>GetValueForm.cs</DependentUpon>
@@ -198,7 +192,6 @@
       <DependentUpon>UPnPForm.cs</DependentUpon>
     </Compile>
     <Compile Include="IMAP.cs" />
-    <Compile Include="MailServer.cs" />
     <Compile Include="NatTraversal.Interop.cs" />
     <Compile Include="NetworkAdapter.cs" />
     <Compile Include="NetworkMonitor.cs" />
@@ -244,10 +237,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\EmailSettingsForm.resx">
-      <DependentUpon>EmailSettingsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ErrorForm.resx">
@@ -310,6 +299,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Resources\chart_bar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\door_out.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -14,11 +14,11 @@ namespace FreeMeterRevival.Forms
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.m_menu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.show_checked = new System.Windows.Forms.ToolStripMenuItem();
-            this.topmost_checked = new System.Windows.Forms.ToolStripMenuItem();
-            this.simple_icon_checked = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exit_menu = new System.Windows.Forms.ToolStripMenuItem();
+            this.msMainFileShowMeter = new System.Windows.Forms.ToolStripMenuItem();
+            this.msMainFileTopmost = new System.Windows.Forms.ToolStripMenuItem();
+            this.msMainFileSimpleIcon = new System.Windows.Forms.ToolStripMenuItem();
+            this.msMainFileBar0 = new System.Windows.Forms.ToolStripSeparator();
+            this.msMainFileExit = new System.Windows.Forms.ToolStripMenuItem();
             this.msMainFile = new System.Windows.Forms.ToolStripMenuItem();
             this.cmMenuGraph = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.m_Opacity = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,10 +74,6 @@ namespace FreeMeterRevival.Forms
             this.msMain = new System.Windows.Forms.MenuStrip();
             this.msMainTools = new System.Windows.Forms.ToolStripMenuItem();
             this.clip_watch = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mailcheck = new System.Windows.Forms.ToolStripMenuItem();
-            this.mailchecknow = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItem14 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItem15 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItem16 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItem17 = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,12 +81,12 @@ namespace FreeMeterRevival.Forms
             this.menuItem19 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItem20 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.msMainToolsOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.msMainWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.msMainWindowStatusBar = new System.Windows.Forms.ToolStripMenuItem();
             this.msMainAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItem21 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.msMainAboutCheckUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.msMainAbout0 = new System.Windows.Forms.ToolStripSeparator();
             this.msMainAboutAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripPanel1 = new System.Windows.Forms.ToolStripPanel();
             this.tsMainGraph = new System.Windows.Forms.ToolStrip();
@@ -114,49 +110,50 @@ namespace FreeMeterRevival.Forms
             // 
             this.m_menu.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.m_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.show_checked,
-            this.topmost_checked,
-            this.simple_icon_checked,
-            this.toolStripMenuItem1,
-            this.exit_menu});
+            this.msMainFileShowMeter,
+            this.msMainFileTopmost,
+            this.msMainFileSimpleIcon,
+            this.msMainFileBar0,
+            this.msMainFileExit});
             this.m_menu.Name = "m_menu";
             this.m_menu.OwnerItem = this.msMainFile;
             this.m_menu.Size = new System.Drawing.Size(190, 98);
             // 
-            // show_checked
+            // msMainFileShowMeter
             // 
-            this.show_checked.Checked = true;
-            this.show_checked.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.show_checked.Name = "show_checked";
-            this.show_checked.Size = new System.Drawing.Size(189, 22);
-            this.show_checked.Text = "Show &Desktop Meter";
-            this.show_checked.Click += new System.EventHandler(this.Show_Click);
+            this.msMainFileShowMeter.Checked = true;
+            this.msMainFileShowMeter.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.msMainFileShowMeter.Name = "msMainFileShowMeter";
+            this.msMainFileShowMeter.Size = new System.Drawing.Size(189, 22);
+            this.msMainFileShowMeter.Text = "Show &Desktop Meter";
+            this.msMainFileShowMeter.Click += new System.EventHandler(this.Show_Click);
             // 
-            // topmost_checked
+            // msMainFileTopmost
             // 
-            this.topmost_checked.Name = "topmost_checked";
-            this.topmost_checked.Size = new System.Drawing.Size(189, 22);
-            this.topmost_checked.Text = "&Always on Top";
-            this.topmost_checked.Click += new System.EventHandler(this.TopMost_Click);
+            this.msMainFileTopmost.Name = "msMainFileTopmost";
+            this.msMainFileTopmost.Size = new System.Drawing.Size(189, 22);
+            this.msMainFileTopmost.Text = "&Always on Top";
+            this.msMainFileTopmost.Click += new System.EventHandler(this.TopMost_Click);
             // 
-            // simple_icon_checked
+            // msMainFileSimpleIcon
             // 
-            this.simple_icon_checked.Name = "simple_icon_checked";
-            this.simple_icon_checked.Size = new System.Drawing.Size(189, 22);
-            this.simple_icon_checked.Text = "&Simple Notify Icon";
-            this.simple_icon_checked.Click += new System.EventHandler(this.SimpleNotifyIcon_Click);
+            this.msMainFileSimpleIcon.Name = "msMainFileSimpleIcon";
+            this.msMainFileSimpleIcon.Size = new System.Drawing.Size(189, 22);
+            this.msMainFileSimpleIcon.Text = "&Simple Notify Icon";
+            this.msMainFileSimpleIcon.Click += new System.EventHandler(this.SimpleNotifyIcon_Click);
             // 
-            // toolStripMenuItem1
+            // msMainFileBar0
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(186, 6);
+            this.msMainFileBar0.Name = "msMainFileBar0";
+            this.msMainFileBar0.Size = new System.Drawing.Size(186, 6);
             // 
-            // exit_menu
+            // msMainFileExit
             // 
-            this.exit_menu.Name = "exit_menu";
-            this.exit_menu.Size = new System.Drawing.Size(189, 22);
-            this.exit_menu.Text = "&Exit";
-            this.exit_menu.Click += new System.EventHandler(this.Exit_Click);
+            this.msMainFileExit.Image = global::FreeMeterRevival.Properties.Resources.door_out;
+            this.msMainFileExit.Name = "msMainFileExit";
+            this.msMainFileExit.Size = new System.Drawing.Size(189, 22);
+            this.msMainFileExit.Text = "&Exit";
+            this.msMainFileExit.Click += new System.EventHandler(this.Exit_Click);
             // 
             // msMainFile
             // 
@@ -181,7 +178,7 @@ namespace FreeMeterRevival.Forms
             this.cmMenuGraph.OwnerItem = this.msMainGraph;
             this.cmMenuGraph.ShowCheckMargin = true;
             this.cmMenuGraph.ShowImageMargin = false;
-            this.cmMenuGraph.Size = new System.Drawing.Size(168, 186);
+            this.cmMenuGraph.Size = new System.Drawing.Size(168, 164);
             // 
             // m_Opacity
             // 
@@ -538,10 +535,6 @@ namespace FreeMeterRevival.Forms
             this.ClipTimer.Interval = 1000;
             this.ClipTimer.Tick += new System.EventHandler(this.ClipTimer_Tick);
             // 
-            // MailTimer
-            // 
-            this.MailTimer.Tick += new System.EventHandler(this.MailTimer_Tick);
-            // 
             // ShrinkTimer
             // 
             this.ShrinkTimer.Interval = 60000;
@@ -573,10 +566,6 @@ namespace FreeMeterRevival.Forms
             // 
             this.msMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clip_watch,
-            this.menuItem1,
-            this.mailcheck,
-            this.mailchecknow,
-            this.menuItem14,
             this.menuItem15,
             this.menuItem16,
             this.menuItem17,
@@ -584,42 +573,17 @@ namespace FreeMeterRevival.Forms
             this.menuItem19,
             this.menuItem20,
             this.toolStripMenuItem4,
-            this.optionsToolStripMenuItem});
+            this.msMainToolsOptions});
             this.msMainTools.Name = "msMainTools";
             this.msMainTools.Size = new System.Drawing.Size(46, 20);
             this.msMainTools.Text = "&Tools";
             // 
             // clip_watch
             // 
+            this.clip_watch.CheckOnClick = true;
             this.clip_watch.Name = "clip_watch";
             this.clip_watch.Size = new System.Drawing.Size(191, 22);
             this.clip_watch.Text = "URL Grabber Enabled";
-            // 
-            // menuItem1
-            // 
-            this.menuItem1.Name = "menuItem1";
-            this.menuItem1.Size = new System.Drawing.Size(188, 6);
-            // 
-            // mailcheck
-            // 
-            this.mailcheck.Name = "mailcheck";
-            this.mailcheck.Size = new System.Drawing.Size(191, 22);
-            this.mailcheck.Text = "Email Notify Enabled";
-            this.mailcheck.Click += new System.EventHandler(this.CheckMail_Auto);
-            // 
-            // mailchecknow
-            // 
-            this.mailchecknow.Name = "mailchecknow";
-            this.mailchecknow.Size = new System.Drawing.Size(191, 22);
-            this.mailchecknow.Text = "Check Email Now";
-            this.mailchecknow.Click += new System.EventHandler(this.CheckMail_Now);
-            // 
-            // menuItem14
-            // 
-            this.menuItem14.Name = "menuItem14";
-            this.menuItem14.Size = new System.Drawing.Size(191, 22);
-            this.menuItem14.Text = "Email Server Settings";
-            this.menuItem14.Click += new System.EventHandler(this.CheckMail_Settings);
             // 
             // menuItem15
             // 
@@ -664,13 +628,13 @@ namespace FreeMeterRevival.Forms
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.Size = new System.Drawing.Size(188, 6);
             // 
-            // optionsToolStripMenuItem
+            // msMainToolsOptions
             // 
-            this.optionsToolStripMenuItem.Enabled = false;
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.optionsToolStripMenuItem.Text = "Options...";
-            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+            this.msMainToolsOptions.Enabled = false;
+            this.msMainToolsOptions.Name = "msMainToolsOptions";
+            this.msMainToolsOptions.Size = new System.Drawing.Size(191, 22);
+            this.msMainToolsOptions.Text = "Options...";
+            this.msMainToolsOptions.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // msMainWindow
             // 
@@ -693,25 +657,25 @@ namespace FreeMeterRevival.Forms
             // msMainAbout
             // 
             this.msMainAbout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItem21,
-            this.toolStripMenuItem3,
+            this.msMainAboutCheckUpdate,
+            this.msMainAbout0,
             this.msMainAboutAbout});
             this.msMainAbout.Name = "msMainAbout";
             this.msMainAbout.Size = new System.Drawing.Size(24, 20);
             this.msMainAbout.Text = "&?";
             // 
-            // menuItem21
+            // msMainAboutCheckUpdate
             // 
-            this.menuItem21.Enabled = false;
-            this.menuItem21.Name = "menuItem21";
-            this.menuItem21.Size = new System.Drawing.Size(178, 22);
-            this.menuItem21.Text = "Check For Updates";
-            this.menuItem21.Click += new System.EventHandler(this.Check_Version);
+            this.msMainAboutCheckUpdate.Image = global::FreeMeterRevival.Properties.Resources.application_go;
+            this.msMainAboutCheckUpdate.Name = "msMainAboutCheckUpdate";
+            this.msMainAboutCheckUpdate.Size = new System.Drawing.Size(178, 22);
+            this.msMainAboutCheckUpdate.Text = "Check For Updates";
+            this.msMainAboutCheckUpdate.Click += new System.EventHandler(this.Check_Version);
             // 
-            // toolStripMenuItem3
+            // msMainAbout0
             // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(175, 6);
+            this.msMainAbout0.Name = "msMainAbout0";
+            this.msMainAbout0.Size = new System.Drawing.Size(175, 6);
             // 
             // msMainAboutAbout
             // 
@@ -850,14 +814,14 @@ namespace FreeMeterRevival.Forms
         private TrackBar trackBar2 ;
         private ColorDialog colorDialog1;
         // Menus and menu click handlers
-        private ToolStripMenuItem exit_menu;
-        private ToolStripMenuItem show_checked, topmost_checked;
+        private ToolStripMenuItem msMainFileExit;
+        private ToolStripMenuItem msMainFileShowMeter, msMainFileTopmost;
         /* added by miechu */
-        private ToolStripMenuItem simple_icon_checked;
+        private ToolStripMenuItem msMainFileSimpleIcon;
         /* end of added by miechu */
         private ToolStripMenuItem m_update;
         private System.ComponentModel.IContainer components;
-        private ToolStripSeparator toolStripMenuItem1;
+        private ToolStripSeparator msMainFileBar0;
         private NotifyIcon m_notifyicon;
         private Timer ClipTimer;
         protected internal Timer MailTimer;
@@ -919,10 +883,6 @@ namespace FreeMeterRevival.Forms
         private ToolStripSeparator toolStripMenuItem2;
         private ToolStripMenuItem msMainTools;
         private ToolStripMenuItem clip_watch;
-        private ToolStripSeparator menuItem1;
-        private ToolStripMenuItem mailcheck;
-        private ToolStripMenuItem mailchecknow;
-        private ToolStripMenuItem menuItem14;
         private ToolStripSeparator menuItem15;
         private ToolStripMenuItem menuItem16;
         private ToolStripMenuItem menuItem17;
@@ -930,9 +890,9 @@ namespace FreeMeterRevival.Forms
         private ToolStripSeparator menuItem19;
         private ToolStripMenuItem menuItem20;
         private ToolStripSeparator toolStripMenuItem4;
-        private ToolStripMenuItem optionsToolStripMenuItem;
-        private ToolStripMenuItem menuItem21;
-        private ToolStripSeparator toolStripMenuItem3;
+        private ToolStripMenuItem msMainToolsOptions;
+        private ToolStripMenuItem msMainAboutCheckUpdate;
+        private ToolStripSeparator msMainAbout0;
         private ContextMenuStrip cmMenuGraph;
         private ToolStripMenuItem msMainWindow;
         private ToolStripMenuItem msMainWindowStatusBar;

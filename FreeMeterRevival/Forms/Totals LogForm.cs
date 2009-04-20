@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using System.Drawing;
-using System.Windows.Forms;
-using Microsoft.Win32;
-using System.Xml.Serialization;
-using System.Xml;
 using System.IO;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace FreeMeterRevival.Forms
 {
