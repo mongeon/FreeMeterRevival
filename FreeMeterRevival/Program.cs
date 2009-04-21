@@ -14,7 +14,9 @@ namespace FreeMeterRevival
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            SplashForm frmSplash = new SplashForm();
+            frmSplash.Show();
+            Application.Run(new MainForm(frmSplash));
         }
     }
 }

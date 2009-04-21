@@ -24,11 +24,14 @@ namespace FreeMeterRevival.Forms
             Assembly ThisAssembly = Assembly.GetExecutingAssembly();
             AssemblyName ThisAssemblyName = ThisAssembly.GetName();
             this.Icon = Owner.Icon;
-            IconBox1.Image = this.Icon.ToBitmap();
             Stream s = ThisAssembly.GetManifestResourceStream("FreeMeterRevival.lr.ico");
             Icon lr = new Icon(s);
             s = ThisAssembly.GetManifestResourceStream("FreeMeterRevival.ly.ico");
             Icon ly = new Icon(s);
+            s = ThisAssembly.GetManifestResourceStream("FreeMeterRevival.FreeMeter.ico");
+            Icon lg = new Icon(s);
+
+            IconBox1.Image = lg.ToBitmap();
             IconBox2.Image = lr.ToBitmap();
             IconBox3.Image = ly.ToBitmap();
             lr.Dispose();
