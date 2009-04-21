@@ -149,7 +149,7 @@ namespace FreeMeterRevival.Forms
             // 
             // msMainFileExit
             // 
-            this.msMainFileExit.Image = global::FreeMeterRevival.Properties.Resources.door_out;
+            this.msMainFileExit.Image = global::FreeMeterRevival.Properties.Resources.door_open_out;
             this.msMainFileExit.Name = "msMainFileExit";
             this.msMainFileExit.Size = new System.Drawing.Size(189, 22);
             this.msMainFileExit.Text = "&Exit";
@@ -666,7 +666,7 @@ namespace FreeMeterRevival.Forms
             // 
             // msMainAboutCheckUpdate
             // 
-            this.msMainAboutCheckUpdate.Image = global::FreeMeterRevival.Properties.Resources.application_go;
+            this.msMainAboutCheckUpdate.Image = global::FreeMeterRevival.Properties.Resources.wrench_screwdriver;
             this.msMainAboutCheckUpdate.Name = "msMainAboutCheckUpdate";
             this.msMainAboutCheckUpdate.Size = new System.Drawing.Size(178, 22);
             this.msMainAboutCheckUpdate.Text = "Check For Updates";
@@ -679,6 +679,7 @@ namespace FreeMeterRevival.Forms
             // 
             // msMainAboutAbout
             // 
+            this.msMainAboutAbout.Image = global::FreeMeterRevival.Properties.Resources.information;
             this.msMainAboutAbout.Name = "msMainAboutAbout";
             this.msMainAboutAbout.Size = new System.Drawing.Size(178, 22);
             this.msMainAboutAbout.Text = "&About...";
@@ -738,7 +739,7 @@ namespace FreeMeterRevival.Forms
             // sbMainDownload
             // 
             this.sbMainDownload.AutoSize = false;
-            this.sbMainDownload.Image = global::FreeMeterRevival.Properties.Resources.arrow_down;
+            this.sbMainDownload.Image = global::FreeMeterRevival.Properties.Resources.arrow_270;
             this.sbMainDownload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.sbMainDownload.Name = "sbMainDownload";
             this.sbMainDownload.Size = new System.Drawing.Size(75, 17);
@@ -747,7 +748,7 @@ namespace FreeMeterRevival.Forms
             // sbMainUpload
             // 
             this.sbMainUpload.AutoSize = false;
-            this.sbMainUpload.Image = global::FreeMeterRevival.Properties.Resources.arrow_up;
+            this.sbMainUpload.Image = global::FreeMeterRevival.Properties.Resources.arrow_090;
             this.sbMainUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.sbMainUpload.Name = "sbMainUpload";
             this.sbMainUpload.Size = new System.Drawing.Size(75, 17);
@@ -793,6 +794,7 @@ namespace FreeMeterRevival.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "FreeMeter Revival";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.m_menu.ResumeLayout(false);
