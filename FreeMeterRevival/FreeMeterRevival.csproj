@@ -16,7 +16,7 @@
     <ProjectGuid>{203C5D9D-D6B2-454B-90BF-37881958B8D3}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ApplicationIcon>FreeMeter.ico</ApplicationIcon>
+    <ApplicationIcon>FreeMeterRevival.ico</ApplicationIcon>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>FreeMeterRevival</AssemblyName>
@@ -305,6 +305,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\door_out.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\information.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wrench-screwdriver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-090.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-270.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\door-open-out.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FreeMeterRevival.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

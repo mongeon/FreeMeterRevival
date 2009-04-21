@@ -1497,6 +1497,11 @@ namespace FreeMeterRevival.Forms
         }
         #endregion
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
 
 
 
