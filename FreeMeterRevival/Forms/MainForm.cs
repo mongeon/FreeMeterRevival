@@ -102,9 +102,12 @@ namespace FreeMeterRevival.Forms
 		[DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
 		static extern bool DeleteObject(IntPtr oBm);
 
-		public MainForm()
+        public MainForm(SplashForm frmSplash)
 		{
+            frmSplash.ShowState("Initialize UI...");
             InitializeComponent();
+
+            frmSplash.ShowState("Get the network adapter(s)...");
 			if (monitor.Adapters.Length == 0)
 			{
 				MessageBox.Show("I can't find any network adapters on this computer.", "FreeMeter Revival Failed.");
@@ -116,10 +119,13 @@ namespace FreeMeterRevival.Forms
                 m_interfaces.DropDownItems.Add(tmp);
                 tmp.Checked = adapter.Enabled;
             }
+
+            frmSplash.ShowState("Start the logs...");
 			logs_form = new Totals_LogForm();
 
 			RestoreRegistry();
 
+            frmSplash.ShowState("Load the configuration...");
 			try
 			{
 				SetDefaults();
@@ -128,30 +134,34 @@ namespace FreeMeterRevival.Forms
 			catch
 			{}
 
+            frmSplash.ShowState("Check the menus...");
 			Check_Menus();
 
+            frmSplash.ShowState("Set the transparency trackbar...");
 			// Transparency Trackbar
 			trackBar2.Location = new Point(2, WHeight - 14);
 			trackBar2.Size = new Size(WLength - 15, 15);
 			trackBar2.SendToBack();
 			trackBar2.Hide();
 
+            frmSplash.ShowState("Start the check process...");
             backgroundWorker1.RunWorkerAsync();
 
+            frmSplash.ShowState("Launch check version background process...");
 			Check_Version(this, new EventArgs());
 
-			//hack to initially try to reduce the memory footprint of the app (admin only)
-			try
-			{
-				Process loProcess = Process.GetCurrentProcess();
-				loProcess.MaxWorkingSet = loProcess.MaxWorkingSet;
-				loProcess.Dispose();
-			}
-			catch { }
+            //hack to initially try to reduce the memory footprint of the app (admin only)
+            try
+            {
+                Process loProcess = Process.GetCurrentProcess();
+                loProcess.MaxWorkingSet = loProcess.MaxWorkingSet;
+                loProcess.Dispose();
+            }
+            catch { }
 
-			ShrinkTimer.Start();
+            ShrinkTimer.Start();
 
-
+            frmSplash.CloseWithSleep();
 
 
 		}
@@ -215,14 +225,14 @@ namespace FreeMeterRevival.Forms
 		}
 		private void ShrinkTimer_Tick(object sender, EventArgs e)
 		{
-			//hack to initially try to reduce the memory footprint of the app (admin only)
-			try
-			{
-				Process loProcess = Process.GetCurrentProcess();
-				loProcess.MaxWorkingSet = loProcess.MaxWorkingSet;
-				loProcess.Dispose();
-			}
-			catch { }
+            //hack to initially try to reduce the memory footprint of the app (admin only)
+            try
+            {
+                Process loProcess = Process.GetCurrentProcess();
+                loProcess.MaxWorkingSet = loProcess.MaxWorkingSet;
+                loProcess.Dispose();
+            }
+            catch { }
 		}
 
 

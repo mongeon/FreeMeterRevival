@@ -60,13 +60,6 @@ namespace FreeMeterRevival.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap application_go {
-            get {
-                object obj = ResourceManager.GetObject("application_go", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap arrow_090 {
             get {
                 object obj = ResourceManager.GetObject("arrow_090", resourceCulture);
@@ -81,20 +74,6 @@ namespace FreeMeterRevival.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_down {
-            get {
-                object obj = ResourceManager.GetObject("arrow_down", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap arrow_up {
-            get {
-                object obj = ResourceManager.GetObject("arrow_up", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap chart_bar {
             get {
                 object obj = ResourceManager.GetObject("chart_bar", resourceCulture);
@@ -105,13 +84,6 @@ namespace FreeMeterRevival.Properties {
         internal static System.Drawing.Bitmap door_open_out {
             get {
                 object obj = ResourceManager.GetObject("door_open_out", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap door_out {
-            get {
-                object obj = ResourceManager.GetObject("door_out", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
